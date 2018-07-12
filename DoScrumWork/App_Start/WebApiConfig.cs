@@ -1,15 +1,17 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Web.Http;
-
-namespace DoScrumWork
+﻿namespace DoScrumWork
 {
+    using System.Web.Http;
+
+    using Utils;
+
     public static class WebApiConfig
     {
         public static void Register(HttpConfiguration config)
         {
-            // Web API configuration and services
+            // Initialize Unity Ioc
+            config.DependencyResolver = new UnityResolver(UnityResolver.InitializeContainer());
+
+            Mapping.Inicializate();
 
             // Web API routes
             config.MapHttpAttributeRoutes();
@@ -17,8 +19,7 @@ namespace DoScrumWork
             config.Routes.MapHttpRoute(
                 name: "DefaultApi",
                 routeTemplate: "api/{controller}/{id}",
-                defaults: new { id = RouteParameter.Optional }
-            );
+                defaults: new { id = RouteParameter.Optional });
         }
     }
 }
