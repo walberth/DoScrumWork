@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Generic;
 
 namespace AgileWork.Models 
 {
@@ -11,10 +12,11 @@ namespace AgileWork.Models
         public string Description { get; set; }
         public string StartDate { get; set; }
         public string EndDate { get; set; }
+        public List<UserStory> UserStories { get; set; }
 
         public Project() {}
 
-        public Project(string uid, string name, string idUserCreated, string userCreatedEmail, string description, string startDate, string endDate) 
+        public Project(string uid, string name, string idUserCreated, string userCreatedEmail, string description, string startDate, string endDate, List<UserStory> userStories) 
         {
             Uid = uid ?? throw new ArgumentNullException(nameof(uid));
             Name = name ?? throw new ArgumentNullException(nameof(name));
@@ -23,6 +25,7 @@ namespace AgileWork.Models
             Description = description ?? throw new ArgumentNullException(nameof(description));
             StartDate = startDate ?? throw new ArgumentNullException(nameof(startDate));
             EndDate = endDate ?? throw new ArgumentNullException(nameof(endDate));
+            UserStories = userStories ?? throw new ArgumentNullException(nameof(userStories));
         }
 
         public override string ToString() 

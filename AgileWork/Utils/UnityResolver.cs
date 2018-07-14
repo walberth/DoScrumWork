@@ -2,6 +2,8 @@
 using System.Collections.Generic;
 using System.Diagnostics.CodeAnalysis;
 using System.Web.Http.Dependencies;
+using AgileWork.Implementation;
+using AgileWork.Interface;
 using Unity;
 using Unity.Exceptions;
 
@@ -23,6 +25,8 @@ namespace AgileWork.Utils
             var container = new UnityContainer();
 
             #region Dependency Injections Here
+            container.RegisterType<ILoginFirebase, LoginFirebase>();
+            container.RegisterType<IAgileProject, AgileProject>();
             #endregion
 
             return container;

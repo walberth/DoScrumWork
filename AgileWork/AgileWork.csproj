@@ -1158,10 +1158,16 @@
     <Compile Include="App_Start\RouteConfig.cs" />
     <Compile Include="App_Start\WebApiConfig.cs" />
     <Compile Include="Controllers\Api\LoginController.cs" />
+    <Compile Include="Controllers\Api\ProjectController.cs" />
     <Compile Include="Controllers\LoginController.cs" />
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
+    <Compile Include="Implementation\AgileProject.cs" />
+    <Compile Include="Implementation\LoginFirebase.cs" />
+    <Compile Include="Interface\IAgileProject.cs" />
+    <Compile Include="Interface\ILoginFirebase.cs" />
+    <Compile Include="Models\Consume\IdProject.cs" />
     <Compile Include="Models\Project.cs" />
     <Compile Include="Models\Sprint.cs" />
     <Compile Include="Models\Task.cs" />
@@ -1343,7 +1349,6 @@
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
-    <Folder Include="Interface\" />
     <Folder Include="ModelView\" />
     <Folder Include="Utils\Profile\" />
   </ItemGroup>
