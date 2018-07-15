@@ -2,6 +2,6 @@
 {
     public class IdProject 
     {
-        public string idUserCreated { get; set; }
+        public string ProjectId { get; set; }
     }
 }

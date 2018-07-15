@@ -4,8 +4,8 @@ using AgileWork.Utils;
 
 namespace AgileWork.Interface 
 {
-    public interface ILoginFirebase 
+    public interface IUserStory 
     {
-        Task<Response<UserFirebase>> GetFirebaseLoginAsync(string email, string password);
+        Task<Response<UserStories>> CreateUserHistoryAsync(UserStories userStory);
     }
 }

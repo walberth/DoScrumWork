@@ -2,7 +2,7 @@
 
 namespace AgileWork.Models 
 {
-    public class UserStory 
+    public class UserStories 
     {
         public string Uid { get; set; }
         public string Name { get; set; }
@@ -16,9 +16,9 @@ namespace AgileWork.Models
         public string IdSprint { get; set; }
         public string State { get; set; }
 
-        public UserStory() {}
+        public UserStories() {}
 
-        public UserStory(string uid, string name, string idProject, string description, string idUserResponsable, string userResponsable, int? effort, int? priority, string acceptanceCriteria, string idSprint, string state) 
+        public UserStories(string uid, string name, string idProject, string description, string idUserResponsable, string userResponsable, int? effort, int? priority, string acceptanceCriteria, string idSprint, string state) 
         {
             Uid = uid ?? throw new ArgumentNullException(nameof(uid));
             Name = name ?? throw new ArgumentNullException(nameof(name));

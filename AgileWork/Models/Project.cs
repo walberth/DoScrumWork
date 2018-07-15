@@ -12,11 +12,12 @@ namespace AgileWork.Models
         public string Description { get; set; }
         public string StartDate { get; set; }
         public string EndDate { get; set; }
-        public List<UserStory> UserStories { get; set; }
+        public List<UserStories> UserStories { get; set; }
+        public List<Sprint> Sprints { get; set; }
 
         public Project() {}
 
-        public Project(string uid, string name, string idUserCreated, string userCreatedEmail, string description, string startDate, string endDate, List<UserStory> userStories) 
+        public Project(string uid, string name, string idUserCreated, string userCreatedEmail, string description, string startDate, string endDate, List<UserStories> userStories, List<Sprint> sprints) 
         {
             Uid = uid ?? throw new ArgumentNullException(nameof(uid));
             Name = name ?? throw new ArgumentNullException(nameof(name));
@@ -26,6 +27,7 @@ namespace AgileWork.Models
             StartDate = startDate ?? throw new ArgumentNullException(nameof(startDate));
             EndDate = endDate ?? throw new ArgumentNullException(nameof(endDate));
             UserStories = userStories ?? throw new ArgumentNullException(nameof(userStories));
+            Sprints = sprints ?? throw new ArgumentNullException(nameof(sprints));
         }
 
         public override string ToString() 

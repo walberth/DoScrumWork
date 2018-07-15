@@ -24,10 +24,10 @@ namespace AgileWork.Controllers.Api
             _agileProject = agileProject;
         }
 
-        //[Route("api/loginValidate/{credentials}")]
+        [Route("api/createProjectAsync/{project}")]
         public async Task<IHttpActionResult> CreateProjectAsync(Project project)
         {
-            var response = await _agileProject.CreateProject(project);
+            var response = await _agileProject.CreateProjectAsync(project);
 
             if (response.IsSuccess)
                 return Ok(response);
@@ -38,7 +38,29 @@ namespace AgileWork.Controllers.Api
         [Route("api/listAllProjectAsync/{idUser}")]
         public async Task<IHttpActionResult> ListAllProjectAsync(UserCredentials idUser) 
         {
-            var response = await _agileProject.ListAllProject(idUser.Uid);
+            var response = await _agileProject.ListAllProjectAsync(idUser.Uid);
+
+            if (response.IsSuccess)
+                return Ok(response);
+               
+            return BadRequest(response.Message);
+        }
+
+        [Route("api/createSprintAsync/{sprint}")]
+        public async Task<IHttpActionResult> CreateSprintAsync(Sprint sprint)
+        {
+            var response = await _agileProject.CreateSprintAsync(sprint);
+
+            if (response.IsSuccess)
+                return Ok(response);
+               
+            return BadRequest(response.Message);
+        }
+        
+        [Route("api/getAllProjectInformationAsync/{projectId}")]
+        public async Task<IHttpActionResult> ListProjectInformationAsync(IdProject projectId)
+        {
+            var response = await _agileProject.GetAllProjectInformationAsync(projectId.ProjectId);
 
             if (response.IsSuccess)
                 return Ok(response);

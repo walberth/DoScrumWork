@@ -2,16 +2,16 @@
 
 namespace AgileWork.Models 
 {
-    public class Task 
+    public class UserTask 
     {
         public string Uid { get; set; }
         public string Name { get; set; }
         public string IdUserHistories { get; set; }
         public string State { get; set; }
 
-        public Task() {}
+        public UserTask() {}
 
-        public Task(string uid, string name, string idUserHistories, string state) 
+        public UserTask(string uid, string name, string idUserHistories, string state) 
         {
             Uid = uid ?? throw new ArgumentNullException(nameof(uid));
             Name = name ?? throw new ArgumentNullException(nameof(name));

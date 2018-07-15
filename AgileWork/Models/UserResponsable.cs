@@ -2,14 +2,14 @@
 
 namespace AgileWork.Models 
 {
-    public class UserReponsable 
+    public class UserResponsable 
     {
         public string Uid { get; set; }
         public string Name { get; set; }
 
-        public UserReponsable() {}
+        public UserResponsable() {}
 
-        public UserReponsable(string uid, string name) 
+        public UserResponsable(string uid, string name) 
         {
             Uid = uid ?? throw new ArgumentNullException(nameof(uid));
             Name = name ?? throw new ArgumentNullException(nameof(name));
