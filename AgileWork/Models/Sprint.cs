@@ -1,17 +1,23 @@
-﻿using System;
-using System.Collections.Generic;
-
-namespace AgileWork.Models 
+﻿namespace AgileWork.Models 
 {
+    using System;
+    using System.Collections.Generic;
+
     public class Sprint 
     {
         public string Uid { get; set; }
+
         public string Name { get; set; }
+
         public string IdProject { get; set; }
+
         public List<UserStories> Stories { get; set; }
+
         public List<UserTask> Tasks { get; set; }
-        
-        public Sprint() {}
+
+        public Sprint()
+        {
+        }
 
         public Sprint(string uid, string name, string idProject, List<UserStories> stories, List<UserTask> tasks) 
         {

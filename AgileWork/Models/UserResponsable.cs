@@ -1,13 +1,16 @@
-﻿using System;
-
-namespace AgileWork.Models 
+﻿namespace AgileWork.Models 
 {
+    using System;
+
     public class UserResponsable 
     {
         public string Uid { get; set; }
+
         public string Name { get; set; }
 
-        public UserResponsable() {}
+        public UserResponsable()
+        {
+        }
 
         public UserResponsable(string uid, string name) 
         {

@@ -1,21 +1,31 @@
-﻿using System;
-using System.Collections.Generic;
-
-namespace AgileWork.Models 
+﻿namespace AgileWork.Models 
 {
+    using System;
+    using System.Collections.Generic;
+
     public class Project 
     {
         public string Uid { get; set; }
+
         public string Name { get; set; }
+
         public string IdUserCreated { get; set; }
+
         public string UserCreatedEmail { get; set; }
+
         public string Description { get; set; }
+
         public string StartDate { get; set; }
+
         public string EndDate { get; set; }
+
         public List<UserStories> UserStories { get; set; }
+
         public List<Sprint> Sprints { get; set; }
 
-        public Project() {}
+        public Project()
+        {
+        }
 
         public Project(string uid, string name, string idUserCreated, string userCreatedEmail, string description, string startDate, string endDate, List<UserStories> userStories, List<Sprint> sprints) 
         {

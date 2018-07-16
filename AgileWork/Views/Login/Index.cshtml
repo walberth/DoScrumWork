@@ -1,4 +1,6 @@
-﻿
+﻿@using AgileWork.ModelView
+@model UserFirebaseViewModel
+
 @{
     ViewBag.Title = "Index"; ;
 }
@@ -11,20 +13,6 @@
     <title>AWM - Inicio de Sesi&oacute;n</title>
     <link rel="icon" type="image/png" href="~/Content/dist/img/agile_work_icon.png" />
     <meta content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no" name="viewport" />
-    <!-- Firebase Reference -->
-    <script src="https://www.gstatic.com/firebasejs/5.0.3/firebase.js"></script>
-    <script>
-        // Initialize Firebase
-        var config = {
-            apiKey: "AIzaSyBOd-nsvRz_PLSvzFRfAdLbIkGkDltwIRc",
-            authDomain: "consumefirebase.firebaseapp.com",
-            databaseURL: "https://consumefirebase.firebaseio.com",
-            projectId: "consumefirebase",
-            storageBucket: "consumefirebase.appspot.com",
-            messagingSenderId: "1030122538021"
-        };
-        firebase.initializeApp(config);
-    </script>
     <!-- Bootstrap 3.3.6 -->
     <link rel="stylesheet" href="~/Content/bootstrap/css/bootstrap.min.css" />
     <!-- Font Awesome -->
@@ -44,24 +32,29 @@
             <!--En la etiqueta a href poner la url del proyecto-->
             <a href="#"><b>Agile Work</b><span class="space-header-login">Management</span></a>
         </div>
-        <div class="login-box-body box-body-login">
-            <p class="login-box-msg title-login">Inicio de sesi&oacute;n</p>
-            <!--<form action="../../index2.html" method="post">-->
-            <div class="form-group has-feedback">
-                <input type="email" class="form-control" placeholder="Email">
-                <span class="glyphicon glyphicon-envelope form-control-feedback"></span>
-            </div>
-            <div class="form-group has-feedback">
-                <input type="password" class="form-control" placeholder="Password">
-                <span class="glyphicon glyphicon-lock form-control-feedback"></span>
-            </div>
-            <div class="row">
-                <div class="col-xs-offset-8 col-xs-4">
-                    <button type="submit" class="btn btn-success btn-flat btn-position-login" onclick="location.href = '@Url.Action("Index", "Project")'">Iniciar</button>
+        @using (Html.BeginForm("Login","Login", new { ReturnUrl = ViewBag.ReturnUrl }, FormMethod.Post, new { @class = "form-horizontal", role = "form" })) {
+            <div class="login-box-body box-body-login">
+                <p class="login-box-msg title-login">Inicio de sesi&oacute;n</p>
+                <!--<form action="../../index2.html" method="post">-->
+                <div class="form-group has-feedback">
+                    @Html.TextBoxFor(m => m.Email,new { placeholder = "Email", @class = "form-control" })
+                    @*<input type="email" class="form-control" placeholder="Email">*@
+                    <span class="glyphicon glyphicon-envelope form-control-feedback"></span>
                 </div>
+                <div class="form-group has-feedback">
+                    @Html.PasswordFor(m => m.Password,new { placeholder = "Password", @class = "form-control" })
+                    @*<input type="password" class="form-control" placeholder="Password">*@
+                    <span class="glyphicon glyphicon-lock form-control-feedback"></span>
+                </div>
+                <div class="row">
+                    <div class="col-xs-offset-8 col-xs-4">
+                        <button type="submit" class="btn btn-success btn-flat btn-position-login" @*onclick="location.href = '@Url.Action("Login", "Login")'"*@>Iniciar</button>
+                    </div>
+                </div>
+                <!--</form>-->
             </div>
-            <!--</form>-->
-        </div>
+        }
+        
     </div>
     <!-- jQuery 2.2.3 -->
     <script src="~/Content/plugins/jQuery/jquery-2.2.3.min.js"></script>

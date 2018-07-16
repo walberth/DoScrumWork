@@ -1,15 +1,20 @@
-﻿using System;
-
-namespace AgileWork.Models 
+﻿namespace AgileWork.Models 
 {
+    using System;
+
     public class UserTask 
     {
         public string Uid { get; set; }
+
         public string Name { get; set; }
+
         public string IdUserHistories { get; set; }
+
         public string State { get; set; }
 
-        public UserTask() {}
+        public UserTask()
+        {
+        }
 
         public UserTask(string uid, string name, string idUserHistories, string state) 
         {

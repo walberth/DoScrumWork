@@ -1,13 +1,16 @@
-﻿using System;
-
-namespace AgileWork.Models 
+﻿namespace AgileWork.Models 
 {
+    using System;
+
     public class UserFirebase 
     {
         public string Uid { get; set; }
+
         public string Email { get; set; }
 
-        public UserFirebase() {}
+        public UserFirebase()
+        {
+        }
 
         public UserFirebase(string uid, string email) 
         {

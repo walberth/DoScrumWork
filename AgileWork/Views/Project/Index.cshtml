@@ -1,4 +1,7 @@
-﻿
+﻿@using AgileWork.ModelView
+@model IEnumerable<ProjectViewModel>
+@*@model ProjectViewModel*@
+
 @{
     ViewBag.Title = "Index";
     Layout = "~/Views/Shared/_Layout.cshtml";
@@ -11,7 +14,25 @@
                 <h3 class="box-title textOverflow-boxTitles"><i class="fa fa-list-alt" aria-hidden="true"></i><span class="space-subtitle">Listado de Proyectos</span></h3>
             </div>
             <div class="box-body">
-                <div id="containerProjects" class="row"></div>
+                <div id="containerProjects" class="row">
+                    <table id="movies" class="table table-bordered table-hover">
+                        <thead>
+                        <tr>
+                            <th>Id</th>
+                            <th>Name</th>
+                        </tr>
+                        </thead>
+                        <tbody>
+                            @foreach(var movie in Model)
+                            {
+                                <tr>
+                                    <td>@movie.Uid</td>
+                                    <td>@movie.Name</td>
+                                </tr>
+                            }
+                        </tbody>
+                    </table>
+                </div>
             </div>
         </div>
     </div>
