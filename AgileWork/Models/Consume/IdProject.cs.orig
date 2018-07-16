@@ -1,0 +1,11 @@
+﻿namespace AgileWork.Models.Consume 
+{
+    public class IdProject 
+    {
+<<<<<<< HEAD
+        public string idUserCreated { get; set; }
+=======
+        public string ProjectId { get; set; }
+>>>>>>> wgutierrez
+    }
+}

@@ -1,0 +1,36 @@
+.title-login {
+    font-weight: bold;
+}
+
+.btn-position-login {
+    margin-left: 28%;
+}
+
+.body-login {
+    overflow-y: hidden;
+}
+
+body, html {
+    height: 100%;
+    margin: 0;
+}
+
+.bg {
+    background-image: url('../img/wallpaper_agile_login.jpg');
+    height: 100%;
+    background-position: center;
+    background-repeat: no-repeat;
+    background-size: cover;
+}
+
+.space-header-login {
+    color: #ff3300;
+}
+
+.space-header-login:before {
+    content: "\00a0";
+}
+
+.box-body-login {
+    background: rgba(255,255,255, .86);
+}

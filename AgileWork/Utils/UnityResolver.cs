@@ -12,11 +12,11 @@ namespace AgileWork.Utils
     [SuppressMessage("StyleCop.CSharp.DocumentationRules", "SA1600:ElementsMustBeDocumented", Justification = "Reviewed. Suppression is OK here.")]
     public class UnityResolver : IDependencyResolver
     {
-        private readonly IUnityContainer container;
+        private readonly IUnityContainer _container;
 
         public UnityResolver(IUnityContainer container)
         {
-            this.container = container ?? throw new ArgumentNullException(nameof(container));
+            _container = container ?? throw new ArgumentNullException(nameof(container));
         }
         
         [SuppressMessage("StyleCop.CSharp.ReadabilityRules", "SA1123:DoNotPlaceRegionsWithinElements", Justification = "Reviewed. Suppression is OK here.")]
@@ -27,6 +27,9 @@ namespace AgileWork.Utils
             #region Dependency Injections Here
             container.RegisterType<ILoginFirebase, LoginFirebase>();
             container.RegisterType<IAgileProject, AgileProject>();
+            container.RegisterType<IUserProject, UserProject>();
+            container.RegisterType<IUserStory, UserStory>();
+            container.RegisterType<ITaskProject, TaskProject>();
             #endregion
 
             return container;
@@ -34,14 +37,14 @@ namespace AgileWork.Utils
 
         public void Dispose()
         {
-            container?.Dispose();
+            _container?.Dispose();
         }
 
         public object GetService(Type serviceType)
         {
             try
             {
-                return this.container.Resolve(serviceType);
+                return _container.Resolve(serviceType);
             }
             catch (ResolutionFailedException)
             {
@@ -53,7 +56,7 @@ namespace AgileWork.Utils
         {
             try
             {
-                return this.container.ResolveAll(serviceType);
+                return _container.ResolveAll(serviceType);
             }
             catch (ResolutionFailedException)
             {
@@ -63,7 +66,7 @@ namespace AgileWork.Utils
 
         public IDependencyScope BeginScope()
         {
-            var child = container?.CreateChildContainer();
+            var child = _container?.CreateChildContainer();
             return new UnityResolver(child);
         }
     }

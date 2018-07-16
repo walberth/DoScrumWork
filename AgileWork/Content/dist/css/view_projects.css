@@ -1,0 +1,11 @@
+.dropdown-menu > .active > a {
+    background-color: #00A65A;
+}
+
+.bg {
+    background-image: url("../images/wallpaper_agile_projects.jpg");
+    height: 100%;
+    background-position: center;
+    background-repeat: no-repeat;
+    background-size: cover;
+}

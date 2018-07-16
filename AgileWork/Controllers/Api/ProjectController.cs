@@ -1,9 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Net;
-using System.Net.Http;
-using System.Threading.Tasks;
+﻿using System.Threading.Tasks;
 using System.Web.Http;
 using AgileWork.Interface;
 using AgileWork.Models;
@@ -24,10 +19,11 @@ namespace AgileWork.Controllers.Api
             _agileProject = agileProject;
         }
 
-        //[Route("api/loginValidate/{credentials}")]
+        [HttpPost]
+        [Route("api/createProjectAsync/{project}")]
         public async Task<IHttpActionResult> CreateProjectAsync(Project project)
         {
-            var response = await _agileProject.CreateProject(project);
+            var response = await _agileProject.CreateProjectAsync(project);
 
             if (response.IsSuccess)
                 return Ok(response);
@@ -35,10 +31,71 @@ namespace AgileWork.Controllers.Api
             return BadRequest(response.Message);
         }
 
+        [HttpPost]
         [Route("api/listAllProjectAsync/{idUser}")]
         public async Task<IHttpActionResult> ListAllProjectAsync(UserCredentials idUser) 
         {
-            var response = await _agileProject.ListAllProject(idUser.Uid);
+            var response = await _agileProject.ListAllProjectAsync(idUser.Uid);
+
+            if (response.IsSuccess)
+                return Ok(response);
+               
+            return BadRequest(response.Message);
+        }
+
+        [HttpPost]
+        [Route("api/createSprintAsync/{sprint}")]
+        public async Task<IHttpActionResult> CreateSprintAsync(Sprint sprint)
+        {
+            var response = await _agileProject.CreateSprintAsync(sprint);
+
+            if (response.IsSuccess)
+                return Ok(response);
+               
+            return BadRequest(response.Message);
+        }
+
+        [HttpPost]
+        [Route("api/getAllSprintAsync/{projectId}")]
+        public async Task<IHttpActionResult> GetAllSprintAsync(IdProject projectId)
+        {
+            var response = await _agileProject.GetAllSprintAsync(projectId.ProjectId);
+
+            if (response.IsSuccess)
+                return Ok(response);
+               
+            return BadRequest(response.Message);
+        }
+        
+        [HttpPost]
+        [Route("api/getAllProjectInformationAsync/{projectId}")]
+        public async Task<IHttpActionResult> ListProjectInformationAsync(IdProject projectId)
+        {
+            var response = await _agileProject.GetAllProjectInformationAsync(projectId.ProjectId);
+
+            if (response.IsSuccess)
+                return Ok(response);
+               
+            return BadRequest(response.Message);
+        }
+
+        [HttpPost]
+        [Route("api/getHistoriesAndSprintProjectAsync/{projectId}")]
+        public async Task<IHttpActionResult> GetHistoriesAndSprintProjectAsync(IdProject projectId)
+        {
+            var response = await _agileProject.GetHistoriesAndSprintProjectAsync(projectId.ProjectId);
+
+            if (response.IsSuccess)
+                return Ok(response);
+               
+            return BadRequest(response.Message);
+        }
+
+        [HttpPost]
+        [Route("api/getAllSprintInformationAsync/{sprintInformation}")]
+        public async Task<IHttpActionResult> GetAllSprintInformationAsync(SprintInformation sprintInformation)
+        {
+            var response = await _agileProject.GetAllSprintInformationAsync(sprintInformation.IdProject, sprintInformation.IdSprint);
 
             if (response.IsSuccess)
                 return Ok(response);

@@ -1,0 +1,38 @@
+.space-header-login:before {
+    content: "\00a0";
+}
+
+.footer-highlight {
+    color: #00a65a;
+}
+
+.textOverflow-boxTitles {
+    white-space: nowrap;
+    width: 100%;
+    overflow: hidden;
+    text-overflow: ellipsis;
+}
+
+.space-subtitle:before {
+    content: "\00a0";
+}
+
+.space-text:after {
+    content: "\00a0";
+}
+
+.row-fixed-zero {
+    margin-right: 0;
+    margin-left: 0;
+}
+
+.container-list-projects {
+    border-radius: 6px;
+    border: 1px solid #3C8DBC;
+    padding: 20px;
+    margin-bottom: 2%;
+}
+
+.not-scroll-page {
+    overflow-y: hidden;
+}

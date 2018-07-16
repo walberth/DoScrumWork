@@ -7,8 +7,18 @@ namespace AgileWork.Interface
 {
     public interface IAgileProject 
     {
-        Task<Response<Project>> CreateProject(Project project);
+        Task<Response<Project>> CreateProjectAsync(Project project);
 
-        Task<Response<List<Project>>> ListAllProject(string idUserCreated);
+        Task<Response<List<Project>>> ListAllProjectAsync(string idUserCreated);
+
+        Task<Response<Sprint>> CreateSprintAsync(Sprint sprint);
+
+        Task<Response<List<Sprint>>> GetAllSprintAsync(string idProject);
+        
+        Task<Response<Project>> GetAllProjectInformationAsync(string idProject);
+
+        Task<Response<Project>> GetHistoriesAndSprintProjectAsync(string idProject);
+
+        Task<Response<Sprint>> GetAllSprintInformationAsync(string idProject, string idSprint);
     }
 }

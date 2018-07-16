@@ -1,0 +1,15 @@
+﻿using System.Threading.Tasks;
+using AgileWork.Models;
+using AgileWork.Utils;
+
+namespace AgileWork.Interface 
+{
+    public interface ILoginFirebase 
+    {
+<<<<<<< HEAD
+        Task<Response<UserFirebase>> GetFirebaseLogin(string email, string password);
+=======
+        Task<Response<UserFirebase>> GetFirebaseLoginAsync(string email, string password);
+>>>>>>> wgutierrez
+    }
+}

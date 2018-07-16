@@ -8,6 +8,7 @@ namespace AgileWork {
             bundles.Add(new ScriptBundle("~/Js").Include(
                 "~/Content/plugins/jQuery/jquery-2.2.3.min.js",
                 "~/Content/bootstrap/js/bootstrap.min.js",
+                "~/Content/plugins/handlebars/handlebars-v4.0.11.js",
                 "~/Content/dist/js/jquery.validate.min.js",
                 "~/Content/dist/js/additional-methods.min.js",
                 "~/Content/dist/js/script-custom-validator.js",
@@ -20,6 +21,7 @@ namespace AgileWork {
                 "~/Content/plugins/fastclick/fastclick.js",
                 "~/Content/plugins/iCheck/icheck.min.js",
                 "~/Content/dist/js/app.min.js",
+                "~/Content/dist/js/view_projects.js",
                 "~/Content/dist/js/demo.js"));
 
             bundles.Add(new StyleBundle("~/Css").Include(

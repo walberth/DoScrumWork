@@ -2,9 +2,6 @@
 using System.Web.Http;
 using AgileWork.Interface;
 using AgileWork.Models.Consume;
-using Firebase.Auth;
-using Firebase.Database;
-using Firebase.Database.Query;
 
 namespace AgileWork.Controllers.Api
 {
@@ -21,10 +18,11 @@ namespace AgileWork.Controllers.Api
             _loginFirebase = loginFirebase;
         }
 
-        //[Route("api/loginValidate/{credentials}")]
-        public async Task<IHttpActionResult> FirebaseLoginAsync(UserCredentials credentials)
+        [HttpPost]
+        [Route("api/getFirebaseLoginAsync/{credentials}")]
+        public async Task<IHttpActionResult> GetFirebaseLoginAsync(UserCredentials credentials)
         {
-            var response = await _loginFirebase.GetFirebaseLogin(credentials.Email, credentials.Password);
+            var response = await _loginFirebase.GetFirebaseLoginAsync(credentials.Email, credentials.Password);
 
             if (response.IsSuccess)
                 return Ok(response);

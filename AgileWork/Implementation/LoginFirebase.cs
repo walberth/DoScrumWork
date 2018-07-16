@@ -10,13 +10,13 @@ namespace AgileWork.Implementation
 {
     public class LoginFirebase : ILoginFirebase 
     {
-        public async Task<Response<UserFirebase>> GetFirebaseLogin(string email, string password) 
+        public async Task<Response<UserFirebase>> GetFirebaseLoginAsync(string email, string password) 
         {
             var response = new Response<UserFirebase>();
 
             try 
             {
-                var authProvider = new FirebaseAuthProvider(new FirebaseConfig(ConfigurationManager.AppSettings["FirebaseToken"]));
+                var authProvider = new FirebaseAuthProvider(new FirebaseConfig(ConfigurationManager.AppSettings[Constant.Token]));
                 var user = await authProvider.SignInWithEmailAndPasswordAsync(email, password);
 
                 var userFirebase = new UserFirebase {
