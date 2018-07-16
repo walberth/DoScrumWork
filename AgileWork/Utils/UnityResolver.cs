@@ -29,6 +29,7 @@ namespace AgileWork.Utils
             container.RegisterType<IAgileProject, AgileProject>();
             container.RegisterType<IUserProject, UserProject>();
             container.RegisterType<IUserStory, UserStory>();
+            container.RegisterType<ITaskProject, TaskProject>();
             #endregion
 
             return container;

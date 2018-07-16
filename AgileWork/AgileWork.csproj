@@ -1209,6 +1209,7 @@
     <Compile Include="Controllers\Api\LoginController.cs" />
     <Compile Include="Controllers\Api\ProjectController.cs" />
     <Compile Include="Controllers\Api\StoryController.cs" />
+    <Compile Include="Controllers\Api\TaskController.cs" />
     <Compile Include="Controllers\Api\UserController.cs" />
     <Compile Include="Controllers\LoginController.cs" />
     <Compile Include="Global.asax.cs">
@@ -1216,13 +1217,18 @@
     </Compile>
     <Compile Include="Implementation\AgileProject.cs" />
     <Compile Include="Implementation\LoginFirebase.cs" />
+    <Compile Include="Implementation\TaskProject.cs" />
     <Compile Include="Implementation\UserStory.cs" />
     <Compile Include="Implementation\UserProject.cs" />
     <Compile Include="Interface\IAgileProject.cs" />
     <Compile Include="Interface\ILoginFirebase.cs" />
     <Compile Include="Interface\IUserStory.cs" />
     <Compile Include="Interface\IUserProject.cs" />
+    <Compile Include="Interface\ITaskProject.cs" />
     <Compile Include="Models\Consume\IdProject.cs" />
+    <Compile Include="Models\Consume\LinkSprint.cs" />
+    <Compile Include="Models\Consume\SprintInformation.cs" />
+    <Compile Include="Models\Consume\UpdateTask.cs" />
     <Compile Include="Models\Project.cs" />
     <Compile Include="Models\Sprint.cs" />
     <Compile Include="Models\UserTask.cs" />

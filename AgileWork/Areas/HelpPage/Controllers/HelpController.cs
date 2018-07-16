@@ -3,6 +3,7 @@ using System.Web.Http;
 using System.Web.Mvc;
 using AgileWork.Areas.HelpPage.ModelDescriptions;
 using AgileWork.Areas.HelpPage.Models;
+using Unity.Attributes;
 
 namespace AgileWork.Areas.HelpPage.Controllers
 {
@@ -13,6 +14,7 @@ namespace AgileWork.Areas.HelpPage.Controllers
     {
         private const string ErrorViewName = "Error";
 
+        [InjectionConstructor]
         public HelpController()
             : this(GlobalConfiguration.Configuration)
         {

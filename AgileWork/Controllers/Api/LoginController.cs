@@ -18,6 +18,7 @@ namespace AgileWork.Controllers.Api
             _loginFirebase = loginFirebase;
         }
 
+        [HttpPost]
         [Route("api/getFirebaseLoginAsync/{credentials}")]
         public async Task<IHttpActionResult> GetFirebaseLoginAsync(UserCredentials credentials)
         {

@@ -18,6 +18,7 @@ namespace AgileWork.Controllers.Api
             _userProject = userProject;
         }
 
+        [HttpPost]
         [Route("api/createUserResponsableAsync/{userResponsable}")]
         public async Task<IHttpActionResult> CreateUserResponsable(UserResponsable userResponsable) 
         {

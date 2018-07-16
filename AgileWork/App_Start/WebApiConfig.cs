@@ -1,5 +1,6 @@
 ﻿using System.Web.Http;
 using AgileWork.Utils;
+using Newtonsoft.Json.Serialization;
 
 namespace AgileWork
 {
@@ -12,13 +13,16 @@ namespace AgileWork
 
             Mapping.Inicializate();
 
+            // Use camel case for JSON data.
+            config.Formatters.JsonFormatter.SerializerSettings.ContractResolver = new CamelCasePropertyNamesContractResolver();
+
             // Web API routes
             config.MapHttpAttributeRoutes();
 
             config.Routes.MapHttpRoute(
-                name: "DefaultApi",
+                name: "DefaultWebApi",
                 routeTemplate: "api/{controller}/{id}",
-                defaults: new { id = RouteParameter.Optional }
+                defaults: new { id = RouteParameter.Optional, action = RouteParameter.Optional }
             );
         }
     }

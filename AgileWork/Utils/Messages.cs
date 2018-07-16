@@ -6,5 +6,6 @@
         public const string NoSeEncontroNingunUsuario = "No se pudo encontrar ningún usuario responsable";
         public const string NoSePudoCrearLaHistoriadeUsuario = "No se pudo crear la historia de usuario";
         public const string NoSePudoCrearElSprint = "No se pudo crear el sprint";
+        public const string NoSePudoCrearLaTarea = "No se pudo crear la tarea";
     }
 }
