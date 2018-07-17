@@ -1,0 +1,21 @@
+@media screen and (min-width: 768px) {
+    .modal-cust {
+        width: 40%;
+    }
+}
+
+@media screen and (max-width: 767px) and (min-width: 520px) {
+    .modal-cust {
+        width: 45%;
+        margin: 0 auto;
+        margin-top: 4%;
+    }
+}
+
+@media screen and (max-width: 519px) {
+    .modal-cust {
+        width: 60%;
+        margin: 0 auto;
+        margin-top: 4%;
+    }
+}

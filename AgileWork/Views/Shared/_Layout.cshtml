@@ -17,14 +17,11 @@
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.5.0/css/font-awesome.min.css" />
     <!-- Ionicons -->
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/ionicons/2.0.1/css/ionicons.min.css" />
-    <!-- Theme Skins -->
-    <link rel="stylesheet" type="text/css" href="~/Content/dist/css/skins/skin-green-light.min.css" />
     <!-- Google Font -->
     <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Source+Sans+Pro:300,400,600,700,300italic,400italic,600italic" />
-    <!--Create Project Styles-->
-    <link href="~/Content/dist/css/base.css" rel="stylesheet" />
-    <link href="~/Content/dist/css/view_projects.css" rel="stylesheet" />
+    
     @Styles.Render("~/Css")
+    @Scripts.Render("~/Js")
 </head>
 
 <body id="main_body" class="hold-transition skin-green-light layout-top-nav">
@@ -46,7 +43,7 @@
                                 <a href="#" class="dropdown-toggle" data-toggle="dropdown">Proyectos<span class="caret"></span></a>
                                 <ul class="dropdown-menu" role="menu">
                                     <!--En estos a href colocar la url para listar los proyectos-->
-                                    <li id="liCreateProject"><a href="#">Crear Proyecto</a></li>
+                                    <li id="liCreateProject"><a href="@Url.Action("NewProject", "Project")">Crear Proyecto</a></li>
                                     <li id="liViewProjects"><a href="#">Ver Proyectos</a></li>
                                 </ul>
                             </li>
@@ -55,6 +52,22 @@
                 </div>
             </nav>
         </header>
+        
+        <!--List Projects Template-->
+        <script id="temp-list-projects" type="text/x-handlebars-template">
+            {{#each projects}}
+            <div class="col-xs-12 col-sm-12 col-md-6 col-lg-6">
+                <div class="row row-fixed-zero container-list-projects">
+                    <div class="col-xs-12 col-sm-6 col-md-8 col-lg-9">
+                        <span>{{name}}</span>
+                    </div>
+                    <div class="col-xs-12 col-sm-6 col-md-4 col-lg-3">
+                        <button type="button" data-identity="{{id}}" class="btn btn-block btn-info btn-xs">Ver</button>
+                    </div>
+                </div>
+            </div>
+            {{/each}}           
+        </script>
 
         <div id="blockContainer" class="content-wrapper bg">
             <div class="container">
@@ -76,8 +89,7 @@
             </div>
         </footer>
     </div>
-    @Scripts.Render("~/Js")
-
+    
     <script type="text/javascript">
         initialize();
     </script>
@@ -85,19 +97,3 @@
     @RenderSection("scripts", required: false)
 </body>
 </html>
-
-<!--List Projects Template-->
-<script id="temp-list-projects" type="text/x-handlebars-template">
-    {{#each projects}}
-    <div class="col-xs-12 col-sm-12 col-md-6 col-lg-6">
-        <div class="row row-fixed-zero container-list-projects">
-            <div class="col-xs-12 col-sm-6 col-md-8 col-lg-9">
-                <span>{{name}}</span>
-            </div>
-            <div class="col-xs-12 col-sm-6 col-md-4 col-lg-3">
-                <button type="button" data-identity="{{id}}" class="btn btn-block btn-info btn-xs">Ver</button>
-            </div>
-        </div>
-    </div>
-    {{/each}}
-</script>

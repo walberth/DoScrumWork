@@ -22,7 +22,7 @@
         }
 
         [SuppressMessage("StyleCop.CSharp.LayoutRules", "SA1500:CurlyBracketsForMultiLineStatementsMustNotShareLine", Justification = "Reviewed. Suppression is OK here.")]
-        public ActionResult Login(UserFirebaseViewModel model, string returnUrl)
+        public ActionResult Login(UserFirebaseViewModel model)
         {
             var client = new RestClient(Constant.GetFirebaseLoginAsync);
             var request = new RestRequest(Method.POST)

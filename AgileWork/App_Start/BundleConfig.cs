@@ -9,30 +9,28 @@ namespace AgileWork {
                 "~/Content/plugins/jQuery/jquery-2.2.3.min.js",
                 "~/Content/bootstrap/js/bootstrap.min.js",
                 "~/Content/plugins/handlebars/handlebars-v4.0.11.js",
-                "~/Content/dist/js/jquery.validate.min.js",
-                "~/Content/dist/js/additional-methods.min.js",
-                "~/Content/dist/js/script-custom-validator.js",
-                "~/Content/dist/js/toastr.min.js",
-                "~/Content/dist/js/typeahead.bundle.min.js",
-                "~/Content/plugins/slimScroll/jquery.slimscroll.min.js",
-                "~/Content/plugins/datatables/jquery.dataTables.min.js",
-                "~/Content/plugins/datatables/dataTables.bootstrap.min.js",
-                "~/Content/plugins/slimScroll/jquery.slimscroll.min.js",
-                "~/Content/plugins/fastclick/fastclick.js",
+                "~/Content/plugins/moment/min/moment-with-locales.min.js",
+                "~/Content/plugins/bootstrap-daterangepicker/daterangepicker.js",
+                "~/Content/plugins/select2/dist/js/select2.full.min.js",
+                "~/Content/plugins/select2/dist/js/i18n/es.js",
                 "~/Content/plugins/iCheck/icheck.min.js",
-                "~/Content/dist/js/app.min.js",
+                "~/Content/dist/js/object.js",
+                "~/Content/dist/js/create_project.js",
                 "~/Content/dist/js/view_projects.js",
-                "~/Content/dist/js/demo.js"));
+                "~/Content/dist/js/datesBuilder.js"));
 
             bundles.Add(new StyleBundle("~/Css").Include(
                 "~/Content/bootstrap/css/bootstrap.min.css",
-                "~/Content/dist/css/font-awesome.min.css",
-                "~/Content/dist/css/ionicons.min.css",
-                "~/Content/dist/css/skins/_all-skins.min.css",
                 "~/Content/dist/css/AdminLTE.min.css",
-                "~/Content/dist/css/toastr.min.css",
-                "~/Content/dist/css/typeahead.css",
-                "~/Content/plugins/iCheck/square/blue.css"));
+                "~/Content/dist/css/skins/skin-green-light.min.css",
+                "~/Content/plugins/bootstrap-daterangepicker/daterangepicker.css",
+                "~/Content/plugins/select2/dist/css/select2.min.css",
+                "~/Content/plugins/select2/bootstrap_theme/css/select2-bootstrap.min.css",
+                "~/Content/plugins/iCheck/square/blue.css",
+                "~/Content/dist/css/create_project.css",
+                "~/Content/dist/css/login.css",
+                "~/Content/dist/css/view_projects.css",
+                "~/Content/dist/css/base.css"));
 
             BundleTable.EnableOptimizations = true;
         }

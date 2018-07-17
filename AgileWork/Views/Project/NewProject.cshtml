@@ -1,0 +1,363 @@
+﻿@using AgileWork.ModelView
+@model UserResponsableViewModel
+
+@{
+    ViewBag.Title = "NewProject";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<div class="row">
+    <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
+        <div id="containerCreateProject" class="box box-primary container-opacity">
+            @*@using (Html.BeginForm("SaveProject", "Project", FormMethod.Post, new { @class = "form-horizontal", role = "form" })) {*@
+                <div class="box-body">
+                    <div class="row row-fixed-zero margin-top-2perc">
+                        <div class="col-xs-12 col-sm-12 col-md-6 col-lg-6">
+                            <div class="row row-fixed-zero">
+                                <div class="col-xs-12 col-sm-6 col-md-4 col-lg-3 form-line-component-opt1 txt-align-right">
+                                    <label for="iNameProject" class="control-label">Nombre</label>
+                                </div>
+                                <div class="col-xs-12 col-sm-6 col-md-8 col-lg-9">
+                                    @*@Html.TextBoxFor(m => m.Name, new { @id = "iNameProject", placeholder = "Nombre de proyecto", @class = "form-control" })*@
+                                    <input type="text" class="form-control" id="iNameProject" placeholder="Nombre de proyecto" />
+                                </div>
+                            </div>
+                        </div>
+                        <div id="containerDates" class="col-xs-12 col-sm-12 col-md-6 col-lg-6">
+                            <div class="row row-fixed-zero">
+                                <div class="col-xs-12 col-sm-6 col-md-4 col-lg-3 form-line-component-opt1 txt-align-right">
+                                    <label for="iDatesProject" class="control-label">Fechas</label>
+                                </div>
+                                <div class="col-xs-12 col-sm-6 col-md-8 col-lg-9">
+                                    @*@Html.TextBoxFor(m => m.StartDate, new { @id = "iDatesProject", placeholder = "Rango de fechas", @class = "form-control" })*@
+                                    <input type="text" class="form-control" id="iDatesProject" placeholder="Rango de fechas" />
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="row row-fixed-zero margin-top-2perc">
+                        <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
+                            <div class="row row-fixed-zero">
+                                <div class="col-xs-12 col-sm-6 col-md-4 col-lg-3 form-line-component-opt2 txt-align-right">
+                                    <label>Descripci&oacute;n</label>
+                                </div>
+                                <div class="col-xs-12 col-sm-6 col-md-8 col-lg-9">
+                                    @*@Html.TextAreaFor(m => m.Description, new { @id = "taDescriptionProject", placeholder = "Descripción del proyecto...", @class = "form-control", rows = "3" })*@
+                                    <textarea id="taDescriptionProject" class="form-control" rows="3" placeholder="Descripci&oacute;n del proyecto..."></textarea>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div id="containerUserStories" class="box box-cus margin-top-2perc box-task">
+                        <div class="box-header with-border">
+                            <h3 class="box-title textOverflow-boxTitles container-task-header">Historias de Usuario</h3>
+                        </div>
+                        <div class="box-body">
+                            <div id="containerUserStoriesDetail" class="row row-fixed-zero">
+                                <span id="msgEmptyUserStories">Registre por lo menos dos historias de usuario</span>
+                            </div>
+                        </div>
+                        <div class="box-footer">
+                            <button type="button" id="btnCreateTask" class="btn btn-info btn-xs">Crear</button>
+                        </div>
+                    </div>
+                </div>
+                <div class="box-footer">
+                    <div class="pull-right">
+                        <button type="submit" id="btnCreateProject" class="btn btn-primary btn-sm">Crear Proyecto</button>
+                    </div>
+                </div>
+                @*  *@}
+        </div>
+    </div>
+</div>
+
+<!--Modal Create or Edit Task-->
+<div id="taskModal" class="modal fade" role="dialog" aria-hidden="true" data-backdrop="static" data-keyboard="false">
+    <div class="modal-dialog modal-cust">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal">&times;</button>
+                <h4 id="taskModalTitle" class="modal-title modal-header-title">[Create_Task]</h4>
+            </div>
+                <div class="modal-body modal-body-cust">
+                    <div class="row">
+                        <div class="col-xs-12 col-sm-6 col-md-4 col-lg-3 form-line-component-opt1 txt-align-right">
+                            <label for="iNameTask" class="control-label">Nombre</label>
+                        </div>
+                        <div class="col-xs-12 col-sm-6 col-md-8 col-lg-9">
+                            @*@Html.TextBoxFor(m => m.Item2.Name, new { @id = "iNameTask", placeholder = "Nombre de tarea", @class = "form-control" })*@
+                            <input type="text" class="form-control" id="iNameTask" placeholder="Nombre de tarea"/>
+                        </div>
+                    </div>
+                    <div class="row margin-top-2perc">
+                        <div class="col-xs-12 col-sm-6 col-md-4 col-lg-3 form-line-component-opt3 txt-align-right">
+                            <label>Descripci&oacute;n</label>
+                        </div>
+                        <div class="col-xs-12 col-sm-6 col-md-8 col-lg-9">
+                            @*@Html.TextAreaFor(m => m.Item2.Description, new { @id = "taDescriptionTask", placeholder = "Descripción del hisoria de usuario...", @class = "form-control", rows = "2" })*@
+                            <textarea id="taDescriptionTask" class="form-control" rows="2" placeholder="Descripci&oacute;n de tarea..."></textarea>
+                        </div>
+                    </div>
+                    <div id="containerResponsibleTask" class="row margin-top-2perc">
+                        <div class="col-xs-12 col-sm-6 col-md-4 col-lg-3 form-line-component-opt1 txt-align-right">
+                            <label>Responsable</label>
+                        </div>
+                        <div class="col-xs-12 col-sm-6 col-md-8 col-lg-9">
+                            @*<select id="sResponsibleTask" class="form-control select2"></select>*@
+                            @Html.DropDownListFor(m => Model.UserResponsables, new SelectList(Model.UserResponsables, "Value", "Text"), htmlAttributes: new { @class = "form-control", id = "sResponsibleTask" })
+
+                        </div>
+                    </div>
+                    <div class="row margin-top-2perc">
+                        <div class="col-xs-12 col-sm-12 col-md-6 col-lg-3 form-line-component-opt1 txt-align-right">
+                            <label>Esfuerzo</label>
+                        </div>
+                        <div class="col-xs-12 col-sm-12 col-md-6 col-lg-3">
+                            @*@Html.TextBoxFor(m => m.userResponsables, new { @id = "iEffortTask", placeholder = "Esfuerzo", @class = "form-control" })*@
+                            <input type="text" class="form-control" id="iEffortTask" placeholder="Esfuerzo" />
+                        </div>
+                        <div class="col-xs-12 col-sm-12 col-md-6 col-lg-3 form-line-component-opt1 txt-align-right">
+                            <label>Prioridad</label>
+                        </div>
+                        <div class="col-xs-12 col-sm-12 col-md-6 col-lg-3">
+                            @*@Html.TextBoxFor(m => m.Item2.Priority, new { @id = "iPriorityTask", placeholder = "Prioridad", @class = "form-control" })*@
+                            <input type="text" class="form-control" id="iPriorityTask" placeholder="Prioridad" />
+                        </div>
+                    </div>
+                    <div class="row margin-top-2perc">
+                        <div class="col-xs-12 col-sm-6 col-md-4 col-lg-3 form-line-component-opt4 txt-align-right">
+                            <label>Criterio de Aceptaci&oacute;n</label>
+                        </div>
+                        <div class="col-xs-12 col-sm-6 col-md-8 col-lg-9">
+                            @*@Html.TextAreaFor(m => m.Item2.AcceptanceCriteria, new { @id = "taCriteriaOfAcceptanceTask", placeholder = "Criterios de aceptación...", @class = "form-control", rows = "3" })*@
+                            <textarea id="taCriteriaOfAcceptanceTask" class="form-control" rows="3" placeholder="Criterios de aceptaci&oacute;n..."></textarea>
+                        </div>
+                    </div>
+                </div>
+            <div class="modal-footer">
+                <button type="button" id="mActionTask" data-action="[action]" class="btn btn-primary btn-sm" data-dismiss="modal">[Action_Task]</button>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!--Container User Story Template-->
+<script id="temp-user-story-container" type="text/x-handlebars-template">
+    <div id="containerItemUserStory{{id}}" class="col-xs-12 col-sm-12 col-md-4 col-lg-3">
+        <div class="row row-fixed-zero external-event" {{{style}}}>
+            <div class="col-xs-10 col-sm-10 col-md-10 col-lg-10">
+                <div class="container-user-story-content"><span id="nameItemUserStory{{id}}">{{name}}</span></div>
+            </div>
+            <div class="col-xs-2 col-sm-2 col-md-2 col-lg-2">
+                <button id="mBtnUpdateUserStory{{id}}" data-id="{{id}}" type="button" class="btn btn-box-tool container-user-story-tools" data-widget="collapse"><i class="fa fa-wrench"></i></button>
+                <button id="mBtnRemoveUserStory{{id}}" data-id="{{id}}" type="button" class="btn btn-box-tool container-user-story-tools" data-widget="collapse"><i class="fa fa-times"></i></button>
+            </div>
+        </div>
+    </div>
+</script>
+
+<!--Msg User Story Template-->
+<script id="temp-user-story-msg" type="text/x-handlebars-template">
+    <span id="msgEmptyUserStories">Registre por lo menos dos historias de usuario</span>
+</script>
+
+<script type="text/javascript">
+    var sResponsibleTaskValid = true, incrementalAuxUserStories = 0, select2Val = { 'id': null, 'text': null },
+        RESOURCES = {
+            'select2': "Seleccione",
+            'modal': {
+                'create': {
+                    'title': "Crear Historia de Usuario", 'button': "Crear", 'action': "create"
+                },
+                'update': {
+                    'title': "Editar Historia de Usuario", 'button': "Actualizar", 'action': "update"
+                }
+            }
+        },
+        COLORS = ['#00a65a', '#f39c12', '#00c0ef', '#3c8dbc', '#dd4b39', '#b32d00', '#ff8c1a', '#99cc00',
+            '#9900cc', '#663300'],
+        colorsIncrementalAux = 0, colorsTotalAux = COLORS.length - 1, dataResponsibles = [], userStories = {},
+        itemUserStoryAux = {}, $select;
+
+    function initialize() {
+        activeNavHeader();
+        buildDatesComponent($('#iDatesProject'), '#containerDates');
+        initializeEvents();
+        getAllResponsibles();
+    }
+
+    function activeNavHeader() {
+        $('#liCreateProject').addClass("active");
+    }
+
+    function initializeEvents() {
+        $("#btnCreateTask").click(function () {
+            $("#taskModal").modal("show");
+            $('#taskModalTitle').text(RESOURCES.modal.create.title);
+            $('#mActionTask').text(RESOURCES.modal.create.button);
+            $('#mActionTask').attr('data-action', RESOURCES.modal.create.action);
+            cleanFormUserStoryModal();
+        });
+        $("#taskModal").on('show.bs.modal', function () {
+            if (sResponsibleTaskValid) {
+                sResponsibleTaskValid = false;
+                buildResponsibleComponent();
+            }
+        });
+        $("#mActionTask").click(function () {
+            var $this = $(this), action = $this.attr('data-action');
+            if (action === 'create') {
+                if (Object.keys(userStories).length === 0) {
+                    $('#containerUserStoriesDetail').empty();
+                }
+                incrementalAuxUserStories++;
+                userStories[incrementalAuxUserStories.toString()] = {
+                    'Name': $('#iNameTask').val(), 'Description': $('#taDescriptionTask').val(),
+                    'IdUserResponsable': select2Val.id, 'UserResponsable': select2Val.text,
+                    'Effort': $('#iEffortTask').val(), 'Priority': $('#iPriorityTask').val(),
+                    'AcceptanceCriteria': $('#taCriteriaOfAcceptanceTask').val(), 'aux': incrementalAuxUserStories.toString()
+                };
+                buildContainerUserStory(userStories[incrementalAuxUserStories.toString()], incrementalAuxUserStories.toString());
+            } else if (action === 'update') {
+                userStories[itemUserStoryAux.aux].Name = $('#iNameTask').val();
+                userStories[itemUserStoryAux.aux].Description = $('#taDescriptionTask').val();
+                userStories[itemUserStoryAux.aux].IdUserResponsable = select2Val.id;
+                userStories[itemUserStoryAux.aux].UserResponsable = select2Val.text;
+                userStories[itemUserStoryAux.aux].Effort = $('#iEffortTask').val();
+                userStories[itemUserStoryAux.aux].Priority = $('#iPriorityTask').val();
+                userStories[itemUserStoryAux.aux].AcceptanceCriteria = $('#taCriteriaOfAcceptanceTask').val();
+                $('#nameItemUserStory'.concat(itemUserStoryAux.aux)).text($('#iNameTask').val());
+            }
+        });
+        $("#btnCreateProject").click(function () {
+            var data = {}, dateParams = getDateParameters(), iNode, node;
+            data.Name = $('#iNameProject').val();
+            data.Description = $('#taDescriptionProject').val();
+            data.StartDate = dateParams.startDate;
+            data.EndDate = dateParams.endDate;
+            console.log(dateParams.startDate);  
+            console.log(dateParams.endDate);  
+            data.UserStoriesViewModel = [];
+            for (iNode in userStories) {
+                node = userStories[iNode];
+                data.UserStoriesViewModel.push({
+                    'Name': node.Name, 
+                    'Description': node.Description,
+                    'IdUserResponsable': node.IdUserResponsable, 
+                    'UserResponsable': node.UserResponsable,
+                    'Effort': node.Effort, 'Priority': node.Priority,
+                    'AcceptanceCriteria': node.AcceptanceCriteria
+                });
+            }
+
+            $.ajax({
+                url: '@Url.Action("SaveProject", "Project")',
+                type: 'POST',
+                data: { model: data }
+            }).done(function() {
+                console.log(data);  
+            });
+        });
+    }
+
+    function buildResponsibleComponent() {
+        $select = $('#sResponsibleTask').select2({
+            'theme': 'bootstrap', 'placeholder': RESOURCES.select2, 'language': 'es',
+            'minimumResultsForSearch': Infinity, 'data': dataResponsibles,
+            'dropdownParent': $('#containerResponsibleTask')
+        });
+        $select.val(null).trigger('change');
+        $select.on('change', function (e) {
+            if (typeof $select.select2('data')[0] !== 'undefined') {
+                select2Val.id = $(this).val();
+                select2Val.text = $select.select2('data')[0].text;
+            }
+        });
+    }
+
+    function getAllResponsibles() {
+        var URI = "";
+        URI = "data/list_responsibles.json";
+        $.ajax({
+            'url': URI,
+            'contentType': "application/json",
+            'dataType': "json",
+            'type': "GET",
+            'cache': true,
+            'async': true
+        }).done(function (data, textStatus, jqXHR) {
+            var datas = data.Data, iData, node;
+            for (iData in datas) {
+                node = datas[iData];
+                dataResponsibles.push({ 'id': node.Uid, 'text': node.Name });
+            }
+        }).fail(function (jqXHR, textStatus, errorThrown) {
+            console.log(jqXHR);
+            console.log(textStatus);
+            console.log(errorThrown);
+        });
+    }
+
+    function buildContainerUserStory(data, id) {
+        var context = {}, nodes = [], project, iProject,
+            source = document.getElementById("temp-user-story-container").innerHTML,
+            template = Handlebars.compile(source);
+        context.name = data.Name;
+        context.id = id;
+        if (colorsIncrementalAux === colorsTotalAux) {
+            colorsIncrementalAux = 0;
+        }
+        context.style = 'style="background-color: '.concat(COLORS[colorsIncrementalAux]).concat(';')
+            .concat(' color: #fff;"');
+        colorsIncrementalAux++;
+        $('#containerUserStoriesDetail').append(template(context));
+        $("#mBtnUpdateUserStory".concat(id)).on('click', function () {
+            var $this = $(this), id = $this.attr('data-id');
+            itemUserStoryAux = clone(userStories[id]);
+            $("#taskModal").modal("show");
+            $('#taskModalTitle').text(RESOURCES.modal.update.title);
+            $('#mActionTask').text(RESOURCES.modal.update.button);
+            $('#mActionTask').attr('data-action', RESOURCES.modal.update.action);
+            updateFormUserStoryModal(itemUserStoryAux);
+        });
+        $("#mBtnRemoveUserStory".concat(id)).on('click', function () {
+            var $this = $(this), id = $this.attr('data-id');
+            $('#containerItemUserStory'.concat(id)).remove();
+            delete userStories[id];
+            if (Object.keys(userStories).length === 0) {
+                buildContainerMsgUserStory();
+            }
+            console.log(userStories);
+        });
+    }
+
+    function buildContainerMsgUserStory() {
+        var context = {}, nodes = [], project, iProject,
+            source = document.getElementById("temp-user-story-msg").innerHTML,
+            template = Handlebars.compile(source);
+        $('#containerUserStoriesDetail').append(template(context));
+        userStoriesActionValid = true;
+    }
+
+    function cleanFormUserStoryModal() {
+        $('#iNameTask').val("");
+        $('#taDescriptionTask').val("");
+        $select.val(null).trigger('change');
+        $('#iEffortTask').val("");
+        $('#iPriorityTask').val("");
+        $('#taCriteriaOfAcceptanceTask').val("");
+    }
+
+    function updateFormUserStoryModal(data) {
+        $('#iNameTask').val(data.Name);
+        $('#taDescriptionTask').val(data.Description);
+        $select.val(data.IdUserResponsable).trigger('change');
+        $('#iEffortTask').val(data.Effort);
+        $('#iPriorityTask').val(data.Priority);
+        $('#taCriteriaOfAcceptanceTask').val(data.AcceptanceCriteria);
+    }
+
+</script>
+
+

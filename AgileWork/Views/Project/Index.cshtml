@@ -15,26 +15,36 @@
             </div>
             <div class="box-body">
                 <div id="containerProjects" class="row">
-                    <table id="movies" class="table table-bordered table-hover">
-                        <thead>
-                        <tr>
-                            <th>Id</th>
-                            <th>Name</th>
-                        </tr>
-                        </thead>
-                        <tbody>
-                            @foreach(var movie in Model)
-                            {
-                                <tr>
-                                    <td>@movie.Uid</td>
-                                    <td>@movie.Name</td>
-                                </tr>
-                            }
-                        </tbody>
-                    </table>
                 </div>
             </div>
         </div>
     </div>
 </div>
+<script>
+    buildContainersForProjects(JSON.parse('@Html.Raw(Json.Encode(Model))'));
+    
+    function buildContainersForProjects(data) {
+        var context = {}, nodes = [], project, iProject,
+            source = document.getElementById("temp-list-projects").innerHTML,
+            template = Handlebars.compile(source);
+        for(iProject in data){
+            project = data[iProject];
+            nodes.push({'name': project.Name, 'id': project.Uid});
+        }
+        context.projects = nodes;
+        $('#containerProjects').html(template(context));
+    }
+
+    $('.btn').click(function() {
+        var idProject = $(this).attr("data-identity");
+
+        $.ajax({
+            url: '@Url.Action("ProjectDetail", "Project")',
+            type: 'POST',
+            data: { id: idProject }
+        }).done(function() {
+            console.log(idProject);  
+        });
+    });
+</script>
 

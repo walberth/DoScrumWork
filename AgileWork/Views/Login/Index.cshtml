@@ -32,7 +32,7 @@
             <!--En la etiqueta a href poner la url del proyecto-->
             <a href="#"><b>Agile Work</b><span class="space-header-login">Management</span></a>
         </div>
-        @using (Html.BeginForm("Login","Login", new { ReturnUrl = ViewBag.ReturnUrl }, FormMethod.Post, new { @class = "form-horizontal", role = "form" })) {
+        @using (Html.BeginForm("Login","Login", FormMethod.Post, new { @class = "form-horizontal", role = "form" })) {
             <div class="login-box-body box-body-login">
                 <p class="login-box-msg title-login">Inicio de sesi&oacute;n</p>
                 <!--<form action="../../index2.html" method="post">-->
@@ -48,7 +48,7 @@
                 </div>
                 <div class="row">
                     <div class="col-xs-offset-8 col-xs-4">
-                        <button type="submit" class="btn btn-success btn-flat btn-position-login" @*onclick="location.href = '@Url.Action("Login", "Login")'"*@>Iniciar</button>
+                        <button type="submit" class="btn btn-success btn-flat btn-position-login">Iniciar</button>
                     </div>
                 </div>
                 <!--</form>-->

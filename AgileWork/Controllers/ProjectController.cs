@@ -1,9 +1,11 @@
-﻿namespace AgileWork.Controllers
+﻿using System;
+
+namespace AgileWork.Controllers
 {
     using System.Collections.Generic;
     using System.Web.Mvc;
 
-    using AgileWork.Models;
+    using Models;
 
     using ModelView;
 
@@ -27,12 +29,30 @@
             return View(projectViewModel);
         }
 
+        public ActionResult NewProject() {
+            var client = new RestClient(Constant.GetAllUserResponsableAsync);
+            var request = new RestRequest(Method.GET);
+            var response = JsonConvert.DeserializeObject<Response<List<UserResponsable>>>(client.Execute(request).Content).Data;
+            //var userResponsableViewModel = Mapping.Map<List<UserResponsable>, UserResponsableViewModel>(response);
+            var userResponsableViewModel = new UserResponsableViewModel();
+
+            foreach (var userResponsable in response) {
+                userResponsableViewModel.UserResponsables.Add(userResponsable);
+            }
+            
+
+            return View(userResponsableViewModel);
+        }
+
         [HttpPost]
-        public ActionResult Index(UserFirebaseViewModel userFirebaseViewModel)
+        public ActionResult SaveProject(ProjectViewModel model) {
+            return null;
+        }
+
+        [HttpPost]
+        public ActionResult ProjectDetail(string id) 
         {
-
-
-            return View();
+            return null;
         }
     }
 }
