@@ -1541,7 +1541,7 @@
     <Compile Include="Models\UserResponsable.cs" />
     <Compile Include="Models\UserStories.cs" />
     <Compile Include="ModelView\ProjectViewModel.cs" />
-    <Compile Include="ModelView\SprintModelView.cs" />
+    <Compile Include="ModelView\SprintViewModel.cs" />
     <Compile Include="ModelView\UserFirebaseViewModel.cs" />
     <Compile Include="ModelView\UserResponsableViewModel.cs" />
     <Compile Include="ModelView\UserStoriesViewModel.cs" />
@@ -1737,6 +1737,7 @@
     <None Include="Properties\PublishProfiles\AgileWorkUTP - Web Deploy.pubxml" />
     <Content Include="Views\Project\Index.cshtml" />
     <Content Include="Views\Project\NewProject.cshtml" />
+    <Content Include="Views\Project\ShowDetail.cshtml" />
     <None Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>
     </None>

@@ -17,5 +17,7 @@
         public string EndDate { get; set; }
 
         public List<UserStoriesViewModel> UserStoriesViewModel { get; set; }
+
+        public List<SprintViewModel> SprintViewModel { get; set; }
     }
 }

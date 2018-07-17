@@ -1,18 +1,23 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Configuration;
-using System.Threading.Tasks;
-using AgileWork.Interface;
-using AgileWork.Models;
-using AgileWork.Utils;
-using Firebase.Database;
-using Firebase.Database.Query;
-
-namespace AgileWork.Implementation 
+﻿namespace AgileWork.Implementation 
 {
+    using System;
+    using System.Collections.Generic;
+    using System.Configuration;
+    using System.Threading.Tasks;
+
+    using Firebase.Database;
+    using Firebase.Database.Query;
+
+    using Interface;
+
+    using Models;
+
+    using Utils;
+
     public class AgileProject : IAgileProject
     {
-        public async Task<Response<Project>> CreateProjectAsync(Project project) {
+        public async Task<Response<Project>> CreateProjectAsync(Project project)
+        {
             var response = new Response<Project>();
             
             try 
@@ -32,7 +37,8 @@ namespace AgileWork.Implementation
 
                 await firebase.Child(Constant.Project).Child(createProject.Key).PutAsync(project);
 
-                foreach (var userStorey in project.UserStories) {
+                foreach (var userStorey in project.UserStories)
+                {
                     userStorey.IdProject = project.Uid;
                     var createUserStory = await firebase.Child(Constant.UserStory).PostAsync(userStorey);
 
@@ -52,7 +58,8 @@ namespace AgileWork.Implementation
             return response;
         }
 
-        public async Task<Response<List<Project>>> ListAllProjectAsync(string idUserCreated) {
+        public async Task<Response<List<Project>>> ListAllProjectAsync(string idUserCreated)
+        {
             var response = new Response<List<Project>>();
 
             try 
@@ -65,7 +72,8 @@ namespace AgileWork.Implementation
                 {
                     if (project.Object.IdUserCreated == idUserCreated) 
                     {
-                        var firebaseProject = new Project {
+                        var firebaseProject = new Project
+                        {
                             Uid = project.Object.Uid,
                             Name = project.Object.Name
                         };
@@ -86,7 +94,8 @@ namespace AgileWork.Implementation
             return response;
         }
 
-        public async Task<Response<Sprint>> CreateSprintAsync(Sprint sprint) {
+        public async Task<Response<Sprint>> CreateSprintAsync(Sprint sprint)
+        {
             var response = new Response<Sprint>();
             
             try 
@@ -118,7 +127,8 @@ namespace AgileWork.Implementation
             return response;
         }
 
-        public async Task<Response<List<Sprint>>> GetAllSprintAsync(string idProject) {
+        public async Task<Response<List<Sprint>>> GetAllSprintAsync(string idProject)
+        {
             var response = new Response<List<Sprint>>();
 
             try 
@@ -129,15 +139,15 @@ namespace AgileWork.Implementation
 
                 foreach (var sprint in firebaseSprint) 
                 {
-                    if (sprint.Object.IdProject == idProject) 
+                    if (sprint.Object.IdProject == idProject)
                     {
-                        var sprintObject = new Sprint {
+                        var sprintObject = new Sprint
+                        {
                             Uid = sprint.Object.Uid,
                             Name = sprint.Object.Name,
                             IdProject = sprint.Object.IdProject,
                             Stories = sprint.Object.Stories,
                             Tasks = sprint.Object.Tasks
-
                         };
 
                         listSprint.Add(sprintObject);
@@ -156,7 +166,8 @@ namespace AgileWork.Implementation
             return response;
         }
 
-        public async Task<Response<Project>> GetAllProjectInformationAsync(string idProject) {
+        public async Task<Response<Project>> GetAllProjectInformationAsync(string idProject)
+        {
             var response = new Response<Project>();
 
             try 
@@ -184,7 +195,8 @@ namespace AgileWork.Implementation
                         {
                             if (userStory.Object.IdProject == idProject) 
                             {
-                                var userStories = new UserStories {
+                                var userStories = new UserStories
+                                {
                                     Uid = userStory.Object.Uid,
                                     Name = userStory.Object.Name,
                                     IdUserResponsable = userStory.Object.IdUserResponsable,
@@ -204,7 +216,8 @@ namespace AgileWork.Implementation
                         {
                             if (sprint.Object.IdProject == idProject) 
                             {
-                                var sprintObject = new Sprint {
+                                var sprintObject = new Sprint
+                                {
                                     Uid = sprint.Object.Uid,
                                     Name = sprint.Object.Name,
                                 };

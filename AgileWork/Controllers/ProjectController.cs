@@ -43,9 +43,31 @@
         [HttpPost]
         public ActionResult SaveProject(ProjectViewModel model)
         {
-            model.IdUserCreated = Session["idUser"].ToString();
+            model.IdUserCreated = Session["idUser"].ToString() ?? string.Empty;
             var project = Mapping.Map<ProjectViewModel, Project>(model);
-            var userStories = Mapping.Map<List<UserStoriesViewModel>, List<UserStories>>(model.UserStoriesViewModel);
+
+            // var userStories = Mapping.Map<List<UserStoriesViewModel>, List<UserStories>>(model.UserStoriesViewModel);
+            var userStories = new List<UserStories>();
+
+            foreach (var storiesViewModel in model.UserStoriesViewModel)
+            {
+               var userStorie = new UserStories
+                {
+                    Uid = storiesViewModel.Uid,
+                    Name = storiesViewModel.Name,
+                    IdProject = storiesViewModel.IdProject,
+                    Description = storiesViewModel.Description,
+                    IdUserResponsable = storiesViewModel.IdUserResponsable,
+                    UserResponsable = storiesViewModel.UserResponsable,
+                    Effort = storiesViewModel.Effort,
+                    Priority = storiesViewModel.Priority,
+                    AcceptanceCriteria = storiesViewModel.AcceptanceCriteria,
+                    IdSprint = storiesViewModel.IdSprint,
+                    State = storiesViewModel.State,
+                }; 
+
+                userStories.Add(userStorie);
+            }
 
             project.UserStories = userStories;
 
@@ -79,15 +101,21 @@
 
             var projectViewModel = Mapping.Map<Project, ProjectViewModel>(response);
             var userStoriesViewModel = Mapping.Map<List<UserStories>, List<UserStoriesViewModel>>(response.UserStories);
+            var sprintViewModel = Mapping.Map<List<Sprint>, List<SprintViewModel>>(response.Sprints);
 
             projectViewModel.UserStoriesViewModel = userStoriesViewModel;
+            projectViewModel.SprintViewModel = sprintViewModel;
 
-            return RedirectToAction("ShowDetail", "Project", projectViewModel);
+            TempData["project"] = projectViewModel;
+
+            return RedirectToAction("ShowDetail", "Project");
         }
 
-        public ActionResult ShowDetail(ProjectViewModel model)
+        public ActionResult ShowDetail()
         {
-            return null;
+            var projectViewModel = (ProjectViewModel)TempData["project"];
+
+            return View(projectViewModel);
         }
     }
 }

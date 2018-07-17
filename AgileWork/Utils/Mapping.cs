@@ -20,6 +20,7 @@
                 // x.AddProfile<ProjectProfile>();
                 x.CreateMap<UserStoriesViewModel, UserStories>().ReverseMap();
                 x.CreateMap<Project, ProjectViewModel>().ReverseMap();
+                x.CreateMap<Sprint, SprintViewModel>().ReverseMap();
             });
         }
 
