@@ -21,7 +21,7 @@
         public const string GetAllUserResponsableAsync = "http://agileworkutp.azurewebsites.net/api/getAllUserResponsableAsync"; // GET
         public const string CreateUserHistoryAsync = "http://agileworkutp.azurewebsites.net/api/createUserHistoryAsync/{userStories}";
         public const string CreateSprintAsync = "http://agileworkutp.azurewebsites.net/api/createSprintAsync/{sprint}";
-        public const string GetAllProjectInformationAsync = "http://agileworkutp.azurewebsites.net/api/getFirebaseLoginAsync/{credentials}";
+        public const string GetAllProjectInformationAsync = "http://agileworkutp.azurewebsites.net/api/getAllProjectInformationAsync/{projectId}";
         public const string CreateTaskAsync = "http://agileworkutp.azurewebsites.net/api/createTaskAsync/{project}";
         public const string UpdateTaskAsync = "http://agileworkutp.azurewebsites.net/api/updateTaskAsync/{updateTask}";
         public const string GetHistoriesAndSprintProjectAsync = "http://agileworkutp.azurewebsites.net/api/getHistoriesAndSprintProjectAsync/{projectId}";

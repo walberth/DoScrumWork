@@ -134,6 +134,10 @@ namespace AgileWork.Implementation
                         var sprintObject = new Sprint {
                             Uid = sprint.Object.Uid,
                             Name = sprint.Object.Name,
+                            IdProject = sprint.Object.IdProject,
+                            Stories = sprint.Object.Stories,
+                            Tasks = sprint.Object.Tasks
+
                         };
 
                         listSprint.Add(sprintObject);

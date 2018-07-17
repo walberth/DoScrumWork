@@ -1,10 +1,13 @@
-﻿using System.Collections.Generic;
-using AgileWork.Models;
-
-namespace AgileWork.ModelView 
+﻿namespace AgileWork.ModelView 
 {
+    using System.Collections.Generic;
+
+    using Models;
+
     public class UserResponsableViewModel 
     {
-        public List<UserResponsable> UserResponsables { get; set; }
+        public byte? Uid { get; set; }
+
+        public IEnumerable<UserResponsable> UserResponsables { get; set; }
     }
 }

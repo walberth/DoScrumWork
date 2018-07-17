@@ -1,5 +1,5 @@
 ﻿@using AgileWork.ModelView
-@model AgileWork.Models.UserResponsable
+@model UserResponsableViewModel
 
 @{
     ViewBag.Title = "NewProject";
@@ -105,8 +105,7 @@
                         </div>
                         <div class="col-xs-12 col-sm-6 col-md-8 col-lg-9">
                             @*<select id="sResponsibleTask" class="form-control select2"></select>*@
-                            @Html.DropDownListFor(m => Model.Uid, new SelectList(Model.UserResponsables, "Value", "Text"), htmlAttributes: new { @class = "form-control", id = "sResponsibleTask" })
-
+                            @Html.DropDownListFor(m => m.Uid, new SelectList(Model.UserResponsables,"Uid", "Name"), "", new { @id = "sResponsibleTask", @class = "form-control" })
                         </div>
                     </div>
                     <div class="row margin-top-2perc">
