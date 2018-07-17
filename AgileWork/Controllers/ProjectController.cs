@@ -41,7 +41,7 @@ namespace AgileWork.Controllers
             }
             
 
-            return View(userResponsableViewModel);
+            return View(response);
         }
 
         [HttpPost]
