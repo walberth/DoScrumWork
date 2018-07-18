@@ -208,7 +208,7 @@
     function initialize() {
         initializeEvents();
         renderProjectDetail();
-        getAllResponsibles();
+        //getAllResponsibles();
     }
 
     function initializeEvents() {
@@ -236,10 +236,15 @@
                 }
                 incrementalAuxUserStories++;
                 userStories[incrementalAuxUserStories.toString()] = {
-                    'Name': $('#iNameTask').val(), 'IdProject': idProject, 'Description': $('#taDescriptionTask').val(),
-                    'IdUserResponsable': select2Val.id, 'UserResponsable': select2Val.text,
-                    'Effort': $('#iEffortTask').val(), 'Priority': $('#iPriorityTask').val(),
-                    'AcceptanceCriteria': $('#taCriteriaOfAcceptanceTask').val(), 'aux': incrementalAuxUserStories.toString()
+                    'Name': $('#iNameTask').val(), 
+                    'IdProject': idProject, 
+                    'Description': $('#taDescriptionTask').val(),
+                    'IdUserResponsable': select2Val.id, 
+                    'UserResponsable': select2Val.text,
+                    'Effort': $('#iEffortTask').val(), 
+                    'Priority': $('#iPriorityTask').val(),
+                    'AcceptanceCriteria': $('#taCriteriaOfAcceptanceTask').val(), 
+                    'aux': incrementalAuxUserStories.toString()
                 };
                 buildContainerUserStory(userStories[incrementalAuxUserStories.toString()], incrementalAuxUserStories.toString());
                 saveToDatabaseUserStory(userStories[incrementalAuxUserStories.toString()]);

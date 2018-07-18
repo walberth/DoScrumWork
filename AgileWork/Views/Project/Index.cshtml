@@ -38,7 +38,7 @@
         var idProject = $(this).attr("data-identity");
 
         $.ajax({
-            url: '@Url.Action("ShowDetail", "Project")',
+            url: '@Url.Action("detail", "Project")',
             type: 'GET',
             data: { id: idProject }
         }).done(function() {
