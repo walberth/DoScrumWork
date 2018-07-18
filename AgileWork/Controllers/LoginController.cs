@@ -13,15 +13,15 @@
 
     using Utils;
 
+    [RoutePrefix("login")]
     public class LoginController : Controller
     {
-        // GET: Login
+        [Route("index")]
         public ActionResult Index()
         {
             return View();
         }
 
-        [SuppressMessage("StyleCop.CSharp.LayoutRules", "SA1500:CurlyBracketsForMultiLineStatementsMustNotShareLine", Justification = "Reviewed. Suppression is OK here.")]
         public ActionResult Login(UserFirebaseViewModel model)
         {
             var client = new RestClient(Constant.GetFirebaseLoginAsync);
@@ -32,11 +32,6 @@
             var userViewModel = Mapping.Map<UserFirebase, UserFirebaseViewModel>(JsonConvert.DeserializeObject<Response<UserFirebase>>(client.Execute(request).Content).Data);
 
             Session["idUser"] = userViewModel.Uid;
-
-            // client.ExecuteAsync<Response<UserFirebase>>(request, response => 
-            // {
-            //    userViewModel = Mapping.Map<UserFirebase, UserFirebaseViewModel>(JsonConvert.DeserializeObject<Response<UserFirebase>>(response.Content).Data);
-            // });
 
             return RedirectToAction("Index", "Project");
         }

@@ -183,7 +183,7 @@
         activeNavHeader();
         buildDatesComponent($('#iDatesProject'), '#containerDates');
         initializeEvents();
-        getAllResponsibles();
+        //getAllResponsibles();
     }
 
     function activeNavHeader() {
@@ -275,28 +275,28 @@
         });
     }
 
-    function getAllResponsibles() {
-        var URI = "";
-        URI = "data/list_responsibles.json";
-        $.ajax({
-            'url': URI,
-            'contentType': "application/json",
-            'dataType': "json",
-            'type': "GET",
-            'cache': true,
-            'async': true
-        }).done(function (data, textStatus, jqXHR) {
-            var datas = data.Data, iData, node;
-            for (iData in datas) {
-                node = datas[iData];
-                dataResponsibles.push({ 'id': node.Uid, 'text': node.Name });
-            }
-        }).fail(function (jqXHR, textStatus, errorThrown) {
-            console.log(jqXHR);
-            console.log(textStatus);
-            console.log(errorThrown);
-        });
-    }
+    //function getAllResponsibles() {
+    //    var URI = "";
+    //    URI = "data/list_responsibles.json";
+    //    $.ajax({
+    //        'url': URI,
+    //        'contentType': "application/json",
+    //        'dataType': "json",
+    //        'type': "GET",
+    //        'cache': true,
+    //        'async': true
+    //    }).done(function (data, textStatus, jqXHR) {
+    //        var datas = data.Data, iData, node;
+    //        for (iData in datas) {
+    //            node = datas[iData];
+    //            dataResponsibles.push({ 'id': node.Uid, 'text': node.Name });
+    //        }
+    //    }).fail(function (jqXHR, textStatus, errorThrown) {
+    //        console.log(jqXHR);
+    //        console.log(textStatus);
+    //        console.log(errorThrown);
+    //    });
+    //}
 
     function buildContainerUserStory(data, id) {
         var context = {}, nodes = [], project, iProject,

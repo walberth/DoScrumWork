@@ -17,6 +17,7 @@ namespace AgileWork {
                 "~/Content/dist/js/object.js",
                 "~/Content/dist/js/create_project.js",
                 "~/Content/dist/js/view_projects.js",
+                "~/Content/dist/js/project_detail.js",
                 "~/Content/dist/js/datesBuilder.js"));
 
             bundles.Add(new StyleBundle("~/Css").Include(
@@ -30,6 +31,7 @@ namespace AgileWork {
                 "~/Content/dist/css/create_project.css",
                 "~/Content/dist/css/login.css",
                 "~/Content/dist/css/view_projects.css",
+                "~/Content/dist/css/project_detail.css",
                 "~/Content/dist/css/base.css"));
 
             BundleTable.EnableOptimizations = true;

@@ -1,6 +1,5 @@
 ﻿@using AgileWork.ModelView
 @model IEnumerable<ProjectViewModel>
-@*@model ProjectViewModel*@
 
 @{
     ViewBag.Title = "Index";
@@ -39,8 +38,8 @@
         var idProject = $(this).attr("data-identity");
 
         $.ajax({
-            url: '@Url.Action("ProjectDetail", "Project")',
-            type: 'POST',
+            url: '@Url.Action("ShowDetail", "Project")',
+            type: 'GET',
             data: { id: idProject }
         }).done(function() {
             console.log(idProject);  

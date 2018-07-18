@@ -1,0 +1,82 @@
+.bg {
+    background-image: url("../images/wallpaper_agile_create_project.jpg");
+    height: 100%;
+    background-position: center;
+    background-repeat: no-repeat;
+    background-size: cover;
+}
+
+.form-line-component-opt1 {
+    line-height: 30px;
+}
+
+.form-line-component-opt2 {
+    line-height: 86px;
+}
+
+.form-line-component-opt3 {
+    line-height: 66px;
+}
+
+.form-line-component-opt4 {
+    line-height: 40px;
+}
+
+.container-tasks {
+    border-radius: 6px;
+    border: 1px solid #3C8DBC;
+    padding: 20px;
+    margin-bottom: 2%;
+}
+
+.container-task-header {
+    font-weight: bold;
+}
+
+.box-task {
+    border: 1px solid #3C8DBC;
+}
+
+.box-header.with-border {
+    border-bottom: 1px solid #d8eaf3;
+}
+
+.box-footer {
+    border-top: 1px solid #d8eaf3;
+}
+
+.select2-container {
+    width: 100% !important;
+}
+
+.select2-selection__rendered {
+    line-height: 25px !important;
+}
+
+.external-event {
+    cursor: default;
+}
+
+.container-user-story-tools {
+    color: #ffffff;
+}
+
+.container-user-story-content {
+    word-break: break-all;
+}
+
+.sprint-container {
+	display: initial !important;
+}
+
+.sprint-icon-create:hover {
+	color: #FFAF00;
+}
+
+.btn-sprint-action {
+	padding: 2px;
+}
+
+.input-sprint-action {
+	margin-top: 4%;
+}
