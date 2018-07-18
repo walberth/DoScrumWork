@@ -13,11 +13,11 @@
 
     using Utils;
 
-    [RoutePrefix("project")]
+    //[RoutePrefix("project")]
     public class ProjectController : Controller
     {
         // GET: Project
-        [Route("index")]
+        //[Route("index")]
         public ActionResult Index()
         {
             var client = new RestClient(Constant.ListAllProjectAsync);
@@ -29,7 +29,7 @@
             return View(projectViewModel);
         }
 
-        [Route("new")]
+        //[Route("new")]
         public ActionResult New()
         {
             var client = new RestClient(Constant.GetAllUserResponsableAsync);
@@ -43,8 +43,9 @@
             return View(userResponsableViewModel);
         }
 
-        [Route("detail")]
-        public ActionResult Detail() {
+        //[Route("detail")]
+        public ActionResult Detail()
+        {
             var projectViewModel = TempData["project"];
 
             return View(projectViewModel);
@@ -100,6 +101,12 @@
         }
 
         [HttpPost]
+        public ActionResult SaveUserStory(UserStoriesViewModel model)
+        {
+            return null;
+        }
+
+        //[HttpPost]
         public ActionResult ProjectDetail(string id) 
         {
             var client = new RestClient(Constant.GetAllProjectInformationAsync);
@@ -118,7 +125,7 @@
             TempData["project"] = projectViewModel;
 
             ModelState.Clear();
-            return RedirectToAction("Detail");
+            return View("Detail", TempData["project"]);
         }
     }
 }

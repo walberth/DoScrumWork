@@ -36,14 +36,20 @@
 
     $('.btn').click(function() {
         var idProject = $(this).attr("data-identity");
+        //debugger;
 
-        $.ajax({
-            url: '@Url.Action("detail", "Project")',
+        @*$.get( '@Url.Action("ProjectDetail", "Project")', { id: idProject } );*@
+
+        window.location.href = '@Url.Action("ProjectDetail", "Project")' + "/"+ idProject;
+
+        @*$.ajax({
+            url: '@Url.Action("ProjectDetail", "Project")',
             type: 'GET',
             data: { id: idProject }
-        }).done(function() {
+        }).done(function(e) {
+            debugger;
             console.log(idProject);  
-        });
+        });*@
     });
 </script>
 

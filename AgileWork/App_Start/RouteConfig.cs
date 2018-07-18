@@ -9,13 +9,11 @@ namespace AgileWork
         {
             routes.IgnoreRoute("{resource}.axd/{*pathInfo}");
 
-            routes.MapMvcAttributeRoutes();
-
+            // routes.MapMvcAttributeRoutes();
             routes.MapRoute(
                 "Default",                                              
-                "{controller}/{action}/{id}",                           
-                new { controller = "Login", action = "Index", id = UrlParameter.Optional }  
-            );
+                "{controller}/{action}/{id}",
+                new { controller = "Login", action = "Index", id = UrlParameter.Optional });
         }
     }
 }

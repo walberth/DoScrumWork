@@ -17,7 +17,7 @@
                         <label for="iNameProject" class="control-label">Nombre</label>
                     </div>
                     <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
-                        @Html.LabelFor(m => m.Name, new { placeholder = "Nombre de proyecto", @class = "form-control", id="iNameProject" })
+                        @Html.TextBoxFor(m => m.Name, new { placeholder = "Nombre de proyecto", @class = "form-control", id="iNameProject", @readonly = "readonly" })
                         @*<input type="text" class="form-control" id="iNameProject" readonly="readonly" placeholder="Nombre de proyecto" />*@
                     </div>
                 </div>
@@ -27,7 +27,7 @@
                     </div>
                     <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
                         @*TODO: CHAMBIAR*@
-                        @Html.LabelFor(m => m.StartDate, new {placeholder = "Rango de fechas", @class = "form-control", id = "iDatesProject"})
+                        @Html.TextBoxFor(m => m.StartDate, new {placeholder = "Rango de fechas", @class = "form-control", id = "iDatesProject", @readonly = "readonly" })
                         @*<input type="text" class="form-control" id="iDatesProject" disabled="" placeholder="Rango de fechas" />*@
                     </div>
                 </div>
@@ -36,7 +36,7 @@
                         <label>Descripci&oacute;n</label>
                     </div>
                     <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
-                        @Html.TextAreaFor(m => m.Description, new {placeholder = "Descripción del proyecto", @class = "form-control", id = "taDescriptionProject", rows="3"})
+                        @Html.TextAreaFor(m => m.Description, new {placeholder = "Descripción del proyecto", @class = "form-control", id = "taDescriptionProject", rows="3", @readonly = "readonly" })
                         @*<textarea id="taDescriptionProject" class="form-control" rows="3" readonly="readonly" placeholder="Descripci&oacute;n del proyecto..."></textarea>*@
                     </div>
                 </div>
@@ -137,12 +137,17 @@
     </div>
 </div>
 
+
 <!--Container User Story Template-->
 <script id="temp-user-story-container" type="text/x-handlebars-template">
     <div id="containerItemUserStory{{id}}" class="col-xs-12 col-sm-12 col-md-12 col-lg-6">
         <div class="row row-fixed-zero external-event" {{{style}}}>
             <div class="col-xs-9 col-sm-9 col-md-9 col-lg-9">
-                <div class="container-user-story-content"><span id="nameItemUserStory{{id}}">{{name}}</span></div>
+                <div class="container-user-story-content">
+                <span id="nameItemUserStory{{id}}">    
+                    {{name}}
+                </span>
+                </div>
             </div>
             <div class="col-xs-3 col-sm-3 col-md-3 col-lg-3">
                 <button id="mBtnUpdateUserStory{{id}}" data-id="{{id}}" type="button" class="btn btn-box-tool container-user-story-tools" data-widget="collapse"><i class="fa fa-plus-circle"></i></button>
@@ -150,6 +155,7 @@
         </div>
     </div>
 </script>
+
 
 <!--Container Sprint Template-->
 <script id="temp-sprint-container" type="text/x-handlebars-template">
@@ -236,16 +242,29 @@
                 }
                 incrementalAuxUserStories++;
                 userStories[incrementalAuxUserStories.toString()] = {
-                    'Name': $('#iNameTask').val(), 
-                    'IdProject': idProject, 
+                    'Name': $('#iNameTask').val(),
+                    'IdProject': idProject,
                     'Description': $('#taDescriptionTask').val(),
-                    'IdUserResponsable': select2Val.id, 
+                    'IdUserResponsable': select2Val.id,
                     'UserResponsable': select2Val.text,
-                    'Effort': $('#iEffortTask').val(), 
+                    'Effort': $('#iEffortTask').val(),
                     'Priority': $('#iPriorityTask').val(),
-                    'AcceptanceCriteria': $('#taCriteriaOfAcceptanceTask').val(), 
+                    'AcceptanceCriteria': $('#taCriteriaOfAcceptanceTask').val(),
                     'aux': incrementalAuxUserStories.toString()
                 };
+
+                console.log(userStories);
+                console.log(userStories[0]);
+                console.log(userStories[1]);
+
+                $.ajax({
+                    url: '@Url.Action("SaveUserStory", "Project")',
+                    type: 'POST',
+                    data: { model: userStories[1] }
+                }).done(function () {
+                    //console.log(userStories[0]);
+                });
+
                 buildContainerUserStory(userStories[incrementalAuxUserStories.toString()], incrementalAuxUserStories.toString());
                 saveToDatabaseUserStory(userStories[incrementalAuxUserStories.toString()]);
             }
@@ -298,7 +317,9 @@
     //}
 
     function renderProjectDetail() {
-        var data = dataProjectDetail.Data, dataUserStories = data.UserStories, dataSprints = data.Sprints,
+        var data = dataProjectDetail.Data, 
+            dataUserStories = data.UserStories, 
+            dataSprints = data.Sprints,
             userStory, iUserStory;
         //General
         $('#iNameProject').val(data.Name);
@@ -307,6 +328,15 @@
         $('#taDescriptionProject').val(data.Description);
         idProject = data.Uid;
         //Historias de Usuario
+
+        @*@foreach (var userStories in Model.UserStoriesViewModel)
+        {
+            <text>buildContainerUserStory('@userStories', incrementalAuxUserStories.toString());</text>
+        }*@
+        debugger;
+
+        console.log(dataUserStories);
+
         for (iUserStory in dataUserStories) {
             incrementalAuxUserStories++;
             userStory = dataUserStories[iUserStory];
@@ -316,11 +346,18 @@
                 'Effort': userStory.Effort, 'Priority': userStory.Priority,
                 'AcceptanceCriteria': userStory.AcceptanceCriteria
             }
-            buildContainerUserStory(userStories[incrementalAuxUserStories.toString()], incrementalAuxUserStories.toString());
+
+            @foreach (var userStories in Model.UserStoriesViewModel)
+            {
+                <text>buildContainerUserStory('@userStories', incrementalAuxUserStories.toString());</text>
+            }
+
+            //buildContainerUserStory(userStories[incrementalAuxUserStories.toString()], incrementalAuxUserStories.toString());
         }
     }
 
     function buildContainerUserStory(data, id) {
+        console.log(data);
         var context = {}, nodes = [], project, iProject,
             source = document.getElementById("temp-user-story-container").innerHTML,
             template = Handlebars.compile(source);
@@ -417,11 +454,11 @@
     function saveToDatabaseUserStory(obj) {
         var data = clone(obj);
         delete data.aux;
-        console.log(data);
+        //console.log(data);
     }
 
     function saveToDatabaseSprint(obj) {
-        console.log(obj);
+        //console.log(obj);
     }
 </script>
 
