@@ -339,6 +339,7 @@
     <Content Include="Content\bootstrap\fonts\glyphicons-halflings-regular.ttf" />
     <Content Include="Content\bootstrap\fonts\glyphicons-halflings-regular.woff" />
     <Content Include="Content\bootstrap\fonts\glyphicons-halflings-regular.woff2" />
+    <Content Include="Content\dist\img\wallpaper_agile_project_detail.jpg" />
     <Content Include="Content\dist\js\create_project.js" />
     <Content Include="Content\dist\js\datesBuilder.js" />
     <Content Include="Content\dist\js\object.js" />
@@ -1493,6 +1494,7 @@
     <Compile Include="Models\UserFirebase.cs" />
     <Compile Include="Models\UserResponsable.cs" />
     <Compile Include="Models\UserStories.cs" />
+    <Compile Include="ModelView\AttachSprintViewModel.cs" />
     <Compile Include="ModelView\ProjectViewModel.cs" />
     <Compile Include="ModelView\SprintViewModel.cs" />
     <Compile Include="ModelView\UserFirebaseViewModel.cs" />
@@ -1690,6 +1692,7 @@
     <None Include="Properties\PublishProfiles\AgileWorkUTP - Web Deploy.pubxml" />
     <Content Include="Views\Project\Index.cshtml" />
     <Content Include="Views\Project\New.cshtml" />
+    <Content Include="Views\Project\AttachToSprint.cshtml" />
     <None Include="Views\Project\Detail.cshtml" />
     <None Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>

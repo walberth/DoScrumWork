@@ -32,17 +32,17 @@
 
         public UserStories(string uid, string name, string idProject, string description, string idUserResponsable, string userResponsable, int? effort, int? priority, string acceptanceCriteria, string idSprint, string state) 
         {
-            Uid = uid ?? throw new ArgumentNullException(nameof(uid));
-            Name = name ?? throw new ArgumentNullException(nameof(name));
-            IdProject = idProject ?? throw new ArgumentNullException(nameof(idProject));
-            Description = description ?? throw new ArgumentNullException(nameof(description));
-            IdUserResponsable = idUserResponsable ?? throw new ArgumentNullException(nameof(idUserResponsable));
-            UserResponsable = userResponsable ?? throw new ArgumentNullException(nameof(userResponsable));
+            Uid = uid;
+            Name = name;
+            IdProject = idProject;
+            Description = description;
+            IdUserResponsable = idUserResponsable;
+            UserResponsable = userResponsable;
             Effort = effort;
             Priority = priority;
-            AcceptanceCriteria = acceptanceCriteria ?? throw new ArgumentNullException(nameof(acceptanceCriteria));
-            IdSprint = idSprint ?? throw new ArgumentNullException(nameof(idSprint));
-            State = state ?? throw new ArgumentNullException(nameof(state));
+            AcceptanceCriteria = acceptanceCriteria;
+            IdSprint = idSprint;
+            State = state;
         }
 
         public override string ToString() 

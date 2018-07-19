@@ -13,11 +13,8 @@
 
     using Utils;
 
-    //[RoutePrefix("project")]
     public class ProjectController : Controller
     {
-        // GET: Project
-        //[Route("index")]
         public ActionResult Index()
         {
             var client = new RestClient(Constant.ListAllProjectAsync);
@@ -29,7 +26,6 @@
             return View(projectViewModel);
         }
 
-        //[Route("new")]
         public ActionResult New()
         {
             var client = new RestClient(Constant.GetAllUserResponsableAsync);
@@ -43,12 +39,26 @@
             return View(userResponsableViewModel);
         }
 
-        //[Route("detail")]
         public ActionResult Detail()
         {
             var projectViewModel = TempData["project"];
 
             return View(projectViewModel);
+        }
+
+        [HttpPost]
+        public ActionResult CreateSprint(SprintViewModel sprint) 
+        {
+            //var idProject = 
+            var client = new RestClient(Constant.CreateSprintAsync);
+            var request = new RestRequest(Method.POST)
+                .AddParameter("Name", sprint.Name)
+                .AddParameter("IdProject", Session["idProject"]);
+
+            var sprintViewModel = Mapping.Map<Sprint, SprintViewModel>(JsonConvert.DeserializeObject<Response<Sprint>>(client.Execute(request).Content).Data);
+
+
+            return RedirectToAction("ProjectDetail", new { id = Session["idProject"] });
         }
 
         [HttpPost]
@@ -103,12 +113,25 @@
         [HttpPost]
         public ActionResult SaveUserStory(UserStoriesViewModel model)
         {
-            return null;
+            var client = new RestClient(Constant.CreateUserHistoryAsync);
+            var request = new RestRequest(Method.POST)
+            {
+                RequestFormat = DataFormat.Json
+            };
+
+            var userStories = Mapping.Map<UserStoriesViewModel, UserStories>(model);
+            userStories.IdProject = Session["idProject"].ToString();
+            request.AddBody(userStories);
+
+            var response = JsonConvert.DeserializeObject<Response<Project>>(client.Execute(request).Content).Data;
+            
+            return RedirectToAction("ProjectDetail", new { id = Session["idProject"] });
         }
 
-        //[HttpPost]
         public ActionResult ProjectDetail(string id) 
         {
+            Session["idProject"] = id;
+
             var client = new RestClient(Constant.GetAllProjectInformationAsync);
             var request = new RestRequest(Method.POST)
                 .AddParameter("ProjectId", id);
@@ -124,8 +147,44 @@
 
             TempData["project"] = projectViewModel;
 
-            ModelState.Clear();
             return View("Detail", TempData["project"]);
+        }
+
+        [HttpGet]
+        public ActionResult GetUserResponsable() 
+        {
+            var client = new RestClient(Constant.GetAllUserResponsableAsync);
+            var request = new RestRequest(Method.GET);
+            var response = JsonConvert.DeserializeObject<Response<List<UserResponsable>>>(client.Execute(request).Content).Data;
+            var result = JsonConvert.SerializeObject(response);
+
+            return Content( result, "application/json" );
+        }
+
+        public ActionResult AttachToSprint() 
+        {
+            var idProject = Session["idProject"];
+
+            // Get all sprints
+            var clientSprint = new RestClient(Constant.GetAllSprintAsync);
+            var requestSprint = new RestRequest(Method.POST)
+                .AddParameter("ProjectId", idProject);
+
+            var sprintResponse = JsonConvert.DeserializeObject<Response<List<Sprint>>>(clientSprint.Execute(requestSprint).Content).Data;
+
+            // Get all user stories
+            var clientUserStory = new RestClient(Constant.GetAllUserHistoryAsync);
+            var requestUserStory = new RestRequest(Method.POST)
+                .AddParameter("ProjectId", idProject);
+
+            var userStoryResponse = JsonConvert.DeserializeObject<Response<List<UserStories>>>(clientUserStory.Execute(requestUserStory).Content).Data;
+
+            var attachToSprintViewModel = new AttachSprintViewModel {
+                ListSprintViewModel = Mapping.Map<List<Sprint>, List<SprintViewModel>>(sprintResponse),
+                ListUserStoriesViewModel = Mapping.Map<List<UserStories>, List<UserStoriesViewModel>>(userStoryResponse)
+            };
+
+            return View(attachToSprintViewModel);
         }
     }
 }

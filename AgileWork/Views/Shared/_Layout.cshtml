@@ -1,6 +1,10 @@
 ﻿@using System.Web.Optimization
 
 @{
+    if (Session["idUser"] == null) {
+        Response.Redirect("~/Login/Index");
+    }
+
     Layout = null;
 }
 
@@ -19,7 +23,7 @@
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/ionicons/2.0.1/css/ionicons.min.css" />
     <!-- Google Font -->
     <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Source+Sans+Pro:300,400,600,700,300italic,400italic,600italic" />
-    
+
     @Styles.Render("~/Css")
     @Scripts.Render("~/Js")
 </head>
@@ -44,7 +48,7 @@
                                 <ul class="dropdown-menu" role="menu">
                                     <!--En estos a href colocar la url para listar los proyectos-->
                                     <li id="liCreateProject"><a href="@Url.Action("new", "Project")">Crear Proyecto</a></li>
-                                    <li id="liViewProjects"><a href="@Url.Action("detail", "Project")">Ver Proyectos</a></li>
+                                    <li id="liViewProjects"><a href="@Url.Action("Index", "Project")">Ver Proyectos</a></li>
                                 </ul>
                             </li>
                         </ul>
@@ -52,7 +56,7 @@
                 </div>
             </nav>
         </header>
-        
+
         <!--List Projects Template-->
         <script id="temp-list-projects" type="text/x-handlebars-template">
             {{#each projects}}
@@ -66,7 +70,7 @@
                     </div>
                 </div>
             </div>
-            {{/each}}           
+            {{/each}}
         </script>
 
         <div id="blockContainer" class="content-wrapper bg">
@@ -89,7 +93,7 @@
             </div>
         </footer>
     </div>
-    
+
     <script type="text/javascript">
         initialize();
     </script>

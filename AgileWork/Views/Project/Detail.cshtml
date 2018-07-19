@@ -1,7 +1,10 @@
-﻿@using System.Activities.Statements
-@model AgileWork.ModelView.ProjectViewModel
+﻿@model AgileWork.ModelView.ProjectViewModel
 
 @{
+    if (Session["idUser"] == null) {
+        @Url.Action("Index", "Login")
+    }
+
     ViewBag.Title = "ShowDetail";
     Layout = "~/Views/Shared/_Layout.cshtml";
 }
@@ -50,30 +53,30 @@
                     <div class="box-body">
                         <div id="containerUserStoriesDetail" class="row row-fixed-zero">
                             @{
-                                var contador = 0;
-                                const string colorVerde = "background-color: #00a65a; color: #fff;";
-                                const string colorNaranja = "background-color: #f39c12; color: #fff;";
-                            }
-                            @foreach (var userStories in Model.UserStoriesViewModel)
-                            {
-
-                                <div id='containerItemUserStory"@userStories.Uid"' class="col-xs-12 col-sm-12 col-md-12 col-lg-6">
-                                    <div class="row row-fixed-zero external-event" style="background-color: #00a65a; color: #fff;">
-                                        <div class="col-xs-9 col-sm-9 col-md-9 col-lg-9">
-                                            <div class="container-user-story-content">
-                                                <span id='nameItemUserStory"@userStories.Uid"'>
-                                                    @userStories.Name
-                                                </span>
+                                if (Model.UserStoriesViewModel.Count == 0 || Model.UserStoriesViewModel.Equals(null))
+                                {
+                                    <span id="msgEmptyUserStories">Listado de historias de usuario vac&iacute;o</span>
+                                }
+                                else {
+                                    foreach (var userStories in Model.UserStoriesViewModel)
+                                    {
+                                        <div id='containerItemUserStory"@userStories.Uid"' class="col-xs-12 col-sm-12 col-md-12 col-lg-6">
+                                            <div class="row row-fixed-zero external-event" style="background-color: #00a65a; color: #fff;">
+                                                <div class="col-xs-9 col-sm-9 col-md-9 col-lg-9">
+                                                    <div class="container-user-story-content">
+                                                        <span id='nameItemUserStory"@userStories.Uid"'>
+                                                            @userStories.Name
+                                                        </span>
+                                                    </div>
+                                                </div>
+                                                <div class="col-xs-3 col-sm-3 col-md-3 col-lg-3">
+                                                    <button id='mBtnUpdateUserStory"@userStories.Uid"' data-id="@userStories.Uid" type="button" class="btn btn-box-tool container-user-story-tools" data-widget="collapse"><i class="fa fa-plus-circle"></i></button>
+                                                </div>
                                             </div>
                                         </div>
-                                        <div class="col-xs-3 col-sm-3 col-md-3 col-lg-3">
-                                            <button id='mBtnUpdateUserStory"@userStories.Uid"' data-id="@userStories.Uid" type="button" class="btn btn-box-tool container-user-story-tools" data-widget="collapse"><i class="fa fa-plus-circle"></i></button>
-                                        </div>
-                                    </div>
-                                </div>
-                                contador++;
+                                    }
+                                }
                             }
-
                         </div>
                     </div>
                     <div class="box-footer">
@@ -88,7 +91,25 @@
                     </div>
                     <div class="box-body">
                         <div id="containerSprintDetail" class="row row-fixed-zero">
-                            <span id="msgEmptySprints">Listado de sprints vac&iacute;o</span>
+                            @{
+                                if (Model.SprintViewModel.Count == 0 || Model.SprintViewModel.Equals(null))
+                                {
+                                    <span id="msgEmptySprints">Listado de sprints vac&iacute;o</span>
+                                }
+                                else
+                                {
+                                    foreach (var sprint in Model.SprintViewModel) 
+                                    {
+                                        <div id='containerItemSprintCreated"@Model.Uid"' class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
+                                            <div class="row row-fixed-zero external-event" style="background-color: #00c0ef; color: #fff;">
+                                                <div class="container-user-story-content">
+                                                    <div class="container-user-story-content"><span id='nameItemSprintCreated"@Model.Uid"'>"@sprint.Name"</span></div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    }
+                                }
+                            }
                         </div>
                     </div>
                     <div class="box-footer">
@@ -164,9 +185,6 @@
     </div>
 </div>
 
-
-
-
 <!--Container Sprint Template-->
 <script id="temp-sprint-container" type="text/x-handlebars-template">
     <div id="containerItemSprintParent" class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
@@ -187,23 +205,21 @@
 </script>
 
 <!--Container Sprint Created Template-->
-<script id="temp-sprint-created-container" type="text/x-handlebars-template">
-    <div id="containerItemSprintCreated{{id}}" class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
-        <div class="row row-fixed-zero external-event" {{{style}}}>
-            <div class="container-user-story-content">
-                <div class="container-user-story-content"><span id="nameItemSprintCreated{{id}}">{{name}}</span></div>
-            </div>
-        </div>
-    </div>
-</script>
+<!--script id="temp-sprint-created-container" type="text/x-handlebars-template">
 
+</!--script-->
 <!--Msg Sprint Empty Template-->
 <script id="temp-sprints-empty-msg" type="text/x-handlebars-template">
     <span id="msgEmptySprints">Listado de sprints vac&iacute;o</span>
 </script>
 
 <script type="text/javascript">
-    var sResponsibleTaskValid = true, incrementalAuxUserStories = 0, select2Val = { 'id': null, 'text': null },
+    var sResponsibleTaskValid = true,
+        incrementalAuxUserStories = 0,
+        select2Val = {
+            'id': null,
+            'text': null
+        },
         RESOURCES = {
             'select2': "Seleccione",
             'modal': {
@@ -217,14 +233,21 @@
         },
         COLORS = ['#00a65a', '#f39c12', '#00c0ef', '#3c8dbc', '#dd4b39', '#b32d00', '#ff8c1a', '#99cc00',
             '#9900cc', '#663300'],
-        colorsIncrementalAux = 0, colorsTotalAux = COLORS.length - 1, dataResponsibles = [], userStories = {},
-        itemUserStoryAux = {}, $select, data, idProject, incrementalAuxSprints = 0, colorsIncrementalAuxSprint = 0,
-        sprintCreated = true, styleSprint;
+        colorsIncrementalAux = 0,
+        colorsTotalAux = COLORS.length - 1,
+        dataResponsibles = [],
+        userStories = {},
+        itemUserStoryAux = {},
+        $select, data,
+        idProject,
+        incrementalAuxSprints = 0,
+        colorsIncrementalAuxSprint = 0,
+        sprintCreated = true,
+        styleSprint;
 
     function initialize() {
         initializeEvents();
         renderProjectDetail();
-        //getAllResponsibles();
     }
 
     function initializeEvents() {
@@ -237,7 +260,9 @@
             $('#taskModal').find('[data-freeze="view"]').removeAttr('readonly');
             $select.prop('disabled', false);
             cleanFormUserStoryModal();
+            fillUserResponsable();
         });
+
         $("#taskModal").on('show.bs.modal', function () {
             if (sResponsibleTaskValid) {
                 sResponsibleTaskValid = false;
@@ -263,19 +288,7 @@
                     'aux': incrementalAuxUserStories.toString()
                 };
 
-                console.log(userStories);
-                console.log(userStories[0]);
-                console.log(userStories[1]);
-
-                $.ajax({
-                    url: '@Url.Action("SaveUserStory", "Project")',
-                    type: 'POST',
-                    data: { model: userStories[1] }
-                }).done(function () {
-                    //console.log(userStories[0]);
-                });
-
-                buildContainerUserStory(userStories[incrementalAuxUserStories.toString()], incrementalAuxUserStories.toString());
+                //buildContainerUserStory(userStories[incrementalAuxUserStories.toString()], incrementalAuxUserStories.toString());
                 saveToDatabaseUserStory(userStories[incrementalAuxUserStories.toString()]);
             }
         });
@@ -284,7 +297,7 @@
         });
         $("#btnMatchSprintHU").click(function () {
             //AQUI PONER URL PARA IR A PAGINA DE RELACIONAR SPRINT CON HISTORIAS DE USUARIO
-            location.href = "https://adminlte.io/themes/AdminLTE/pages/forms/general.html";
+            location.href = '@Url.Action("AttachToSprint", "Project")';
         });
     }
 
@@ -303,32 +316,9 @@
         });
     }
 
-    //function getAllResponsibles() {
-    //    var URI = "";
-    //    URI = "data/list_responsibles.json";
-    //    $.ajax({
-    //        'url': URI,
-    //        'contentType': "application/json",
-    //        'dataType': "json",
-    //        'type': "GET",
-    //        'cache': true,
-    //        'async': true
-    //    }).done(function (data, textStatus, jqXHR) {
-    //        var datas = data.Data, iData, node;
-    //        for (iData in datas) {
-    //            node = datas[iData];
-    //            dataResponsibles.push({ 'id': node.Uid, 'text': node.Name });
-    //        }
-    //    }).fail(function (jqXHR, textStatus, errorThrown) {
-    //        console.log(jqXHR);
-    //        console.log(textStatus);
-    //        console.log(errorThrown);
-    //    });
-    //}
-
     function renderProjectDetail() {
-        var data = dataProjectDetail.Data, 
-            dataUserStories = data.UserStories, 
+        var data = dataProjectDetail.Data,
+            dataUserStories = data.UserStories,
             dataSprints = data.Sprints,
             userStory, iUserStory;
         //General
@@ -338,30 +328,23 @@
         $('#taDescriptionProject').val(data.Description);
         idProject = data.Uid;
         //Historias de Usuario
-
-        @*@foreach (var userStories in Model.UserStoriesViewModel)
-        {
-            <text>buildContainerUserStory('@userStories', incrementalAuxUserStories.toString());</text>
-        }*@
-        debugger;
-
         console.log(dataUserStories);
 
         for (iUserStory in dataUserStories) {
             incrementalAuxUserStories++;
             userStory = dataUserStories[iUserStory];
             userStories[incrementalAuxUserStories] = {
-                'Uid': userStory.Uid, 'Name': userStory.Name, 'Description': userStory.Description,
-                'IdUserResponsable': userStory.IdUserResponsable, 'UserResponsable': userStory.UserResponsable,
-                'Effort': userStory.Effort, 'Priority': userStory.Priority,
+                'Uid': userStory.Uid,
+                'Name': userStory.Name,
+                'Description': userStory.Description,
+                'IdUserResponsable': userStory.IdUserResponsable,
+                'UserResponsable': userStory.UserResponsable,
+                'Effort': userStory.Effort,
+                'Priority': userStory.Priority,
                 'AcceptanceCriteria': userStory.AcceptanceCriteria
             }
 
-            @foreach (var userStories in Model.UserStoriesViewModel)
-            {
-                <text>buildContainerUserStory('@userStories', incrementalAuxUserStories.toString());</text>
-            }
-            //buildContainerUserStory(userStories[incrementalAuxUserStories.toString()], incrementalAuxUserStories.toString());
+            buildContainerUserStory(userStories[incrementalAuxUserStories.toString()], incrementalAuxUserStories.toString());
         }
     }
 
@@ -379,8 +362,13 @@
             .concat(' color: #fff;"');
         colorsIncrementalAux++;
         $('#containerUserStoriesDetail').append(template(context));
+
         $("#mBtnUpdateUserStory".concat(id)).on('click', function () {
-            var $this = $(this), id = $this.attr('data-id');
+            var $this = $(this),
+                id = $this.attr('data-id');
+
+            console.log("hola " + id);
+
             itemUserStoryAux = clone(userStories[id]);
             $("#taskModal").modal("show");
             $('#taskModalTitle').text(RESOURCES.modal.view.title);
@@ -410,6 +398,7 @@
     }
 
     function buildContainerSprint() {
+        console.log("hola");
         var context = {}, nodes = [], project, iProject,
             source = document.getElementById("temp-sprint-container").innerHTML,
             template = Handlebars.compile(source);
@@ -424,14 +413,18 @@
             .concat(' color: #fff;"');
         context.style = styleSprint;
         colorsIncrementalAuxSprint++;
+
         $('#containerSprintDetail').append(template(context));
+
         $("#btnItemSprintCreate").on('click', function () {
-            var $this = $(this), id = $this.attr('data-id'), name;
-            name = $('#nameItemSprint').val();
-            saveToDatabaseSprint({ 'Name': name, 'IdProject': idProject });
+            var name = $('#nameItemSprint').val();
+
+            saveToDatabaseSprint({ 'Name': name });
+
             $('#containerItemSprintParent').remove();
             buildContainerCreatedSprint(name, styleSprint);
         });
+
         $("#btnItemSprintRemove").on('click', function () {
             $('#containerItemSprintParent').remove();
             if (incrementalAuxSprints === 0) {
@@ -459,15 +452,52 @@
         $('#containerSprintDetail').append(template(context));
     }
 
-    //AQUI SE DEBE INSERTAR EN LA BASE DE DATOS
+    //AQUI SE DEBE INSERTAR EN LA BASE DE DATOSfa fa-plus-circle
     function saveToDatabaseUserStory(obj) {
         var data = clone(obj);
         delete data.aux;
-        //console.log(data);
+
+        $.ajax({
+            url: '@Url.Action("SaveUserStory", "Project")',
+            type: 'POST',
+            data: { model: obj }
+        }).done(function (e) {
+            window.location.reload();
+        });
     }
 
     function saveToDatabaseSprint(obj) {
-        //console.log(obj);
+        console.log("sprint " + obj.Name);
+
+        $.ajax({
+            url: '@Url.Action("CreateSprint", "Project")',
+            type: 'POST',
+            data: { sprint: obj }
+        }).done(function (e) {
+            window.location.reload();
+        });
+    }
+
+    function fillUserResponsable() {
+        $.ajax({
+            url: '@Url.Action("GetUserResponsable", "Project")',
+            type: 'GET'
+        }).done(function (e) {
+            console.log(e);
+
+            var len = e.length;
+
+            //$.each(result, function (k, v) {
+            //    $('#sResponsibleTask').append('<option value="' + v.Uid + '">' + v.Name + '</option>');
+            //});
+
+            for (var i = 0; i < len; i++) {
+                var id = e[i]['Uid'];
+                var name = e[i]['Name'];
+
+                $("#sResponsibleTask").append("<option value='" + id + "'>" + name + "</option>");
+            }
+        });
     }
 </script>
 
