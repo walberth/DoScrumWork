@@ -1,4 +1,5 @@
-﻿@model AgileWork.ModelView.ProjectViewModel
+﻿@using System.Activities.Statements
+@model AgileWork.ModelView.ProjectViewModel
 
 @{
     ViewBag.Title = "ShowDetail";
@@ -47,7 +48,33 @@
                         <h3 class="box-title textOverflow-boxTitles container-task-header">Historias de Usuario</h3>
                     </div>
                     <div class="box-body">
-                        <div id="containerUserStoriesDetail" class="row row-fixed-zero"></div>
+                        <div id="containerUserStoriesDetail" class="row row-fixed-zero">
+                            @{
+                                var contador = 0;
+                                const string colorVerde = "background-color: #00a65a; color: #fff;";
+                                const string colorNaranja = "background-color: #f39c12; color: #fff;";
+                            }
+                            @foreach (var userStories in Model.UserStoriesViewModel)
+                            {
+
+                                <div id='containerItemUserStory"@userStories.Uid"' class="col-xs-12 col-sm-12 col-md-12 col-lg-6">
+                                    <div class="row row-fixed-zero external-event" style="background-color: #00a65a; color: #fff;">
+                                        <div class="col-xs-9 col-sm-9 col-md-9 col-lg-9">
+                                            <div class="container-user-story-content">
+                                                <span id='nameItemUserStory"@userStories.Uid"'>
+                                                    @userStories.Name
+                                                </span>
+                                            </div>
+                                        </div>
+                                        <div class="col-xs-3 col-sm-3 col-md-3 col-lg-3">
+                                            <button id='mBtnUpdateUserStory"@userStories.Uid"' data-id="@userStories.Uid" type="button" class="btn btn-box-tool container-user-story-tools" data-widget="collapse"><i class="fa fa-plus-circle"></i></button>
+                                        </div>
+                                    </div>
+                                </div>
+                                contador++;
+                            }
+
+                        </div>
                     </div>
                     <div class="box-footer">
                         <button type="button" id="btnCreateTask" class="btn btn-info btn-xs">Crear</button>
@@ -138,23 +165,6 @@
 </div>
 
 
-<!--Container User Story Template-->
-<script id="temp-user-story-container" type="text/x-handlebars-template">
-    <div id="containerItemUserStory{{id}}" class="col-xs-12 col-sm-12 col-md-12 col-lg-6">
-        <div class="row row-fixed-zero external-event" {{{style}}}>
-            <div class="col-xs-9 col-sm-9 col-md-9 col-lg-9">
-                <div class="container-user-story-content">
-                <span id="nameItemUserStory{{id}}">    
-                    {{name}}
-                </span>
-                </div>
-            </div>
-            <div class="col-xs-3 col-sm-3 col-md-3 col-lg-3">
-                <button id="mBtnUpdateUserStory{{id}}" data-id="{{id}}" type="button" class="btn btn-box-tool container-user-story-tools" data-widget="collapse"><i class="fa fa-plus-circle"></i></button>
-            </div>
-        </div>
-    </div>
-</script>
 
 
 <!--Container Sprint Template-->
@@ -351,7 +361,6 @@
             {
                 <text>buildContainerUserStory('@userStories', incrementalAuxUserStories.toString());</text>
             }
-
             //buildContainerUserStory(userStories[incrementalAuxUserStories.toString()], incrementalAuxUserStories.toString());
         }
     }
