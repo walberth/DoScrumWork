@@ -158,7 +158,7 @@
             var response = JsonConvert.DeserializeObject<Response<List<UserResponsable>>>(client.Execute(request).Content).Data;
             var result = JsonConvert.SerializeObject(response);
 
-            return Content( result, "application/json" );
+            return Content(result, "application/json");
         }
 
         public ActionResult AttachToSprint() 
@@ -185,6 +185,14 @@
             };
 
             return View(attachToSprintViewModel);
+        }
+
+        [HttpPost]
+        public ActionResult ShowUserStoryDetail(string idUserStory)
+        {
+            var clientUserStory = new RestClient(Constant.GetAllUserHistoryAsync);
+            var requestUserStory = new RestRequest(Method.POST)
+                .AddParameter("ProjectId", idProject);
         }
     }
 }

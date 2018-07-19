@@ -9,7 +9,6 @@ namespace AgileWork
         {
             routes.IgnoreRoute("{resource}.axd/{*pathInfo}");
 
-            // routes.MapMvcAttributeRoutes();
             routes.MapRoute(
                 "Default",                                              
                 "{controller}/{action}/{id}",

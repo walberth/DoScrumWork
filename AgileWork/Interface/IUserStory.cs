@@ -12,5 +12,7 @@ namespace AgileWork.Interface
         Task<Response<List<UserStories>>> GetAllUserHistoryAsync(string idProject);
         
         Task<Response<UserStories>> SetUserStoriesToSprintAsync(string idUserStory, string idSprint);
+
+        Task<Response<UserStories>> GetUserStorieAsync(string idUserStory);
     }
 }

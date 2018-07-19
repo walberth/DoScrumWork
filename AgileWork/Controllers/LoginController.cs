@@ -13,10 +13,8 @@
 
     using Utils;
 
-    [RoutePrefix("login")]
     public class LoginController : Controller
     {
-        [Route("index")]
         public ActionResult Index()
         {
             return View();
@@ -26,8 +24,8 @@
         {
             var client = new RestClient(Constant.GetFirebaseLoginAsync);
             var request = new RestRequest(Method.POST)
-                .AddParameter("Email", model.Email)
-                .AddParameter("Password", model.Password);
+                .AddParameter("Email", /*model.Email*/"w.felipe.gutierrez@gmail.com")
+                .AddParameter("Password", /*model.Password*/"omarjc");
             
             var userViewModel = Mapping.Map<UserFirebase, UserFirebaseViewModel>(JsonConvert.DeserializeObject<Response<UserFirebase>>(client.Execute(request).Content).Data);
 

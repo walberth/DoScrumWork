@@ -1,14 +1,17 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Configuration;
-using System.Threading.Tasks;
-using AgileWork.Interface;
-using AgileWork.Models;
-using AgileWork.Utils;
-using Firebase.Database;
-using Firebase.Database.Query;
+﻿namespace AgileWork.Implementation
+{
+    using System;
+    using System.Collections.Generic;
+    using System.Configuration;
+    using System.Threading.Tasks;
 
-namespace AgileWork.Implementation {
+    using AgileWork.Interface;
+    using AgileWork.Models;
+    using AgileWork.Utils;
+
+    using Firebase.Database;
+    using Firebase.Database.Query;
+
     public class UserStory : IUserStory 
     {
         public async Task<Response<UserStories>> CreateUserHistoryAsync(UserStories userStories) 
@@ -44,7 +47,8 @@ namespace AgileWork.Implementation {
             return response;
         }
 
-        public async Task<Response<List<UserStories>>> GetAllUserHistoryAsync(string idProject) {
+        public async Task<Response<List<UserStories>>> GetAllUserHistoryAsync(string idProject)
+        {
             var response = new Response<List<UserStories>>();
             
             try 
@@ -59,7 +63,8 @@ namespace AgileWork.Implementation {
                 {
                     if (userStory.Object.IdProject == idProject) 
                     {
-                        var userStories = new UserStories {
+                        var userStories = new UserStories
+                        {
                             Uid = userStory.Object.Uid,
                             Name = userStory.Object.Name,
                             IdUserResponsable = userStory.Object.IdUserResponsable,
@@ -82,7 +87,8 @@ namespace AgileWork.Implementation {
             return response;
         }
 
-        public async Task<Response<UserStories>> SetUserStoriesToSprintAsync(string idUserStory, string idSprint) {
+        public async Task<Response<UserStories>> SetUserStoriesToSprintAsync(string idUserStory, string idSprint)
+        {
             var response = new Response<UserStories>();
             
             try 
@@ -94,7 +100,8 @@ namespace AgileWork.Implementation {
                 {
                     if (userStory.Object.Uid == idUserStory) 
                     {
-                        var userStories = new UserStories {
+                        var userStories = new UserStories
+                        {
                             Uid = userStory.Object.Uid,
                             Name = userStory.Object.Name,
                             IdProject = userStory.Object.IdProject,
@@ -111,6 +118,68 @@ namespace AgileWork.Implementation {
 
                         response.IsSuccess = true;
                         response.Data = userStories;
+                    }
+                }
+            }
+            catch (Exception ex)
+            {
+                response.IsSuccess = false;
+                response.Message = $"{ex.Message}";
+            }
+            
+            return response;
+        }
+
+        public async Task<Response<UserStories>> GetUserStorieAsync(string idUserStory)
+        {
+            var response = new Response<UserStories>();
+            
+            try 
+            {
+                var firebase = new FirebaseClient(ConfigurationManager.AppSettings[Constant.Url]);
+                var firebaseUserStory = await firebase.Child(Constant.UserStory).OrderByKey().OnceAsync<UserStories>();
+
+                foreach (var userStory in firebaseUserStory)
+                {
+                    if (userStory.Object.Uid == idUserStory)
+                    {
+                        var userStories = new UserStories
+                        {
+                            Uid = userStory.Object.Uid,
+                            Name = userStory.Object.Name,
+                            IdProject = userStory.Object.IdProject,
+                            Description = userStory.Object.Description,
+                            IdUserResponsable = userStory.Object.IdUserResponsable,
+                            UserResponsable = userStory.Object.UserResponsable,
+                            Effort = userStory.Object.Effort,
+                            Priority = userStory.Object.Priority,
+                            AcceptanceCriteria = userStory.Object.AcceptanceCriteria,
+                            IdSprint = idSprint,
+                            State = userStory.Object.State
+                        };
+                        /*
+                         * public string  { get; set; }
+
+                            public string  { get; set; }
+
+                            public string  { get; set; }
+
+                            public string  { get; set; }
+
+                            public string  { get; set; }
+
+                            public string UserResponsable { get; set; }
+
+                            public int? Effort { get; set; }
+
+                            public int? Priority { get; set; }
+
+                            public string AcceptanceCriteria { get; set; }
+
+                            public string IdSprint { get; set; }
+
+                            public string State { get; set; }
+                         */
                     }
                 }
             }

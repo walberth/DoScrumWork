@@ -70,7 +70,7 @@
                                                     </div>
                                                 </div>
                                                 <div class="col-xs-3 col-sm-3 col-md-3 col-lg-3">
-                                                    <button id='mBtnUpdateUserStory"@userStories.Uid"' data-id="@userStories.Uid" type="button" class="btn btn-box-tool container-user-story-tools" data-widget="collapse"><i class="fa fa-plus-circle"></i></button>
+                                                    <button id='@string.Concat("mBtnUpdateUserStory",@userStories.Uid)' data-id="@userStories.Uid" type="button" class="btn btn-box-tool container-user-story-tools mija" data-widget="collapse"><i class="fa fa-plus-circle"></i></button>
                                                 </div>
                                             </div>
                                         </div>
@@ -245,6 +245,34 @@
         sprintCreated = true,
         styleSprint;
 
+    $( document ).ready(function() {
+        //Show user storie detail
+        $(".mija").on('click', function () {
+            var $this = $(this),
+                id = $this.attr('data-id');
+
+            console.log("hola " + id);
+
+            var data = {};
+            $.ajax({
+                url: '@Url.Action("SaveUserStory", "Project")',
+                type: 'POST',
+                data: { idUserStory: id }
+            }).done(function (e) {
+                console.log(e);
+            });
+
+
+            itemUserStoryAux = clone(userStories[id]);
+            $("#taskModal").modal("show");
+            $('#taskModalTitle').text(RESOURCES.modal.view.title);
+            $('#mUserStoryFooter').addClass('hidden');
+            updateFormUserStoryModal(itemUserStoryAux);
+            $('#taskModal').find('[data-freeze="view"]').attr('readonly', 'readonly');
+            $select.prop('disabled', true);
+        });
+    });
+
     function initialize() {
         initializeEvents();
         renderProjectDetail();
@@ -364,6 +392,7 @@
         $('#containerUserStoriesDetail').append(template(context));
 
         $("#mBtnUpdateUserStory".concat(id)).on('click', function () {
+            debugger;
             var $this = $(this),
                 id = $this.attr('data-id');
 
