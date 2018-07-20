@@ -154,32 +154,12 @@
                             Effort = userStory.Object.Effort,
                             Priority = userStory.Object.Priority,
                             AcceptanceCriteria = userStory.Object.AcceptanceCriteria,
-                            IdSprint = idSprint,
+                            IdSprint = userStory.Object.IdSprint,
                             State = userStory.Object.State
                         };
-                        /*
-                         * public string  { get; set; }
 
-                            public string  { get; set; }
-
-                            public string  { get; set; }
-
-                            public string  { get; set; }
-
-                            public string  { get; set; }
-
-                            public string UserResponsable { get; set; }
-
-                            public int? Effort { get; set; }
-
-                            public int? Priority { get; set; }
-
-                            public string AcceptanceCriteria { get; set; }
-
-                            public string IdSprint { get; set; }
-
-                            public string State { get; set; }
-                         */
+                        response.IsSuccess = true;
+                        response.Data = userStories;
                     }
                 }
             }

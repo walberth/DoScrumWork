@@ -54,5 +54,17 @@ namespace AgileWork.Controllers.Api
                
             return BadRequest(response.Message);
         }
+
+        [HttpPost]
+        [Route("api/getUserStorieAsync/{idUserStory}")]
+        public async Task<IHttpActionResult> GetUserStorieAsync(IdUserStory idUserStory)
+        {
+            var response = await _userStory.GetUserStorieAsync(idUserStory.IdUserStorie);
+
+            if (response.IsSuccess)
+                return Ok(response);
+               
+            return BadRequest(response.Message);
+        }
     }
 }

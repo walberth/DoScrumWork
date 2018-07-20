@@ -255,6 +255,8 @@
                 var listUserStory = new List<UserStories>();
                 var listSprint = new List<Sprint>();
 
+                firebaseProject.Uid = idProject;
+
                 foreach (var userStory in firebaseUserStory) 
                 {
                     if (userStory.Object.IdProject == idProject) 
@@ -262,8 +264,15 @@
                         var userStories = new UserStories {
                             Uid = userStory.Object.Uid,
                             Name = userStory.Object.Name,
+                            IdProject = userStory.Object.IdProject,
+                            Description = userStory.Object.Description,
                             IdUserResponsable = userStory.Object.IdUserResponsable,
-                            UserResponsable = userStory.Object.UserResponsable
+                            UserResponsable = userStory.Object.UserResponsable,
+                            Effort = userStory.Object.Effort,
+                            Priority = userStory.Object.Priority,
+                            AcceptanceCriteria = userStory.Object.AcceptanceCriteria,
+                            IdSprint = userStory.Object.IdSprint,
+                            State = userStory.Object.State
                         };
 
                         listUserStory.Add(userStories);
@@ -373,6 +382,111 @@
 
                 response.IsSuccess = true;
                 response.Data = sprintInfo;
+            }
+            catch (Exception ex)
+            {
+                response.IsSuccess = false;
+                response.Message = $"{ex.Message}";
+            }
+            
+            return response;
+        }
+
+        public async Task<Response<List<Project>>> GetAllProjectsAsync() {
+            var response = new Response<List<Project>>();
+
+            try 
+            {
+                var firebaseProjects = new List<Project>();
+                var firebase = new FirebaseClient(ConfigurationManager.AppSettings[Constant.Url]);
+                var firebaseProjectList = await firebase.Child(Constant.Project).OrderByKey().OnceAsync<Project>();
+
+                foreach (var project in firebaseProjectList) 
+                {
+                    var firebaseProject = new Project();
+                    // Informacion del proyecto
+                    firebaseProject.Uid = project.Object.Uid;
+                    firebaseProject.Name = project.Object.Name;
+                    firebaseProject.UserCreatedEmail = project.Object.UserCreatedEmail;
+                    firebaseProject.Description = project.Object.Description;
+                    firebaseProject.StartDate = project.Object.StartDate;
+                    firebaseProject.EndDate = project.Object.EndDate;
+
+                    // Informacion de las historias de usuario del proyecto
+                    var firebaseUserStory = await firebase.Child(Constant.UserStory).OrderByKey().OnceAsync<UserStories>();
+                    var listUserStory = new List<UserStories>();
+
+                    foreach (var userStory in firebaseUserStory) 
+                    {
+                        if (userStory.Object.IdProject == project.Object.Uid) 
+                        {
+                            var userStories = new UserStories
+                            {
+                                Uid = userStory.Object.Uid,
+                                Name = userStory.Object.Name,
+                                IdProject = userStory.Object.IdProject,
+                                Description = userStory.Object.Description,
+                                IdUserResponsable = userStory.Object.IdUserResponsable,
+                                UserResponsable = userStory.Object.UserResponsable,
+                                Effort = userStory.Object.Effort,
+                                Priority = userStory.Object.Priority,
+                                AcceptanceCriteria = userStory.Object.AcceptanceCriteria,
+                                IdSprint = userStory.Object.IdSprint,
+                                State = userStory.Object.State
+                            };
+
+                            //Informacion de las tareas
+                            var firebaseTaskList = await firebase.Child(Constant.Task).OrderByKey().OnceAsync<UserTask>();
+                            var firebaseTasks = new List<UserTask>();
+
+                            foreach (var task in firebaseTaskList) 
+                            {
+                                if (task.Object.IdUserHistories == userStory.Object.Uid) 
+                                {
+                                    var firebaseTask = new UserTask {
+                                        Uid = task.Object.Uid,
+                                        Name = task.Object.Name,
+                                        IdUserHistories = task.Object.IdUserHistories,
+                                        State = task.Object.State
+                                    };
+
+                                    firebaseTasks.Add(firebaseTask);
+                                }
+                            }
+
+                            userStories.Tasks = firebaseTasks;
+
+                            listUserStory.Add(userStories);
+                        }
+                    }
+
+                    firebaseProject.UserStories = listUserStory;
+                    
+                    // Informacion de los Sprint del proyecto
+                    var firebaseSprint = await firebase.Child(Constant.Sprint).OrderByKey().OnceAsync<Sprint>();
+                    var listSprint = new List<Sprint>();
+
+                    foreach (var sprint in firebaseSprint) 
+                    {
+                        if (sprint.Object.IdProject == project.Object.Uid) 
+                        {
+                            var sprintObject = new Sprint
+                            {
+                                Uid = sprint.Object.Uid,
+                                Name = sprint.Object.Name,
+                            };
+
+                            listSprint.Add(sprintObject);
+                        }
+                    }
+
+                    firebaseProject.Sprints = listSprint;
+
+                    firebaseProjects.Add(firebaseProject);
+                }
+
+                response.IsSuccess = true;
+                response.Data = firebaseProjects;
             }
             catch (Exception ex)
             {

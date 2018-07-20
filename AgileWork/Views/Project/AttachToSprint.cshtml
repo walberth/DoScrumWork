@@ -2,9 +2,505 @@
 @model AttachSprintViewModel
 
 @{
+    if (Session["idUser"] == null) {
+        @Url.Action("Index", "Login")
+    }
+
     ViewBag.Title = "AttachToSprint";
     Layout = "~/Views/Shared/_Layout.cshtml";
 }
 
-<h2>AttachToSprint</h2>
+<div id="containerAttachSprintUS" class="box box-primary container-opacity">
+    <div class="box-header">
+        <h3 class="box-title textOverflow-boxTitles"><i class="fa fa-tags" aria-hidden="true"></i><span class="space-subtitle">Asignaci&oacute;n de Historias de Usuario a Sprints</span></h3>
+    </div>
+    <div class="box-body">
+        <div class="row row-fixed-zero">
+            <div class="col-xs-12 col-sm-12 col-md-8 col-lg-8">
+                <div id="containerAttachSprints" class="box box-cus box-task">
+                    <div class="box-header with-border">
+                        <h3 class="box-title textOverflow-boxTitles container-task-header">Relaci&oacute;n de Sprints e Historias de Usuario</h3>
+                    </div>
+                    <div class="box-body box-body-attach-sprint-container">
+                        <div id="contentAttachSprintUS" class="row row-fixed-zero"></div>
+                    </div>
+                </div>
+            </div>
+            <div class="col-xs-12 col-sm-12 col-md-4 col-lg-4">
+                <div id="containerUnassignedUS" class="box box-cus box-task">
+                    <div class="box-header with-border">
+                        <h3 class="box-title textOverflow-boxTitles container-task-header">Historias de Usuario sin asignar</h3>
+                    </div>
+                    <div class="box-body box-body-attach-us-container">
+                        <div id="contentUnassignedUS" class="row row-fixed-zero"></div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="box-footer txt-align-right">
+        <button type="button" id="btnProjectDetail" class="btn btn-info btn-md">Ir a detalle de proyecto</button>
+    </div>
+</div>
 
+<!--Modal Create or Edit Task-->
+<div id="taskModal" class="modal fade" role="dialog" aria-hidden="true" data-backdrop="static" data-keyboard="false">
+    <div class="modal-dialog modal-cust">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal">&times;</button>
+                <h4 id="taskModalTitle" class="modal-title modal-header-title">Detalle de Historia de Usuario</h4>
+            </div>
+            <div class="modal-body modal-body-cust">
+                <div class="row">
+                    <div class="col-xs-12 col-sm-6 col-md-4 col-lg-3 form-line-component-opt1 txt-align-right">
+                        <label for="iNameTask" class="control-label">Nombre</label>
+                    </div>
+                    <div class="col-xs-12 col-sm-6 col-md-8 col-lg-9">
+                        <input data-freeze="view" readonly="readonly" type="text" class="form-control" id="iNameTask" />
+                    </div>
+                </div>
+                <div class="row margin-top-2perc">
+                    <div class="col-xs-12 col-sm-6 col-md-4 col-lg-3 form-line-component-opt3 txt-align-right">
+                        <label>Descripci&oacute;n</label>
+                    </div>
+                    <div class="col-xs-12 col-sm-6 col-md-8 col-lg-9">
+                        <textarea data-freeze="view" readonly="readonly" id="taDescriptionTask" class="form-control" rows="2"></textarea>
+                    </div>
+                </div>
+                <div id="containerResponsibleTask" class="row margin-top-2perc">
+                    <div class="col-xs-12 col-sm-6 col-md-4 col-lg-3 form-line-component-opt1 txt-align-right">
+                        <label>Responsable</label>
+                    </div>
+                    <div class="col-xs-12 col-sm-6 col-md-8 col-lg-9">
+                        <select data-freeze="view" id="sResponsibleTask" class="form-control select2"></select>
+                    </div>
+                </div>
+                <div class="row margin-top-2perc">
+                    <div class="col-xs-12 col-sm-12 col-md-6 col-lg-3 form-line-component-opt1 txt-align-right">
+                        <label>Esfuerzo</label>
+                    </div>
+                    <div class="col-xs-12 col-sm-12 col-md-6 col-lg-3">
+                        <input data-freeze="view" readonly="readonly" type="text" class="form-control" id="iEffortTask" />
+                    </div>
+                    <div class="col-xs-12 col-sm-12 col-md-6 col-lg-3 form-line-component-opt1 txt-align-right">
+                        <label>Prioridad</label>
+                    </div>
+                    <div class="col-xs-12 col-sm-12 col-md-6 col-lg-3">
+                        <input data-freeze="view" readonly="readonly" type="text" class="form-control" id="iPriorityTask" />
+                    </div>
+                </div>
+                <div class="row margin-top-2perc">
+                    <div class="col-xs-12 col-sm-6 col-md-4 col-lg-3 form-line-component-opt4 txt-align-right">
+                        <label>Criterio de Aceptaci&oacute;n</label>
+                    </div>
+                    <div class="col-xs-12 col-sm-6 col-md-8 col-lg-9">
+                        <textarea data-freeze="view" readonly="readonly" id="taCriteriaOfAcceptanceTask" class="form-control" rows="3"></textarea>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+   
+
+<!--Container User Story Template-->
+<script id="temp-user-story-container" type="text/x-handlebars-template">
+    <div id="containerItemUserStory{{id}}" class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
+        <div class="row row-fixed-zero external-event" {{{style}}}>
+            <div class="col-xs-9 col-sm-9 col-md-9 col-lg-9">
+                <div class="container-user-story-content"><span id="nameItemUserStory{{id}}">{{name}}</span></div>
+            </div>
+            <div class="col-xs-3 col-sm-3 col-md-3 col-lg-3">
+                <button id="mBtnDetailUserStory{{id}}" data-id="{{id}}" type="button" class="btn btn-box-tool container-user-story-tools" data-widget="collapse"><i class="fa fa-plus-circle"></i></button>
+            </div>
+        </div>
+    </div>
+</script>
+
+<!--Container Sprint Template-->
+<script id="temp-sprint-container" type="text/x-handlebars-template">
+    <div id="containerAttachSprint{{id}}" data-container="{{id}}" class="col-xs-12 col-sm-12 col-md-12 col-lg-12 margin-bottom-2perc">
+        <div class="box-sprint">
+            <div class="row row-fixed-zero">
+                <div id="contentAttachedSprint{{id}}" class="col-xs-12 col-sm-12 col-md-6 col-lg-6 box-sprint-container-display">
+                    <div class="external-event box-sprint-child-display" {{{style}}}>
+                        <div class="container-user-story-content">
+            				<div class="container-user-story-content"><span id="nameItemSprint{{id}}">{{name}}</span></div>
+            			</div>
+                    </div>
+                </div>
+                <div id="contentAttachedUserStories{{id}}" class="col-xs-12 col-sm-12 col-md-6 col-lg-6 box-sprint-us-height-50px">
+                    <span id="msgEmptySprint{{id}}">Arrastre historias de usuario para asignar...</span>
+                </div>
+            </div>
+        </div>
+    </div>
+</script>
+
+<!--Msg User Story Empty Template-->
+<script id="temp-us-empty-msg" type="text/x-handlebars-template">
+    <span id="msgEmptyUs">No hay historias de usuario por asignar</span>
+</script>
+
+<!--Msg Sprints Msg Template-->
+<script id="temp-sprints-empty-msg" type="text/x-handlebars-template">
+    <span id="msgEmptySprint">No se encontraron sprints</span>
+</script>
+
+<script type="text/javascript">
+    initialize();
+</script>
+
+@*<div id="containerAttachSprintUS" class="box box-primary container-opacity">
+    <div class="box-header">
+        <h3 class="box-title textOverflow-boxTitles"><i class="fa fa-tags" aria-hidden="true"></i><span class="space-subtitle">Asignaci&oacute;n de Historias de Usuario a Sprints</span></h3>
+    </div>
+    <div class="box-body">
+        <div class="row row-fixed-zero">
+            <div class="col-xs-12 col-sm-12 col-md-8 col-lg-8">
+                <div id="containerAttachSprints" class="box box-cus box-task">
+                    <div class="box-header with-border">
+                        <h3 class="box-title textOverflow-boxTitles container-task-header">Relaci&oacute;n de Sprints e Historias de Usuario</h3>
+                    </div>
+                    <div class="box-body box-body-attach-sprint-container">
+                        <div id="contentAttachSprintUS" class="row row-fixed-zero">
+                            @{
+                                if (Model.ListSprintViewModel.Count == 0 || Model.ListSprintViewModel.Equals(null)) 
+                                {
+                                    <span id="msgEmptySprint">No se encontraron sprints</span>
+                                }
+                                else
+                                {
+                                    foreach (var sprint in Model.ListSprintViewModel) 
+                                    {
+                                        <div id='@string.Concat("containerAttachSprint",@sprint.Uid)' data-container='@sprint.Uid)' class="col-xs-12 col-sm-12 col-md-12 col-lg-12 margin-bottom-2perc">
+                                            <div class="box-sprint">
+                                                <div class="row row-fixed-zero">
+                                                    <div id='@string.Concat("contentAttachedSprint",@sprint.Uid)' class="col-xs-12 col-sm-12 col-md-6 col-lg-6 box-sprint-container-display">
+                                                        <div class="external-event box-sprint-child-display" style="background-color: #99cc00; color: #fff;">
+                                                            <div class="container-user-story-content">
+                                                                <div class="container-user-story-content"><span id='@string.Concat("nameItemSprint",@sprint.Uid)'>@sprint.Name</span></div>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                    <div id='@string.Concat("contentAttachedUserStories",@sprint.Uid)' class="col-xs-12 col-sm-12 col-md-6 col-lg-6 box-sprint-us-height-50px">
+                                                        <span id='@string.Concat("msgEmptySprint",@sprint.Uid)'>Arrastre historias de usuario para asignar...</span>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    }
+                                }
+                            }
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="col-xs-12 col-sm-12 col-md-4 col-lg-4">
+                <div id="containerUnassignedUS" class="box box-cus box-task">
+                    <div class="box-header with-border">
+                        <h3 class="box-title textOverflow-boxTitles container-task-header">Historias de Usuario sin asignar</h3>
+                    </div>
+                    <div class="box-body box-body-attach-us-container">
+                        <div id="contentUnassignedUS" class="row row-fixed-zero">
+                            @{
+                                if (Model.ListUserStoriesViewModel.Count == 0 || Model.ListUserStoriesViewModel.Equals(null)) 
+                                {
+                            <span id="msgEmptyUs">No hay historias de usuario por asignar</span>
+                                }
+                                else 
+                                {
+                                    foreach (var userStorie in Model.ListUserStoriesViewModel) 
+                                    {
+                                        <div id='@string.Concat("containerItemUserStory",@userStorie.Uid)' class="col-xs-12 col-sm-12 col-md-12 col-lg-12 userstory">
+                                            <div class="row row-fixed-zero external-event" style="background-color: #00c0ef; color: #fff;">
+                                                <div class="col-xs-9 col-sm-9 col-md-9 col-lg-9">
+                                                    <div class="container-user-story-content"><span id='@string.Concat("nameItemUserStory",@userStorie.Uid)'>@userStorie.Name</span></div>
+                                                </div>
+                                                <div class="col-xs-3 col-sm-3 col-md-3 col-lg-3">
+                                                    <button id='@string.Concat("mBtnDetailUserStory",@userStorie.Uid)' data-id='@userStorie.Uid' type="button" class="btn btn-box-tool container-user-story-tools btnDetailUS" data-widget="collapse"><i class="fa fa-plus-circle"></i></button>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    }
+                                }
+                            }
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="box-footer txt-align-right">
+        <button type="button" id="btnProjectDetail" class="btn btn-info btn-md">Ir a detalle de proyecto</button>
+    </div>
+</div>
+
+<script type="text/javascript">
+    var sResponsibleTaskValid = true, 
+        incrementalAuxUserStories = 0, 
+        select2Val = { 'id': null, 'text': null },
+        RESOURCES = {
+            'select2': "Seleccione",
+            'modal': {
+                'create': {
+                    'title': "Crear Historia de Usuario", 'button': "Crear", 'action': "create"
+                },
+                'view': {
+                    'title': "Detalle Historia de Usuario", 'button': null, 'action': "view"
+                }
+            }
+        },
+        COLORS = ['#00a65a', '#f39c12', '#00c0ef', '#3c8dbc', '#dd4b39', '#b32d00', '#ff8c1a', '#99cc00', '#9900cc', '#663300'],
+        colorsIncrementalAux = 0, 
+        colorsTotalAux = COLORS.length - 1, 
+        dataResponsibles = [], 
+        userStories = {},
+        itemUserStoryAux = {}, 
+        $select, data, 
+        idProject, 
+        incrementalAuxSprints = 0, 
+        colorsIncrementalAuxSprint = 0,
+        sprintCreated = true, 
+        styleSprint, 
+        sprints = {}, 
+        idDragEventUS;
+
+    $(document).ready(function() {
+        $(".btnDetailUS").on('click', function () {
+            console.log("hola button clicked ");
+
+            var $this = $(this), id = $this.attr('data-id');
+            itemUserStoryAux = clone(userStories[id]);
+            $("#taskModal").modal("show");
+            cleanFormUserStoryModal();
+            updateFormUserStoryModal(itemUserStoryAux);
+            $select.prop('disabled', true);
+        });
+    });
+
+    function initialize() {
+        initializeEvents();
+        renderSprintsUS();
+        getAllResponsibles();
+    }
+
+    function initializeEvents() {
+        $("#btnProjectDetail").click(function () {
+            location.href = "https://adminlte.io/themes/AdminLTE/pages/forms/general.html";
+        });
+        $("#taskModal").on('show.bs.modal', function () {
+            if (sResponsibleTaskValid) {
+                sResponsibleTaskValid = false;
+                buildResponsibleComponent();
+            }
+        });
+    }
+
+    function buildResponsibleComponent() {
+        $select = $('#sResponsibleTask').select2({
+            'theme': 'bootstrap', 'placeholder': RESOURCES.select2, 'language': 'es',
+            'minimumResultsForSearch': Infinity, 'data': dataResponsibles,
+            'dropdownParent': $('#containerResponsibleTask')
+        });
+        $select.val(null).trigger('change');
+        $select.on('change', function (e) {
+            if (typeof $select.select2('data')[0] !== 'undefined') {
+                select2Val.id = $(this).val();
+                select2Val.text = $select.select2('data')[0].text;
+            }
+        });
+    }
+
+    //function getAllResponsibles() {
+    //    var URI = "";
+    //    URI = "data/list_responsibles.json";
+    //    $.ajax({
+    //        'url': URI,
+    //        'contentType': "application/json",
+    //        'dataType': "json",
+    //        'type': "GET",
+    //        'cache': true,
+    //        'async': true
+    //    }).done(function (data, textStatus, jqXHR) {
+    //        var datas = data.Data, iData, node;
+    //        for (iData in datas) {
+    //            node = datas[iData];
+    //            dataResponsibles.push({ 'id': node.Uid, 'text': node.Name });
+    //        }
+    //    }).fail(function (jqXHR, textStatus, errorThrown) {
+    //        console.log(jqXHR);
+    //        console.log(textStatus);
+    //        console.log(errorThrown);
+    //    });
+    //}
+
+    function renderSprintsUS() {
+        var data = dataAttachSprintUS.data, 
+            dataUserStories = data.userStories, 
+            dataSprints = data.sprints,
+            userStory, iUserStory, 
+            sprint, 
+            iSprint, 
+            sprintAttachUS = false;
+
+        //Sprints
+        if (dataSprints.length > 0) {
+            for (iSprint in dataSprints) {
+                sprint = dataSprints[iSprint];
+                sprints[sprint.uid] = {
+                    'uid': sprint.uid, 'name': sprint.name
+                }
+                if (sprint.stories !== null) {
+                    sprintAttachUS = true;
+                }
+                buildContainerSprint(sprints[sprint.uid], sprint.uid, sprintAttachUS);
+            }
+        } else {
+            buildContainerMsgEmptySprints();
+        }
+        //Historias de Usuario
+        if (dataUserStories.length > 0) {
+            for (iUserStory in dataUserStories) {
+                userStory = dataUserStories[iUserStory];
+                userStories[userStory.uid] = {
+                    'uid': userStory.uid, 'name': userStory.name, 'description': userStory.description,
+                    'idUserResponsable': userStory.idUserResponsable, 'userResponsable': userStory.userResponsable,
+                    'effort': userStory.effort, 'priority': userStory.priority,
+                    'acceptanceCriteria': userStory.acceptanceCriteria, 'idSprint': userStory.idSprint
+                }
+                buildContainerUserStory(userStories[userStory.uid], userStory.uid);
+            }
+        } else {
+            buildContainerMsgEmptyUnassignedUS();
+        }
+    }
+
+    function buildContainerUserStory(data, id) {
+        var context = {}, nodes = [], project, iProject,
+            source = document.getElementById("temp-user-story-container").innerHTML,
+            template = Handlebars.compile(source), height;
+        context.name = data.name;
+        context.id = id;
+        if (colorsIncrementalAux === colorsTotalAux) {
+            colorsIncrementalAux = 0;
+        }
+        context.style = 'style="background-color: '.concat(COLORS[colorsIncrementalAux]).concat(';')
+            .concat(' color: #fff;"');
+        colorsIncrementalAux++;
+        if (data.idSprint === null) {
+            $('#contentUnassignedUS').append(template(context));
+            $(".userstory").draggable({
+                'zIndex': 10000,
+                'revert': "invalid",
+                'cursor': "move",
+                'drag': function (event, ui) {
+                    idDragEventUS = id;
+                }
+            });
+        } else {
+            $('#msgEmptySprint'.concat(data.idSprint)).remove();
+            $('#contentAttachedUserStories'.concat(data.idSprint)).append(template(context));
+            if (!$("#contentAttachedUserStories".concat(data.idSprint)).hasClass('box-sprint-us-height-auto')) {
+                $("#contentAttachedUserStories".concat(data.idSprint)).removeClass('box-sprint-us-height-50px');
+                $("#contentAttachedUserStories".concat(data.idSprint)).addClass('box-sprint-us-height-auto');
+            }
+            height = $("#contentAttachedUserStories".concat(data.idSprint)).height();
+            $("#contentAttachedSprint".concat(data.idSprint)).css('height', height.toString().concat('px'));
+        }
+
+        
+    }
+
+    function cleanFormUserStoryModal() {
+        $('#iNameTask').val("");
+        $('#taDescriptionTask').val("");
+        $select.val(null).trigger('change');
+        $('#iEffortTask').val("");
+        $('#iPriorityTask').val("");
+        $('#taCriteriaOfAcceptanceTask').val("");
+    }
+
+    function updateFormUserStoryModal(data) {
+        $('#iNameTask').val(data.name);
+        $('#taDescriptionTask').val(data.description);
+        $select.val(data.idUserResponsable).trigger('change');
+        $('#iEffortTask').val(data.effort);
+        $('#iPriorityTask').val(data.priority);
+        $('#taCriteriaOfAcceptanceTask').val(data.acceptanceCriteria);
+    }
+
+    function buildContainerSprint(data, id, hasUS) {
+        var context = {}, 
+            nodes = [], 
+            project, 
+            iProject,
+            source = document.getElementById("temp-sprint-container").innerHTML,
+            template = Handlebars.compile(source);
+
+        context.name = data.name;
+        context.id = id;
+        if (colorsIncrementalAuxSprint === colorsTotalAux) {
+            colorsIncrementalAuxSprint = 0;
+        }
+        styleSprint = 'style="background-color: '.concat(COLORS[colorsIncrementalAuxSprint]).concat(';')
+            .concat(' color: #fff;"');
+        context.style = styleSprint;
+        colorsIncrementalAuxSprint++;
+        $('#contentAttachSprintUS').append(template(context));
+        $("#contentAttachedUserStories".concat(id)).droppable({
+            'drop': function (event, ui) {
+                var height;
+                saveToDatabaseAttachSprintUS(idDragEventUS, id);
+                $('#containerItemUserStory'.concat(idDragEventUS)).draggable("destroy");
+                $('#containerItemUserStory'.concat(idDragEventUS)).removeAttr('style');
+                if ($("#msgEmptySprint".concat(id)).length === 1) {
+                    $("#msgEmptySprint".concat(id)).remove();
+                }
+                $("#contentAttachedUserStories".concat(id)).append($('#containerItemUserStory'.concat(idDragEventUS)));
+                if (!$("#contentAttachedUserStories".concat(id)).hasClass('box-sprint-us-height-auto')) {
+                    $("#contentAttachedUserStories".concat(id)).removeClass('box-sprint-us-height-50px');
+                    $("#contentAttachedUserStories".concat(id)).addClass('box-sprint-us-height-auto');
+                }
+                height = $("#contentAttachedUserStories".concat(id)).height();
+                $("#contentAttachedSprint".concat(id)).css('height', height.toString().concat('px'));
+                if ($('#contentUnassignedUS').children().length === 0) {
+                    buildContainerMsgEmptyUnassignedUS();
+                }
+            }
+        });
+    }
+
+    function buildContainerCreatedSprint(name, style) {
+        var context = {}, nodes = [], project, iProject,
+            source = document.getElementById("temp-sprint-created-container").innerHTML,
+            template = Handlebars.compile(source);
+        incrementalAuxSprints++;
+        context.name = name;
+        context.style = style;
+        context.id = incrementalAuxSprints;
+        $('#containerSprintDetail').append(template(context));
+    }
+
+    function buildContainerMsgEmptyUnassignedUS() {
+        var context = {}, nodes = [], project, iProject,
+            source = document.getElementById("temp-us-empty-msg").innerHTML,
+            template = Handlebars.compile(source);
+        $('#contentUnassignedUS').append(template(context));
+    }
+
+    function buildContainerMsgEmptySprints() {
+        var context = {}, nodes = [], project, iProject,
+            source = document.getElementById("temp-sprints-empty-msg").innerHTML,
+            template = Handlebars.compile(source);
+        $('#contentAttachSprintUS').append(template(context));
+    }
+
+    //AQUI SE DEBE INSERTAR EN LA BASE DE DATOS
+    function saveToDatabaseAttachSprintUS(idUs, idSprint) {
+        var data = { 'IdUserStory': idUs, 'IdSprint': idSprint }
+        console.log(data);
+    }
+
+</script>*@

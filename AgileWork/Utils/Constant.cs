@@ -29,6 +29,7 @@
         public const string GetAllUserHistoryAsync = "http://agileworkutp.azurewebsites.net/api/getAllUserHistoryAsync/{projectId}";
         public const string SetUserStoriesToSprintAsync = "http://agileworkutp.azurewebsites.net/api/setUserStoriesToSprintAsync/{linkSprint}";
         public const string GetAllSprintInformationAsync = "http://agileworkutp.azurewebsites.net/api/getAllSprintInformationAsync/{sprintInformation}";
+        public const string GetUserStorieAsync = "http://agileworkutp.azurewebsites.net/api/getUserStorieAsync/{idUserStory}";
         #endregion
     }
 }

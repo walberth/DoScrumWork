@@ -258,6 +258,8 @@
             }).done(function() {
                 console.log(data);  
             });
+
+            location.href = '@Url.Action("Index", "Project")';
         });
     }
 
@@ -357,7 +359,6 @@
         $('#iPriorityTask').val(data.Priority);
         $('#taCriteriaOfAcceptanceTask').val(data.AcceptanceCriteria);
     }
-
 </script>
 
 

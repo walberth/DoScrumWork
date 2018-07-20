@@ -20,5 +20,7 @@ namespace AgileWork.Interface
         Task<Response<Project>> GetHistoriesAndSprintProjectAsync(string idProject);
 
         Task<Response<Sprint>> GetAllSprintInformationAsync(string idProject, string idSprint);
+
+        Task<Response<List<Project>>> GetAllProjectsAsync();
     }
 }

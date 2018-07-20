@@ -102,5 +102,17 @@ namespace AgileWork.Controllers.Api
                
             return BadRequest(response.Message);
         }
+
+        [HttpGet]
+        [Route("api/getAllProjectsAsync")]
+        public async Task<IHttpActionResult> GetAllProjectsAsync()
+        {
+            var response = await _agileProject.GetAllProjectsAsync();
+
+            if (response.IsSuccess)
+                return Ok(response);
+               
+            return BadRequest(response.Message);
+        }
     }
 }

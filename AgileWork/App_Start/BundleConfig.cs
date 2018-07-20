@@ -7,6 +7,7 @@ namespace AgileWork {
         {
             bundles.Add(new ScriptBundle("~/Js").Include(
                 "~/Content/plugins/jQuery/jquery-2.2.3.min.js",
+                "~/Content/plugins/jQueryUI/jquery-ui.min.js",
                 "~/Content/bootstrap/js/bootstrap.min.js",
                 "~/Content/plugins/handlebars/handlebars-v4.0.11.js",
                 "~/Content/plugins/moment/min/moment-with-locales.min.js",
@@ -18,6 +19,7 @@ namespace AgileWork {
                 "~/Content/dist/js/create_project.js",
                 "~/Content/dist/js/view_projects.js",
                 "~/Content/dist/js/project_detail.js",
+                "~/Content/dist/js/attach_sprint_us.js",
                 "~/Content/dist/js/datesBuilder.js"));
 
             bundles.Add(new StyleBundle("~/Css").Include(
@@ -31,7 +33,9 @@ namespace AgileWork {
                 "~/Content/dist/css/create_project.css",
                 "~/Content/dist/css/login.css",
                 "~/Content/dist/css/view_projects.css",
+                "~/Content/dist/css/attach_sprint_us.css",
                 "~/Content/dist/css/project_detail.css",
+                "~/Content/dist/css/mq_base.css",
                 "~/Content/dist/css/base.css"));
 
             BundleTable.EnableOptimizations = true;

@@ -1,7 +1,7 @@
-﻿namespace AgileWork.Models 
-{
-    using System;
+﻿using System.Collections.Generic;
 
+namespace AgileWork.Models 
+{
     public class UserStories 
     {
         public string Uid { get; set; }
@@ -26,11 +26,13 @@
 
         public string State { get; set; }
 
+        public List<UserTask> Tasks { get; set; }
+
         public UserStories()
         {
         }
 
-        public UserStories(string uid, string name, string idProject, string description, string idUserResponsable, string userResponsable, int? effort, int? priority, string acceptanceCriteria, string idSprint, string state) 
+        public UserStories(string uid, string name, string idProject, string description, string idUserResponsable, string userResponsable, int? effort, int? priority, string acceptanceCriteria, string idSprint, string state, List<UserTask> tasks) 
         {
             Uid = uid;
             Name = name;
@@ -43,6 +45,7 @@
             AcceptanceCriteria = acceptanceCriteria;
             IdSprint = idSprint;
             State = state;
+            Tasks = tasks;
         }
 
         public override string ToString() 

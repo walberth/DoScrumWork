@@ -1,9 +1,9 @@
 ﻿@model AgileWork.ModelView.ProjectViewModel
 
 @{
-    if (Session["idUser"] == null) {
+    @*if (Session["idUser"] == null) {
         @Url.Action("Index", "Login")
-    }
+    }*@
 
     ViewBag.Title = "ShowDetail";
     Layout = "~/Views/Shared/_Layout.cshtml";
@@ -136,7 +136,7 @@
                         <label for="iNameTask" class="control-label">Nombre</label>
                     </div>
                     <div class="col-xs-12 col-sm-6 col-md-8 col-lg-9">
-                        <input data-freeze="view" type="text" class="form-control" id="iNameTask" placeholder="Nombre de tarea" />
+                        <input data-freeze="view" type="text" class="form-control" id="iNameTask" placeholder="Nombre de tarea" readonly="readonly" />
                     </div>
                 </div>
                 <div class="row margin-top-2perc">
@@ -144,7 +144,7 @@
                         <label>Descripci&oacute;n</label>
                     </div>
                     <div class="col-xs-12 col-sm-6 col-md-8 col-lg-9">
-                        <textarea data-freeze="view" id="taDescriptionTask" class="form-control" rows="2" placeholder="Descripci&oacute;n de tarea..."></textarea>
+                        <textarea data-freeze="view" id="taDescriptionTask" class="form-control" rows="2" readonly="readonly" placeholder="Descripci&oacute;n de tarea..."></textarea>
                     </div>
                 </div>
                 <div id="containerResponsibleTask" class="row margin-top-2perc">
@@ -152,7 +152,7 @@
                         <label>Responsable</label>
                     </div>
                     <div class="col-xs-12 col-sm-6 col-md-8 col-lg-9">
-                        <select data-freeze="view" id="sResponsibleTask" class="form-control select2"></select>
+                        <select data-freeze="view" id="sResponsibleTask" class="form-control select2" disabled></select>
                     </div>
                 </div>
                 <div class="row margin-top-2perc">
@@ -160,13 +160,13 @@
                         <label>Esfuerzo</label>
                     </div>
                     <div class="col-xs-12 col-sm-12 col-md-6 col-lg-3">
-                        <input data-freeze="view" type="text" class="form-control" id="iEffortTask" placeholder="Esfuerzo" />
+                        <input data-freeze="view" type="text" class="form-control" id="iEffortTask" placeholder="Esfuerzo" readonly="readonly" />
                     </div>
                     <div class="col-xs-12 col-sm-12 col-md-6 col-lg-3 form-line-component-opt1 txt-align-right">
                         <label>Prioridad</label>
                     </div>
                     <div class="col-xs-12 col-sm-12 col-md-6 col-lg-3">
-                        <input data-freeze="view" type="text" class="form-control" id="iPriorityTask" placeholder="Prioridad" />
+                        <input data-freeze="view" type="text" class="form-control" id="iPriorityTask" placeholder="Prioridad" readonly="readonly" />
                     </div>
                 </div>
                 <div class="row margin-top-2perc">
@@ -174,7 +174,7 @@
                         <label>Criterio de Aceptaci&oacute;n</label>
                     </div>
                     <div class="col-xs-12 col-sm-6 col-md-8 col-lg-9">
-                        <textarea data-freeze="view" id="taCriteriaOfAcceptanceTask" class="form-control" rows="3" placeholder="Criterios de aceptaci&oacute;n..."></textarea>
+                        <textarea data-freeze="view" id="taCriteriaOfAcceptanceTask" class="form-control" readonly="readonly" rows="3" placeholder="Criterios de aceptaci&oacute;n..."></textarea>
                     </div>
                 </div>
             </div>
@@ -245,23 +245,42 @@
         sprintCreated = true,
         styleSprint;
 
-    $( document ).ready(function() {
+    $(document).ready(function () {
         //Show user storie detail
         $(".mija").on('click', function () {
             var $this = $(this),
                 id = $this.attr('data-id');
 
-            console.log("hola " + id);
+            console.log(".mija " + id);
+            var userResponsable = "";
 
-            var data = {};
             $.ajax({
-                url: '@Url.Action("SaveUserStory", "Project")',
+                url: '@Url.Action("ShowUserStoryDetail", "Project")',
                 type: 'POST',
                 data: { idUserStory: id }
             }).done(function (e) {
-                console.log(e);
+                console.log("user storie  " + e);
+
+                $('#iNameTask').val(e.Name);
+                $('#taDescriptionTask').val(e.Description);
+                userResponsable = e.UserResponsable;
+                $('#iEffortTask').val(e.Effort);
+                $('#iPriorityTask').val(e.Priority);
+                $('#taCriteriaOfAcceptanceTask').val(e.AcceptanceCriteria);
             });
 
+            $.ajax({
+                url: '@Url.Action("GetUserResponsable", "Project")',
+                type: 'GET'
+            }).done(function (e) {
+                var len = e.length;
+
+                for (var i = 0; i < len; i++) {
+                    if (e[i]['Name'] === userResponsable) {
+                        $("#sResponsibleTask").append("<option value='" + e[i]['Uid'] + "'>" + e[i]['Name'] + "</option>");
+                    }
+                }
+            });
 
             itemUserStoryAux = clone(userStories[id]);
             $("#taskModal").modal("show");
@@ -427,7 +446,6 @@
     }
 
     function buildContainerSprint() {
-        console.log("hola");
         var context = {}, nodes = [], project, iProject,
             source = document.getElementById("temp-sprint-container").innerHTML,
             template = Handlebars.compile(source);
@@ -512,13 +530,7 @@
             url: '@Url.Action("GetUserResponsable", "Project")',
             type: 'GET'
         }).done(function (e) {
-            console.log(e);
-
             var len = e.length;
-
-            //$.each(result, function (k, v) {
-            //    $('#sResponsibleTask').append('<option value="' + v.Uid + '">' + v.Name + '</option>');
-            //});
 
             for (var i = 0; i < len; i++) {
                 var id = e[i]['Uid'];
