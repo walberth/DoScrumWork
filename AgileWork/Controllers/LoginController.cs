@@ -24,8 +24,8 @@
         {
             var client = new RestClient(Constant.GetFirebaseLoginAsync);
             var request = new RestRequest(Method.POST)
-                .AddParameter("Email", /*model.Email*/"w.felipe.gutierrez@gmail.com")
-                .AddParameter("Password", /*model.Password*/"omarjc");
+                .AddParameter("Email", model.Email)
+                .AddParameter("Password", model.Password);
             
             var userViewModel = Mapping.Map<UserFirebase, UserFirebaseViewModel>(JsonConvert.DeserializeObject<Response<UserFirebase>>(client.Execute(request).Content).Data);
 
