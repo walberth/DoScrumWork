@@ -35,13 +35,13 @@ var sResponsibleTaskValid = true,
     idDragEventUS,
     dataAttachSprintUS;
 
-function initialize(){
-    initializeEvents();
+function initializeAttachSprint(){
+    initializeEventsAttach();
     getProjectInformation();
     getAllResponsibles();
 }
 
-function initializeEvents(){
+function initializeEventsAttach(){
     $("#btnProjectDetail").click(function(){
         location.href = "/Project/ReturnProjectDetail";
     });
@@ -56,7 +56,7 @@ function initializeEvents(){
 function getProjectInformation() {
     $.ajax({
         url: '/Project/GetSprintAndUserStorie',
-        type: 'POST',
+        type: 'POST'
     }).done(function(e) {
         dataAttachSprintUS = e;
         renderSprintsUS();
@@ -80,12 +80,14 @@ function buildResponsibleComponent(){
 
 function getAllResponsibles(){
     $.ajax({
-        url: '/Project/GetUserResponsableSelected',
-        type: 'GET'
-    }).done(function(e, textStatus, jqXHR) {
-        console.log(e);
-
-        var datas = e.data, 
+        'url': '/Project/GetUserResponsable',
+        'contentType': "application/json",
+        'dataType': "json",
+        'type': "GET",
+        'cache': true,
+        'async': true
+    }).done(function(e) {
+        var datas = e, 
             iData, 
             node;
 
@@ -126,9 +128,10 @@ function renderSprintsUS(){
         buildContainerMsgEmptySprints();
     }
     //Historias de Usuario
-    if(dataUserStories.length > 0){
+    if(dataUserStories.length > 0) {
         for(iUserStory in dataUserStories){
             userStory = dataUserStories[iUserStory];
+
             userStories[userStory.uid] = {
                 'uid': userStory.uid,
                 'name': userStory.name,
@@ -141,17 +144,21 @@ function renderSprintsUS(){
                 'idSprint': userStory.idSprint
             }
             
-            buildContainerUserStory(userStories[userStory.uid], userStory.uid);
+            buildContainerUserStoryAttach(userStories[userStory.uid], userStory.uid);
         }
     } else {
         buildContainerMsgEmptyUnassignedUS();
     }
 }
 
-function buildContainerUserStory(data, id){
-    var context = {}, nodes = [], project, iProject,
+function buildContainerUserStoryAttach(data, id){
+    var context = {}, 
+        nodes = [],
+        project, 
+        iProject,
         source = document.getElementById("temp-user-story-container").innerHTML,
         template = Handlebars.compile(source), height;
+
     context.name = data.name;
     context.id = id;
     if(colorsIncrementalAux === colorsTotalAux){
@@ -273,8 +280,6 @@ function buildContainerMsgEmptySprints(){
 //AQUI SE DEBE INSERTAR EN LA BASE DE DATOS
 function saveToDatabaseAttachSprintUS(idUs, idSprint){
     var data = {'IdUserStory': idUs, 'IdSprint': idSprint}
-	console.log("cambiando info " + data.IdUserStory);
-	console.log("cambiando info " + data.IdSprint);
 
     $.ajax({
         url:  '/Project/SetUserStorieToSprint',

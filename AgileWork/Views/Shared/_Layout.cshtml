@@ -23,6 +23,8 @@
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/ionicons/2.0.1/css/ionicons.min.css" />
     <!-- Google Font -->
     <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Source+Sans+Pro:300,400,600,700,300italic,400italic,600italic" />
+    <!-- Sheet JS -->
+    <script src="https://unpkg.com/file-saver@1.3.3/FileSaver.js"></script>
 
     @Styles.Render("~/Css")
     @Scripts.Render("~/Js")
@@ -36,7 +38,7 @@
             <nav class="navbar navbar-static-top">
                 <div class="container">
                     <div class="navbar-header">
-                        <a href="#" class="navbar-brand"><b>Agile Work</b><span class="space-header-login">Management</span></a>
+                        <a href="@Url.Action("Index", "Project")" class="navbar-brand"><b>Agile Work</b><span class="space-header-login">Management</span></a>
                         <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#navbar-collapse">
                             <i class="fa fa-bars"></i>
                         </button>
@@ -47,10 +49,11 @@
                                 <a href="#" class="dropdown-toggle" data-toggle="dropdown">Proyectos<span class="caret"></span></a>
                                 <ul class="dropdown-menu" role="menu">
                                     <!--En estos a href colocar la url para listar los proyectos-->
-                                    <li id="liCreateProject"><a href="@Url.Action("new", "Project")">Crear Proyecto</a></li>
+                                    <li id="liCreateProject"><a href="@Url.Action("New", "Project")">Crear Proyecto</a></li>
                                     <li id="liViewProjects"><a href="@Url.Action("Index", "Project")">Ver Proyectos</a></li>
                                 </ul>
                             </li>
+                            <li id="liStatistics"><a href="@Url.Action("Index", "Stadistics")">Estad&iacute;sticas</a></li>
                         </ul>
                     </div>
                 </div>
@@ -73,13 +76,7 @@
             {{/each}}
         </script>
 
-        <div id="blockContainer" class="content-wrapper bg">
-            <div class="container">
-                <section class="content">
-                    @RenderBody()
-                </section>
-            </div>
-        </div>
+        @RenderBody()
 
         <footer class="main-footer">
             <div class="container">

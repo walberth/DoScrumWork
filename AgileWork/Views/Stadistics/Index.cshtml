@@ -1,0 +1,135 @@
+﻿
+@{
+    ViewBag.Title = "Index";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<div id="blockContainer" class="content-wrapper bg-stadistics">
+    <div>
+        <div id="block-page" data-js="block-page">
+            <div id="circle-progress" data-js="circle-progress">
+                <strong></strong>
+            </div>
+        </div>
+    </div>
+    <div class="container">
+        <section class="content">
+            <div id="containerMainReport" class="box box-primary container-opacity">
+                <div class="box-header">
+                    <h3 class="box-title textOverflow-boxTitles"><i class="fa fa-table" aria-hidden="true"></i><span class="space-subtitle">Reporte General</span></h3>
+                    <div class="box-tools">
+                        <button type="button" class="btn btn-box-tool" data-widget="collapse"><i class="fa fa-minus"></i></button>
+                    </div>
+                </div>
+                <div id="contentMainReport" class="box-body">
+                    <div class="row">
+                        <div class="col-xs-12 col-sm-6 col-md-6 col-lg-6">
+                            <button type="button" id="btnExportMainReport" class="btn btn-success btn-md"><i class="fa fa-file-excel-o" aria-hidden="true"></i><span class="space-subtitle">Exportar</span></button>
+                            <table id="tMainReport" class="cell-border display table table-bordered table-hover" cellspacing="0" width="100%">
+                                <thead>
+                                <tr>
+                                    <th>Id</th>
+                                    <th>Proyectos</th>
+                                    <th>Historias de Usuario</th>
+                                    <th>Sprints</th>
+                                </tr>
+                                </thead>
+                                <tbody></tbody>
+                            </table>
+                        </div>
+                        <div class="col-xs-12 col-sm-6 col-md-6 col-lg-6">
+                            <div id="gMainReport" class="chart-project"></div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div id="containerDetailReport" class="box box-primary container-opacity">
+                <div class="box-header">
+                    <h3 class="box-title textOverflow-boxTitles"><i class="fa fa-bar-chart" aria-hidden="true"></i><span class="space-subtitle">Reporte Detallado</span></h3>
+                    <div class="box-tools">
+                        <button type="button" class="btn btn-box-tool" data-widget="collapse"><i class="fa fa-minus"></i></button>
+                    </div>
+                </div>
+                <div id="contentDetailReport" class="box-body">
+                    <div id="containerSListProjects" class="row row-fixed-zero">
+                        <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
+                            <select id="sListProjects" class="form-control select2"></select>
+                        </div>
+                    </div>
+                    <div class="row row-fixed-zero margin-top-2perc">
+                        <div class="col-xs-12 col-sm-12 col-md-3 col-lg-3">
+                            <div id="gDetailReportProjectSprintsPie" class="chart-project"></div>
+                        </div>
+                        <div class="col-xs-12 col-sm-12 col-md-9 col-lg-9">
+                            <div id="gDetailReportProjectSprints" class="chart-project"></div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+    </div>
+</div>
+
+<!--Modal User Stories-->
+<div id="userStoriesModal" class="modal fade" role="dialog" aria-hidden="true" data-backdrop="static" data-keyboard="false">
+    <div class="modal-dialog modal-cust" style="width: 50% !important;">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal">&times;</button>
+                <h4 id="usModalTitle" class="modal-title modal-header-title">Historias de Usuario de proyecto <span id="nameProjectUsTitle"></span></h4>
+            </div>
+            <div id="userStoriesModalBody" class="modal-body modal-body-cust">
+                <button type="button" id="btnExportUSProject" class="btn btn-success btn-md"><i class="fa fa-file-excel-o" aria-hidden="true"></i><span class="space-subtitle">Exportar</span></button>
+                <table id="tProjectUserStories" class="cell-border display table table-bordered table-hover" cellspacing="0" width="100%">
+                    <thead>
+                        <tr>
+                            <th>Historia de Usuario</th>
+                            <th>Responsable</th>
+                            <th>Esfuerzo</th>
+                            <th>Prioridad</th>
+                            <th>Tareas</th>
+                        </tr>
+                    </thead>
+                    <tbody></tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!--Modal Sprints-->
+<div id="sprintsModal" class="modal fade" role="dialog" aria-hidden="true" data-backdrop="static" data-keyboard="false">
+    <div class="modal-dialog modal-cust">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal">&times;</button>
+                <h4 id="sprintModalTitle" class="modal-title modal-header-title">Sprints de proyecto <span id="nameProjectSprintTitle"></span></h4>
+            </div>
+            <div id="sprintsModalBody" class="modal-body modal-body-cust">
+                <button type="button" id="btnExportSprintProject" class="btn btn-success btn-md"><i class="fa fa-file-excel-o" aria-hidden="true"></i><span class="space-subtitle">Exportar</span></button>
+                <table id="tProjectSprints" class="cell-border display table table-bordered table-hover" cellspacing="0" width="100%">
+                    <thead>
+                        <tr>
+                            <th>Sprint</th>
+                            <th>Historias de Usuario</th>
+                            <th>Tareas</th>
+                        </tr>
+                    </thead>
+                    <tbody></tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!--Overlay Container Template-->
+<script id="temp-overlay-container" type="text/x-handlebars-template">
+    <div class="overlay overlay-modal">
+        <i class="fa fa-refresh fa-spin"></i>
+    </div>
+</script>
+
+<script type="text/javascript"> 
+    ejectPageLoad();
+    initializeStadistics();
+</script>

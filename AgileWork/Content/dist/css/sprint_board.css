@@ -1,0 +1,137 @@
+.bg-dashboard {
+    background-image: url('../../../Image/wallpaper_agile_sprint_board.jpg');
+    height: 100%;
+    -ms-background-position: center;
+    background-position: center;
+    -ms-background-repeat: no-repeat;
+    background-repeat: no-repeat;
+    -ms-background-size: cover;
+    background-size: cover;
+}
+
+.container-tasks-status {
+    -ms-border-radius: 6px;
+    border-radius: 6px;
+    border: 1px solid #d8eaf3;
+    padding: 20px;
+    margin-bottom: 2%;
+	background-color: #d8eaf3;
+}
+
+.container-tasks-height100px {
+	height: 150px;
+}
+
+.container-us-hover {
+	background-color: #99ff99;
+}
+
+.container-tasks-heightauto {
+	height: auto;
+}
+
+.container-helper-task {
+    height: 90px;
+}
+
+.container-task-header {
+    font-weight: bold;
+}
+
+.select2-container {
+	width: 100% !important;
+}
+
+.box-container-root {
+    overflow-y: auto;
+    overflow-x: hidden;
+    height: 420px;
+}
+
+.sprint-name {
+    line-height: 29px;
+}
+
+.sprint-board-header {
+    text-align: center;
+}
+
+.sprint-board-text {
+    font-weight: bold;
+}
+
+.box-task {
+    border: 1px solid #3C8DBC;
+}
+
+.box-header.with-border {
+    border-bottom: 1px solid #d8eaf3;
+}
+
+.box-footer {
+    border-top: 1px solid #d8eaf3;
+}
+
+.external-event {
+    cursor: default;
+}
+
+.container-user-story-tools {
+    color: #ffffff;
+}
+
+.container-user-story-content {
+    word-break: break-all;
+}
+
+.sprint-container {
+	display: initial !important;
+}
+
+.box-sprint {
+    border: 1px solid #86b300;
+    -ms-border-radius: 5px;
+    border-radius: 5px;
+    padding: 2%;
+}
+
+.space-box-sprint {
+    margin-top: 2%;
+}
+
+.box-sprint-us-height-50px {
+    height: 50px;
+}
+
+.box-sprint-us-height-auto {
+    height: auto;
+}
+
+.box-sprint-container-display {
+    display: table;
+}
+
+.box-sprint-child-display {
+    vertical-align: middle;
+    display: table-cell;
+}
+
+.box-body-attach-sprint-container {
+    overflow-y: auto;
+    overflow-x: hidden;
+    height: 400px;
+}
+
+.box-body-attach-us-container {
+    overflow-y: auto;
+    overflow-x: hidden;
+    height: 400px;
+}
+
+.margin-bottom-2perc {
+    margin-bottom: 2%;
+}
+
+.btn-padding-created-task {
+	padding: 0;
+}

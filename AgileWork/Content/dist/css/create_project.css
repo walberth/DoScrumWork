@@ -1,5 +1,5 @@
-.bg {
-    background-image: url("~/Content/dist/img/wallpaper_agile_create_project.jpg");
+.bg-new-project {
+    background-image: url('../../../Image/wallpaper_agile_create_project.jpg');
     height: 100%;
     -ms-background-position: center;
     background-position: center;

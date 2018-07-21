@@ -10,7 +10,7 @@
         public const string Task = "task";
 
         #region Task State
-        public const string InitialTaskState = "New";
+        public const string InitialTaskState = "to_do";
         #endregion
 
         #region Web Services APIs
@@ -30,6 +30,7 @@
         public const string SetUserStoriesToSprintAsync = "http://agileworkutp.azurewebsites.net/api/setUserStoriesToSprintAsync/{linkSprint}";
         public const string GetAllSprintInformationAsync = "http://agileworkutp.azurewebsites.net/api/getAllSprintInformationAsync/{sprintInformation}";
         public const string GetUserStorieAsync = "http://agileworkutp.azurewebsites.net/api/getUserStorieAsync/{idUserStory}";
+        public const string GetAllProjectsAsync = "http://agileworkutp.azurewebsites.net/api/getAllProjectsAsync";
         #endregion
     }
 }

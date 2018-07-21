@@ -16,10 +16,13 @@ body, html {
 }
 
 .bg {
-    background-image: url('../img/wallpaper_agile_login.jpg');
+    background-image: url('../../../Image/wallpaper_agile_login.jpg');
     height: 100%;
+    -ms-background-position: center;
     background-position: center;
+    -ms-background-repeat: no-repeat;
     background-repeat: no-repeat;
+    -ms-background-size: cover;
     background-size: cover;
 }
 
@@ -32,5 +35,6 @@ body, html {
 }
 
 .box-body-login {
+    background: #ffffff;
     background: rgba(255,255,255, .86);
 }

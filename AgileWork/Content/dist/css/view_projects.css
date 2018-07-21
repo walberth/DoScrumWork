@@ -1,12 +1,16 @@
-.bg {
-    background-image: url('../img/wallpaper_agile_projects.jpg');
+.bg-view-projects {
+    background-image: url('../../../Image/wallpaper_agile_projects.jpg');
     height: 100%;
+    -ms-background-position: center;
     background-position: center;
+    -ms-background-repeat: no-repeat;
     background-repeat: no-repeat;
+    -ms-background-size: cover;
     background-size: cover;
 }
 
 .container-list-projects {
+    -ms-border-radius: 6px;
     border-radius: 6px;
     border: 1px solid #3C8DBC;
     padding: 20px;

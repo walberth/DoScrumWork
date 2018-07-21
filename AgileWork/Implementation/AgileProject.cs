@@ -476,6 +476,9 @@
                                 Name = sprint.Object.Name,
                             };
 
+                            sprintObject.Stories = new List<UserStories>();
+                            sprintObject.Tasks = new List<UserTask>();
+
                             listSprint.Add(sprintObject);
                         }
                     }

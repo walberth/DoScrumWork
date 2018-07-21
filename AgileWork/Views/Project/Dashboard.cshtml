@@ -1,0 +1,194 @@
+﻿
+@{
+    ViewBag.Title = "Dashboard";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<div id="blockContainer" class="content-wrapper bg-dashboard">
+    <div>
+        <div id="block-page" data-js="block-page">
+            <div id="circle-progress" data-js="circle-progress">
+                <strong></strong>
+            </div>
+        </div>
+    </div>
+    <div class="container">
+        <section class="content">
+            <div id="containerSprintInformation" class="box box-default container-opacity">
+                <div class="box-body">
+                    <div class="row">
+                        <div class="col-xs-12 col-sm-6 col-md-4 col-lg-3 form-line-component-opt1 txt-align-right sprint-name">
+                            <label for="iNameSprint" class="control-label">Nombre de Sprint</label>
+                        </div>
+                        <div class="col-xs-12 col-sm-6 col-md-4 col-lg-4">
+                            <input readonly="readonly" type="text" class="form-control" id="iNameSprint" />
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div id="containerSprintBoard" class="box box-primary container-opacity">
+                <div class="box-header">
+                    <h3 class="box-title textOverflow-boxTitles"><i class="fa fa-th-large" aria-hidden="true"></i><span class="space-subtitle">Tablero para Asignaci&oacute;n de Tareas</span></h3>
+                </div>
+                <div id="boardContent" class="box-body box-container-root">
+                    <div class="row">
+                        <div class="col-xs-12 col-sm-6 col-md-3 col-lg-3 sprint-board-header">
+                            <h4 class="sprint-board-text">Historias de Usuario</h4>
+                        </div>
+                        <div class="col-xs-12 col-sm-6 col-md-3 col-lg-3 sprint-board-header">
+                            <h4 class="sprint-board-text">A realizar</h4>
+                        </div>
+                        <div class="col-xs-12 col-sm-6 col-md-3 col-lg-3 sprint-board-header">
+                            <h4 class="sprint-board-text">En proceso</h4>
+                        </div>
+                        <div class="col-xs-12 col-sm-6 col-md-3 col-lg-3 sprint-board-header">
+                            <h4 class="sprint-board-text">Realizado</h4>
+                        </div>
+                    </div>
+                </div>
+                <div class="box-footer txt-align-right">
+                    <button type="button" id="btnProjectDetail" class="btn btn-info btn-md">Ir a detalle de proyecto</button>
+                </div>
+            </div>
+        </section>
+    </div>
+</div>
+
+<!--Modal Create or Edit Task-->
+<div id="taskModal" class="modal fade" role="dialog" aria-hidden="true" data-backdrop="static" data-keyboard="false">
+    <div class="modal-dialog modal-cust">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal">&times;</button>
+                <h4 id="taskModalTitle" class="modal-title modal-header-title">Detalle de Historia de Usuario</h4>
+            </div>
+            <div class="modal-body modal-body-cust">
+                <div class="row">
+                    <div class="col-xs-12 col-sm-6 col-md-4 col-lg-3 form-line-component-opt1 txt-align-right">
+                        <label for="iNameTask" class="control-label">Nombre</label>
+                    </div>
+                    <div class="col-xs-12 col-sm-6 col-md-8 col-lg-9">
+                        <input data-freeze="view" readonly="readonly" type="text" class="form-control" id="iNameTask" />
+                    </div>
+                </div>
+                <div class="row margin-top-2perc">
+                    <div class="col-xs-12 col-sm-6 col-md-4 col-lg-3 form-line-component-opt3 txt-align-right">
+                        <label>Descripci&oacute;n</label>
+                    </div>
+                    <div class="col-xs-12 col-sm-6 col-md-8 col-lg-9">
+                        <textarea data-freeze="view" readonly="readonly" id="taDescriptionTask" class="form-control" rows="2"></textarea>
+                    </div>
+                </div>
+                <div id="containerResponsibleTask" class="row margin-top-2perc">
+                    <div class="col-xs-12 col-sm-6 col-md-4 col-lg-3 form-line-component-opt1 txt-align-right">
+                        <label>Responsable</label>
+                    </div>
+                    <div class="col-xs-12 col-sm-6 col-md-8 col-lg-9">
+                        <select data-freeze="view" id="sResponsibleTask" class="form-control select2"></select>
+                    </div>
+                </div>
+                <div class="row margin-top-2perc">
+                    <div class="col-xs-12 col-sm-12 col-md-6 col-lg-3 form-line-component-opt1 txt-align-right">
+                        <label>Esfuerzo</label>
+                    </div>
+                    <div class="col-xs-12 col-sm-12 col-md-6 col-lg-3">
+                        <input data-freeze="view" readonly="readonly" type="text" class="form-control" id="iEffortTask" />
+                    </div>
+                    <div class="col-xs-12 col-sm-12 col-md-6 col-lg-3 form-line-component-opt1 txt-align-right">
+                        <label>Prioridad</label>
+                    </div>
+                    <div class="col-xs-12 col-sm-12 col-md-6 col-lg-3">
+                        <input data-freeze="view" readonly="readonly" type="text" class="form-control" id="iPriorityTask" />
+                    </div>
+                </div>
+                <div class="row margin-top-2perc">
+                    <div class="col-xs-12 col-sm-6 col-md-4 col-lg-3 form-line-component-opt4 txt-align-right">
+                        <label>Criterio de Aceptaci&oacute;n</label>
+                    </div>
+                    <div class="col-xs-12 col-sm-6 col-md-8 col-lg-9">
+                        <textarea data-freeze="view" readonly="readonly" id="taCriteriaOfAcceptanceTask" class="form-control" rows="3"></textarea>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!--Container User Story And Tasks Template-->
+<script id="temp-us-tasks-container" type="text/x-handlebars-template">
+    <div id="containerBoardUserStoryAttached{{id}}" class="row margin-top-2perc">
+        <div id="containerBoardUserStory{{id}}" class="col-xs-12 col-sm-6 col-md-3 col-lg-3 sprint-board-header">
+            {{{userStory}}}
+        </div>
+        <div class="col-xs-12 col-sm-6 col-md-3 col-lg-3 sprint-board-header">
+            <div class="container-tasks-status">
+                <div id="containerBoardStatusToDo{{id}}" data-id="{{id}}" data-state="to_do" class="row row-fixed-zero" style="height: 150px;">
+                    <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12 margin-bottom-2perc" data-element="button">
+                        <button id="mBtnCreateTask{{id}}" data-id="{{id}}" type="button" class="btn btn-success btn-sm pull-left" data-widget="collapse"><i class="fa fa-plus"></i></button>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="col-xs-12 col-sm-6 col-md-3 col-lg-3 sprint-board-header">
+            <div class="container-tasks-status">
+                <div id="containerBoardStatusInProgress{{id}}" data-id="{{id}}" data-state="in_progress" class="row row-fixed-zero" style="height: 150px;">
+
+                </div>
+            </div>
+        </div>
+        <div class="col-xs-12 col-sm-6 col-md-3 col-lg-3 sprint-board-header">
+            <div class="container-tasks-status">
+                <div id="containerBoardStatusDone{{id}}" data-id="{{id}}" data-state="done" class="row row-fixed-zero" style="height: 150px;">
+
+                </div>
+            </div>
+        </div>
+    </div>
+</script>
+
+<!--Container Item User Story Template-->
+<script id="temp-item-us-container" type="text/x-handlebars-template">
+    <div id="containerItemUserStory{{id}}" class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
+        <div class="row row-fixed-zero external-event" {{{style}}}>
+            <div class="col-xs-9 col-sm-9 col-md-9 col-lg-9">
+                <div class="container-user-story-content"><span id="nameItemUserStory{{id}}">{{name}}</span></div>
+            </div>
+            <div class="col-xs-3 col-sm-3 col-md-3 col-lg-3">
+                <button id="mBtnDetailUserStory{{id}}" data-id="{{id}}" type="button" class="btn btn-box-tool container-user-story-tools" data-widget="collapse"><i class="fa fa-plus-circle"></i></button>
+            </div>
+        </div>
+    </div>
+</script>
+
+<!--Container Task Template-->
+<script id="temp-task-container" type="text/x-handlebars-template">
+    <div id="containerTaskUS{{id}}" data-id="{{id}}" data-us="{{idUs}}" data-state="{{state}}" data-container="task" class="col-xs-12 col-sm-12 col-md-12 col-lg-12 droppable-helper{{idUs}}">
+        <div class="row row-fixed-zero external-event" {{{style}}}>
+            <div class="container-user-story-content"><span id="nameTaskUS{{id}}">{{name}}</span></div>
+        </div>
+    </div>
+</script>
+
+<!--Container Task Pre Created Template-->
+<script id="temp-task-pre-created-container" type="text/x-handlebars-template">
+    <div id="containerPreCreatedTaskUS" class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
+        <div class="row row-fixed-zero external-event" {{{style}}}>
+            <div class="container-user-story-content">
+                <div class="row row-fixed-zero">
+                    <div class="col-xs-9 col-sm-9 col-md-9 col-lg-9">
+                        <input type="text" id="nameItemPreTask" class="form-control sprint-container input-sprint-action" />
+                    </div>
+                    <div class="col-xs-3 col-sm-3 col-md-3 col-lg-3">
+                        <button id="btnItemPreTaskCreate" data-us="{{idus}}" type="button" class="btn-padding-created-task btn-sprint-action btn btn-box-tool container-user-story-tools sprint-icon-create" data-widget="collapse"><i class="fa fa-check"></i></button>
+                        <button id="btnItemPreTaskRemove" data-us="{{idus}}" type="button" class="btn-padding-created-task btn-sprint-action btn btn-box-tool container-user-story-tools sprint-icon-create" data-widget="collapse"><i class="fa fa-times"></i></button>
+                    </div>
+                </div>
+            </div>  
+        </div>
+    </div>
+</script>
+
+<script type="text/javascript">
+    ejectPageLoad();
+    initialize_dashboard();
+</script>

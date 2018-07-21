@@ -1,0 +1,51 @@
+/*
+* Author: Gustavo Ramos Montalvo
+* Project: info-bomberos
+*/
+
+.scroll-hide{
+    overflow: hidden !important;
+}
+
+#block-page {
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background-color: rgba(59, 59, 58,.99);
+    -webkit-transition: all .5s ease;
+    z-index: 20000;
+    width:100%;
+    height:100%
+}
+
+#block-page.hide {
+    opacity: 0;
+}
+
+#circle-progress {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    margin-top: -50px;
+    margin-left: -50px;
+    -webkit-transition: all 1000s linear;
+}
+
+#circle-progress strong {
+    position: absolute;
+    top: 30px;
+    left: 0;
+    width: 100%;
+    text-align: center;
+    line-height: 40px;
+    font-size: 30px;
+    color: #fff !important;
+}
+
+#circle-progress strong i {
+    font-style: normal;
+    font-size: 0.6em;
+    font-weight: normal;
+}

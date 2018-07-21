@@ -6,69 +6,82 @@
     Layout = "~/Views/Shared/_Layout.cshtml";
 }
 
-<div class="row">
-    <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
-        <div id="containerCreateProject" class="box box-primary container-opacity">
-            @*@using (Html.BeginForm("SaveProject", "Project", FormMethod.Post, new { @class = "form-horizontal", role = "form" })) {*@
-                <div class="box-body">
-                    <div class="row row-fixed-zero margin-top-2perc">
-                        <div class="col-xs-12 col-sm-12 col-md-6 col-lg-6">
-                            <div class="row row-fixed-zero">
-                                <div class="col-xs-12 col-sm-6 col-md-4 col-lg-3 form-line-component-opt1 txt-align-right">
-                                    <label for="iNameProject" class="control-label">Nombre</label>
-                                </div>
-                                <div class="col-xs-12 col-sm-6 col-md-8 col-lg-9">
-                                    @*@Html.TextBoxFor(m => m.Name, new { @id = "iNameProject", placeholder = "Nombre de proyecto", @class = "form-control" })*@
-                                    <input type="text" class="form-control" id="iNameProject" placeholder="Nombre de proyecto" />
-                                </div>
-                            </div>
-                        </div>
-                        <div id="containerDates" class="col-xs-12 col-sm-12 col-md-6 col-lg-6">
-                            <div class="row row-fixed-zero">
-                                <div class="col-xs-12 col-sm-6 col-md-4 col-lg-3 form-line-component-opt1 txt-align-right">
-                                    <label for="iDatesProject" class="control-label">Fechas</label>
-                                </div>
-                                <div class="col-xs-12 col-sm-6 col-md-8 col-lg-9">
-                                    @*@Html.TextBoxFor(m => m.StartDate, new { @id = "iDatesProject", placeholder = "Rango de fechas", @class = "form-control" })*@
-                                    <input type="text" class="form-control" id="iDatesProject" placeholder="Rango de fechas" />
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="row row-fixed-zero margin-top-2perc">
-                        <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
-                            <div class="row row-fixed-zero">
-                                <div class="col-xs-12 col-sm-6 col-md-4 col-lg-3 form-line-component-opt2 txt-align-right">
-                                    <label>Descripci&oacute;n</label>
-                                </div>
-                                <div class="col-xs-12 col-sm-6 col-md-8 col-lg-9">
-                                    @*@Html.TextAreaFor(m => m.Description, new { @id = "taDescriptionProject", placeholder = "Descripción del proyecto...", @class = "form-control", rows = "3" })*@
-                                    <textarea id="taDescriptionProject" class="form-control" rows="3" placeholder="Descripci&oacute;n del proyecto..."></textarea>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                    <div id="containerUserStories" class="box box-cus margin-top-2perc box-task">
-                        <div class="box-header with-border">
-                            <h3 class="box-title textOverflow-boxTitles container-task-header">Historias de Usuario</h3>
-                        </div>
+<div id="blockContainer" class="content-wrapper bg-new-project">
+    <div>
+        <div id="block-page" data-js="block-page">
+            <div id="circle-progress" data-js="circle-progress">
+                <strong></strong>
+            </div>
+        </div>
+    </div>
+    <div class="container">
+        <section class="content">
+            <div class="row">
+                <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
+                    <div id="containerCreateProject" class="box box-primary container-opacity">
+                        @*@using (Html.BeginForm("SaveProject", "Project", FormMethod.Post, new { @class = "form-horizontal", role = "form" })) {*@
                         <div class="box-body">
-                            <div id="containerUserStoriesDetail" class="row row-fixed-zero">
-                                <span id="msgEmptyUserStories">Registre por lo menos dos historias de usuario</span>
+                            <div class="row row-fixed-zero margin-top-2perc">
+                                <div class="col-xs-12 col-sm-12 col-md-6 col-lg-6">
+                                    <div class="row row-fixed-zero">
+                                        <div class="col-xs-12 col-sm-6 col-md-4 col-lg-3 form-line-component-opt1 txt-align-right">
+                                            <label for="iNameProject" class="control-label">Nombre</label>
+                                        </div>
+                                        <div class="col-xs-12 col-sm-6 col-md-8 col-lg-9">
+                                            @*@Html.TextBoxFor(m => m.Name, new { @id = "iNameProject", placeholder = "Nombre de proyecto", @class = "form-control" })*@
+                                            <input type="text" class="form-control" id="iNameProject" placeholder="Nombre de proyecto" />
+                                        </div>
+                                    </div>
+                                </div>
+                                <div id="containerDates" class="col-xs-12 col-sm-12 col-md-6 col-lg-6">
+                                    <div class="row row-fixed-zero">
+                                        <div class="col-xs-12 col-sm-6 col-md-4 col-lg-3 form-line-component-opt1 txt-align-right">
+                                            <label for="iDatesProject" class="control-label">Fechas</label>
+                                        </div>
+                                        <div class="col-xs-12 col-sm-6 col-md-8 col-lg-9">
+                                            @*@Html.TextBoxFor(m => m.StartDate, new { @id = "iDatesProject", placeholder = "Rango de fechas", @class = "form-control" })*@
+                                            <input type="text" class="form-control" id="iDatesProject" placeholder="Rango de fechas" />
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="row row-fixed-zero margin-top-2perc">
+                                <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
+                                    <div class="row row-fixed-zero">
+                                        <div class="col-xs-12 col-sm-6 col-md-4 col-lg-3 form-line-component-opt2 txt-align-right">
+                                            <label>Descripci&oacute;n</label>
+                                        </div>
+                                        <div class="col-xs-12 col-sm-6 col-md-8 col-lg-9">
+                                            @*@Html.TextAreaFor(m => m.Description, new { @id = "taDescriptionProject", placeholder = "Descripción del proyecto...", @class = "form-control", rows = "3" })*@
+                                            <textarea id="taDescriptionProject" class="form-control" rows="3" placeholder="Descripci&oacute;n del proyecto..."></textarea>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div id="containerUserStories" class="box box-cus margin-top-2perc box-task">
+                                <div class="box-header with-border">
+                                    <h3 class="box-title textOverflow-boxTitles container-task-header">Historias de Usuario</h3>
+                                </div>
+                                <div class="box-body">
+                                    <div id="containerUserStoriesDetail" class="row row-fixed-zero">
+                                        <span id="msgEmptyUserStories">Registre por lo menos dos historias de usuario</span>
+                                    </div>
+                                </div>
+                                <div class="box-footer">
+                                    <button type="button" id="btnCreateTask" class="btn btn-info btn-xs">Crear</button>
+                                </div>
                             </div>
                         </div>
                         <div class="box-footer">
-                            <button type="button" id="btnCreateTask" class="btn btn-info btn-xs">Crear</button>
+                            <div class="pull-right">
+                                <button type="submit" id="btnCreateProject" class="btn btn-primary btn-sm">Crear Proyecto</button>
+                            </div>
                         </div>
+                        @* } *@
                     </div>
                 </div>
-                <div class="box-footer">
-                    <div class="pull-right">
-                        <button type="submit" id="btnCreateProject" class="btn btn-primary btn-sm">Crear Proyecto</button>
-                    </div>
-                </div>
-                @* } *@
-        </div>
+            </div>
+        </section>
     </div>
 </div>
 
@@ -162,6 +175,8 @@
 </script>
 
 <script type="text/javascript">
+    ejectPageLoad();
+
     var sResponsibleTaskValid = true, incrementalAuxUserStories = 0, select2Val = { 'id': null, 'text': null },
         RESOURCES = {
             'select2': "Seleccione",

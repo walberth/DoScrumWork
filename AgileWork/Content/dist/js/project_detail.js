@@ -1,4 +1,6 @@
-//var sResponsibleTaskValid = true, incrementalAuxUserStories = 0, select2Val = {'id': null, 'text': null},
+//var sResponsibleTaskValid = true, 
+//    incrementalAuxUserStories = 0, 
+//    select2Val = {'id': null, 'text': null},
 //    RESOURCES = {
 //        'select2': "Seleccione",
 //        'modal': {
@@ -10,19 +12,28 @@
 //            }
 //        }
 //    },
-//    COLORS = ['#00a65a', '#f39c12', '#00c0ef', '#3c8dbc', '#dd4b39', '#b32d00', '#ff8c1a', '#99cc00',
-//            '#9900cc', '#663300'],
-//    colorsIncrementalAux = 0, colorsTotalAux = COLORS.length - 1, dataResponsibles = [], userStories = {},
-//    itemUserStoryAux = {}, $select, data, idProject, incrementalAuxSprints = 0, colorsIncrementalAuxSprint = 0,
-//	sprintCreated = true, styleSprint;
+//    COLORS = ['#00a65a', '#f39c12', '#00c0ef', '#3c8dbc', '#dd4b39', '#b32d00', '#ff8c1a', '#99cc00', '#9900cc', '#663300'],
+//    colorsIncrementalAux = 0, 
+//    colorsTotalAux = COLORS.length - 1, 
+//    dataResponsibles = [], 
+//    userStories = {},
+//    itemUserStoryAux = {}, 
+//    $select, 
+//    data, 
+//    idProject, 
+//    incrementalAuxSprints = 0,
+//    colorsIncrementalAuxSprint = 0,
+//	sprintCreated = true, 
+//    styleSprint,
+//    dataProjectDetail;
 
-//function initialize(){
-//    initializeEvents();
-//	renderProjectDetail();
-//    getAllResponsibles();
+//function initializeDetail(){
+//    initializeEventsDetail();
+//    getProjectinformation();
+//    getAllResponsiblesProject();
 //}
 
-//function initializeEvents(){
+//function initializeEventsDetail(){
 //    $("#btnCreateTask").click(function(){
 //        $("#taskModal").modal("show");
 //        $('#taskModalTitle').text(RESOURCES.modal.create.title);
@@ -31,12 +42,12 @@
 //        $('#mActionTask').attr('data-action', RESOURCES.modal.create.action);
 //		$('#taskModal').find('[data-freeze="view"]').removeAttr('readonly');
 //		$select.prop('disabled', false);
-//        cleanFormUserStoryModal();
+//        cleanFormUserStoryModalDetail();
 //    });
 //    $("#taskModal").on('show.bs.modal', function () {
 //        if(sResponsibleTaskValid){
 //            sResponsibleTaskValid = false;
-//            buildResponsibleComponent();
+//            buildResponsibleComponentDetail();
 //        }
 //    });
 //    $("#mActionTask").click(function(){
@@ -47,17 +58,22 @@
 //            }
 //            incrementalAuxUserStories++;
 //            userStories[incrementalAuxUserStories.toString()] = {
-//                'Name': $('#iNameTask').val(), 'IdProject': idProject, 'Description': $('#taDescriptionTask').val(),
-//                'IdUserResponsable': select2Val.id, 'UserResponsable': select2Val.text,
-//                'Effort': $('#iEffortTask').val(), 'Priority': $('#iPriorityTask').val(),
-//                'AcceptanceCriteria': $('#taCriteriaOfAcceptanceTask').val(), 'aux': incrementalAuxUserStories.toString()
+//                'Name': $('#iNameTask').val(), 
+//                'IdProject': idProject, 
+//                'Description': $('#taDescriptionTask').val(),
+//                'IdUserResponsable': select2Val.id, 
+//                'UserResponsable': select2Val.text,
+//                'Effort': $('#iEffortTask').val(), 
+//                'Priority': $('#iPriorityTask').val(),
+//                'AcceptanceCriteria': $('#taCriteriaOfAcceptanceTask').val(), 
+//                'aux': incrementalAuxUserStories.toString()
 //            };
-//            buildContainerUserStory(userStories[incrementalAuxUserStories.toString()], incrementalAuxUserStories.toString());		
+//            buildContainerUserStoryDetail(userStories[incrementalAuxUserStories.toString()], incrementalAuxUserStories.toString());
 //			saveToDatabaseUserStory(userStories[incrementalAuxUserStories.toString()]);
 //        }
 //    });
 //    $("#btnCreateSprint").click(function(){
-//        buildContainerSprint();
+//        buildContainerSprintDetail();
 //    });
 //	$("#btnMatchSprintHU").click(function(){
 //		//AQUI PONER URL PARA IR A PAGINA DE RELACIONAR SPRINT CON HISTORIAS DE USUARIO
@@ -65,7 +81,7 @@
 //    });
 //}
 
-//function buildResponsibleComponent(){
+//function buildResponsibleComponentDetail(){
 //    $select = $('#sResponsibleTask').select2({
 //        'theme': 'bootstrap', 'placeholder': RESOURCES.select2, 'language': 'es',
 //        'minimumResultsForSearch': Infinity, 'data': dataResponsibles,
@@ -80,18 +96,29 @@
 //    });
 //}
 
-//function getAllResponsibles(){
-//	var URI = "";
-//    URI = "data/list_responsibles.json";
+//function getProjectinformation() {
 //    $.ajax({
-//        'url': URI,
+//        url: '/Project/ObtainProjectDetail',
+//        type: 'POST'
+//    }).done(function(e) {
+//        dataProjectDetail = e;
+//        renderProjectDetail();
+//    });
+//}
+
+//function getAllResponsiblesProject(){
+//    $.ajax({
+//        'url': '/Project/GetUserResponsable',
 //        'contentType': "application/json",
 //        'dataType': "json",
 //        'type': "GET",
 //        'cache': true,
 //        'async': true
-//    }).done(function(data, textStatus, jqXHR) {
-//        var datas = data.Data, iData, node;
+//    }).done(function(e) {
+//        var datas = e, 
+//            iData, 
+//            node;
+
 //        for(iData in datas){
 //            node = datas[iData];
 //            dataResponsibles.push({'id': node.Uid, 'text': node.Name});
@@ -104,54 +131,95 @@
 //}
 
 //function renderProjectDetail(){
-//	var data = dataProjectDetail.Data, dataUserStories = data.UserStories, dataSprints = data.Sprints,
-//		userStory, iUserStory;
+//    console.log(dataProjectDetail.data);
+//    console.log(dataProjectDetail.data.userStories);
+
+//	var data = dataProjectDetail.data, 
+//	    dataUserStories = data.userStories, 
+//	    dataSprints = data.sprints,
+//		userStory,
+//	    iUserStory;
+
 //	//General
-//	$('#iNameProject').val(data.Name);	
-//	buildDatesComponent($('#iDatesProject'), '#containerDates', 'auto', 
-//		{'startDate': data.StartDate, 'endDate': data.EndDate});
-//	$('#taDescriptionProject').val(data.Description);
-//	idProject = data.Uid;
-//	//Historias de Usuario
+//	$('#iNameProject').val(data.name);
+//	buildDatesComponent($('#iDatesProject'), '#containerDates', 'auto',
+//		{'startDate': data.startDate, 'endDate': data.endDate});
+//	$('#taDescriptionProject').val(data.description);
+//	idProject = data.uid;
+
+//    //Historias de Usuario
 //	for(iUserStory in dataUserStories){
 //		incrementalAuxUserStories++;
+
 //		userStory = dataUserStories[iUserStory];
 //		userStories[incrementalAuxUserStories] = {
-//			'Uid': userStory.Uid, 'Name': userStory.Name, 'Description': userStory.Description, 
-//			'IdUserResponsable': userStory.IdUserResponsable, 'UserResponsable': userStory.UserResponsable, 
-//			'Effort': userStory.Effort, 'Priority': userStory.Priority, 
-//			'AcceptanceCriteria': userStory.AcceptanceCriteria
+//			'Uid': userStory.uid, 
+//			'Name': userStory.name, 
+//			'Description': userStory.description,
+//			'IdUserResponsable': userStory.idUserResponsable, 
+//			'UserResponsable': userStory.userResponsable,
+//			'Effort': userStory.effort, 
+//			'Priority': userStory.priority,
+//			'AcceptanceCriteria': userStory.acceptanceCriteria
 //		}
-//		buildContainerUserStory(userStories[incrementalAuxUserStories.toString()], incrementalAuxUserStories.toString());
+//		buildContainerUserStoryDetail(userStories[incrementalAuxUserStories.toString()], incrementalAuxUserStories.toString());
 //	}
+
+//    //Sprints
+//    if(dataSprints.length > 0){
+//        for(iSprint in dataSprints){
+//            sprint = dataSprints[iSprint];
+//            sprints[sprint.uid] = {
+//                'uid': sprint.uid, 
+//                'name': sprint.name
+//            }
+//            if(sprint.stories !== null){
+//                sprintAttachUS = true;
+//            }
+//            buildContainerSprintDetail();
+//        }
+//    } else {
+//        buildContainerMsgEmptySprintDetail();
+//    }
 //}
 
-//function buildContainerUserStory(data, id){
+//function buildContainerUserStoryDetail(data, id){
 //    var context = {}, nodes = [], project, iProject,
 //        source = document.getElementById("temp-user-story-container").innerHTML,
 //        template = Handlebars.compile(source);
 //    context.name = data.Name;
 //    context.id = id;
+
 //    if(colorsIncrementalAux === colorsTotalAux){
 //        colorsIncrementalAux = 0;
 //    }
-//    context.style = 'style="background-color: '.concat(COLORS[colorsIncrementalAux]).concat(';')
-//        .concat(' color: #fff;"');
+
+//    context.style = 'style="background-color: '.concat(COLORS[colorsIncrementalAux]).concat(';').concat(' color: #fff;"');
 //    colorsIncrementalAux++;
 //    $('#containerUserStoriesDetail').append(template(context));
+
 //    $("#mBtnUpdateUserStory".concat(id)).on('click', function(){
-//        var $this = $(this), id = $this.attr('data-id');
+//        var $this = $(this), 
+//            id = $this.attr('data-id');
+
+//        console.log(userStories[id].Uid);
+//        console.log(userStories[id].Description);
+//        console.log(userStories[id].IdUserResponsable);
+//        console.log(userStories[id].Effort);
+//        console.log(userStories[id].Priority);
+//        console.log(userStories[id].AcceptanceCriteria);
+
 //        itemUserStoryAux = clone(userStories[id]);
 //        $("#taskModal").modal("show");
 //        $('#taskModalTitle').text(RESOURCES.modal.view.title);
 //		$('#mUserStoryFooter').addClass('hidden');
-//        updateFormUserStoryModal(itemUserStoryAux);
+//        updateFormUserStoryModalDetail(itemUserStoryAux);
 //		$('#taskModal').find('[data-freeze="view"]').attr('readonly', 'readonly');
 //		$select.prop('disabled', true);
 //    });
 //}
 
-//function cleanFormUserStoryModal(){
+//function cleanFormUserStoryModalDetail(){
 //    $('#iNameTask').val("");
 //    $('#taDescriptionTask').val("");
 //    $select.val(null).trigger('change');
@@ -160,7 +228,14 @@
 //    $('#taCriteriaOfAcceptanceTask').val("");
 //}
 
-//function updateFormUserStoryModal(data){
+//function updateFormUserStoryModalDetail(data) {
+//    console.log(data.Uid);
+//    console.log(data.Description);
+//    console.log(data.IdUserResponsable);
+//    console.log(data.effort);
+//    console.log(data.priority);
+//    console.log(data.acceptanceCriteria);
+
 //    $('#iNameTask').val(data.Name);
 //    $('#taDescriptionTask').val(data.Description);
 //    $select.val(data.IdUserResponsable).trigger('change');
@@ -169,7 +244,7 @@
 //    $('#taCriteriaOfAcceptanceTask').val(data.AcceptanceCriteria);
 //}
 
-//function buildContainerSprint(){
+//function buildContainerSprintDetail(){
 //    var context = {}, nodes = [], project, iProject,
 //        source = document.getElementById("temp-sprint-container").innerHTML,
 //        template = Handlebars.compile(source);
@@ -180,8 +255,7 @@
 //	if(colorsIncrementalAuxSprint === colorsTotalAux){
 //        colorsIncrementalAuxSprint = 0;
 //    }
-//	styleSprint = 'style="background-color: '.concat(COLORS[colorsIncrementalAuxSprint]).concat(';')
-//        .concat(' color: #fff;"');
+//	styleSprint = 'style="background-color: '.concat(COLORS[colorsIncrementalAuxSprint]).concat(';').concat(' color: #fff;"');
 //	context.style = styleSprint;
 //	colorsIncrementalAuxSprint++;
 //    $('#containerSprintDetail').append(template(context));
@@ -190,7 +264,7 @@
 //        name = $('#nameItemSprint').val();
 //		saveToDatabaseSprint({'Name': name, 'IdProject': idProject});
 //		$('#containerItemSprintParent').remove();
-//		buildContainerCreatedSprint(name, styleSprint);
+//		buildContainerCreatedSprintDetail(name, styleSprint);
 //    });
 //    $("#btnItemSprintRemove").on('click', function(){
 //        $('#containerItemSprintParent').remove();
@@ -201,7 +275,7 @@
 //    });
 //}
 
-//function buildContainerCreatedSprint(name, style){
+//function buildContainerCreatedSprintDetail(name, style){
 //    var context = {}, nodes = [], project, iProject,
 //        source = document.getElementById("temp-sprint-created-container").innerHTML,
 //        template = Handlebars.compile(source);
@@ -210,9 +284,12 @@
 //	context.style = style;
 //	context.id = incrementalAuxSprints;
 //    $('#containerSprintDetail').append(template(context));
+//    $('#mBtnGoToSprintDetail'.concat(incrementalAuxSprints)).on('click', function(){
+//        location.href = "https://adminlte.io/themes/AdminLTE/pages/calendar.html";
+//    });
 //}
 
-//function buildContainerMsgEmptySprint(){
+//function buildContainerMsgEmptySprintDetail(){
 //    var context = {}, nodes = [], project, iProject,
 //        source = document.getElementById("temp-sprints-empty-msg").innerHTML,
 //        template = Handlebars.compile(source);

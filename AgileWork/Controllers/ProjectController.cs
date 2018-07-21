@@ -125,6 +125,7 @@
             return RedirectToAction("ProjectDetail", new { id = Session["idProject"] });
         }
 
+        //[HttpPost]
         public ActionResult ProjectDetail(string id) 
         {
             Session["idProject"] = id;
@@ -144,8 +145,43 @@
 
             TempData["project"] = projectViewModel;
 
-            return View("~/Views/Project/Detail.cshtml", model:TempData["project"]);
+            return View("Detail", model: TempData["project"]);
         }
+
+        [HttpPost]
+        public ActionResult ObtainProjectDetail() {
+            var client = new RestClient(Constant.GetAllProjectInformationAsync);
+            var request = new RestRequest(Method.POST)
+                .AddParameter("ProjectId",  Session["idProject"]);
+
+            var response = client.Execute(request).Content;
+
+            return Content(response, "application/json");
+        }
+
+        //[HttpPost]
+        //public ActionResult GetProjectDetail(string id) 
+        //{
+        //    Session["idProject"] = id;
+
+        //    var client = new RestClient(Constant.GetAllProjectInformationAsync);
+        //    var request = new RestRequest(Method.POST)
+        //        .AddParameter("ProjectId", id);
+
+        //    var result = client.Execute(request).Content;
+        //    var response = JsonConvert.DeserializeObject<Response<Project>>(result).Data;
+
+        //    var projectViewModel = Mapping.Map<Project, ProjectViewModel>(response);
+        //    var userStoriesViewModel = Mapping.Map<List<UserStories>, List<UserStoriesViewModel>>(response.UserStories);
+        //    var sprintViewModel = Mapping.Map<List<Sprint>, List<SprintViewModel>>(response.Sprints);
+
+        //    projectViewModel.UserStoriesViewModel = userStoriesViewModel;
+        //    projectViewModel.SprintViewModel = sprintViewModel;
+
+        //    TempData["project"] = projectViewModel;
+
+        //    return Content(result, "application/json");
+        //}
 
         public ActionResult ReturnProjectDetail() 
         {
@@ -251,6 +287,51 @@
             var response = client.Execute(request).Content;
 
             return Content(response, "application/json");
+        }
+
+        public ActionResult Dashboard(string id) {
+            Session["idSprint"] = id;
+
+            return View();
+        }
+
+        [HttpPost]
+        public ActionResult GetDashboardInfo() 
+        {
+            var client = new RestClient(Constant.GetAllSprintInformationAsync);
+            var request = new RestRequest(Method.POST)
+                .AddParameter("IdSprint", Session["idSprint"])
+                .AddParameter("IdProject", Session["idProject"]);
+
+            var result = client.Execute(request).Content;
+
+            return Content(result, "application/json");
+        }
+
+        [HttpPost]
+        public ActionResult UpdateTaskState(UserTaskViewModel model) 
+        {
+            var client = new RestClient(Constant.UpdateTaskAsync);
+            var request = new RestRequest(Method.POST)
+                .AddParameter("IdTask", model.idTask)
+                .AddParameter("State", model.state);
+            
+            var result = client.Execute(request).Content;
+
+            return Content(result, "application/json");
+        }
+
+        [HttpPost]
+        public ActionResult CreateTask(UserTaskViewModel model) 
+        {
+            var client = new RestClient(Constant.CreateTaskAsync);
+            var request = new RestRequest(Method.POST)
+                .AddParameter("Name", model.name)
+                .AddParameter("IdUserHistories", model.idUs);
+            
+            var result = client.Execute(request).Content;
+
+            return Content(result, "application/json");
         }
     }
 }
