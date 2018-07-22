@@ -82,7 +82,7 @@ function getAllResponsiblesDashboard(){
         var datas = e, 
             iData, 
             node;
-
+        
         for(iData in datas){
             node = datas[iData];
             dataResponsibles.push({'id': node.Uid, 'text': node.Name});

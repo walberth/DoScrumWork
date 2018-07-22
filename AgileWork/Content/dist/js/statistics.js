@@ -91,9 +91,11 @@ function getAllData() {
         'type': "GET",
         'cache': true,
         'async': true
-    }).done(function(e) {
+    }).done(function (e) {
         console.log(e);
         dataStatistic = e;
+        console.log("data stadistics");
+        console.log(dataStatistic);
         prepareData();
         renderReport();
     }).fail(function(jqXHR, textStatus, errorThrown) {
@@ -163,7 +165,6 @@ function prepareData(){
         gMainReport.yAxis = "Cantidad";
         dataSerieProjectUS.push(quantityUS);
         dataSerieProjectSprint.push(quantitySprint);
-        dataCategoriesProjects.push(nameProject);
         //
         seriesSprintsProject = [];
         gDetailReportProjectSprintsPie[idProject] = [];

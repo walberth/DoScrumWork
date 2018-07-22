@@ -1,7 +1,8 @@
 ﻿@model AgileWork.ModelView.ProjectViewModel
 
 @{
-    if (Session["idUser"] == null) {
+    if (Session["idUser"] == null)
+    {
         @Url.Action("Index", "Login")
     }
 
@@ -31,8 +32,7 @@
                                     <label for="iNameProject" class="control-label">Nombre</label>
                                 </div>
                                 <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
-                                    @Html.TextBoxFor(m => m.Name, new { placeholder = "Nombre de proyecto", @class = "form-control", id = "iNameProject", @readonly = "readonly" })
-                                    @*<input type="text" class="form-control" id="iNameProject" readonly="readonly" placeholder="Nombre de proyecto" />*@
+                                    <input type="text" class="form-control" id="iNameProject" readonly="readonly" placeholder="Nombre de proyecto" />
                                 </div>
                             </div>
                             <div class="row row-fixed-zero margin-top-2perc">
@@ -40,8 +40,7 @@
                                     <label for="iDatesProject" class="control-label">Fechas</label>
                                 </div>
                                 <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
-                                    @Html.TextBoxFor(m => m.StartDate, new { placeholder = "Rango de fechas", @class = "form-control", id = "iDatesProject", @readonly = "readonly" })
-                                    @*<input type="text" class="form-control" id="iDatesProject" disabled="" placeholder="Rango de fechas" />*@
+                                    <input type="text" class="form-control" id="iDatesProject" disabled="" placeholder="Rango de fechas" />
                                 </div>
                             </div>
                             <div class="row row-fixed-zero margin-top-2perc">
@@ -49,8 +48,7 @@
                                     <label>Descripci&oacute;n</label>
                                 </div>
                                 <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
-                                    @Html.TextAreaFor(m => m.Description, new { placeholder = "Descripción del proyecto", @class = "form-control", id = "taDescriptionProject", rows = "3", @readonly = "readonly" })
-                                    @*<textarea id="taDescriptionProject" class="form-control" rows="3" readonly="readonly" placeholder="Descripci&oacute;n del proyecto..."></textarea>*@
+                                    <textarea id="taDescriptionProject" class="form-control" rows="5" readonly="readonly" placeholder="Descripci&oacute;n del proyecto..."></textarea>
                                 </div>
                             </div>
                         </div>
@@ -59,33 +57,10 @@
                                 <div class="box-header with-border">
                                     <h3 class="box-title textOverflow-boxTitles container-task-header">Historias de Usuario</h3>
                                 </div>
-                                <div class="box-body">
-                                    <div id="containerUserStoriesDetail" class="row row-fixed-zero">
-                                        @{
-                                            if (Model.UserStoriesViewModel.Count == 0 || Model.UserStoriesViewModel.Equals(null)) {
-                                                <span id="msgEmptyUserStories">Listado de historias de usuario vac&iacute;o</span>
-                                            } else {
-                                                foreach (var userStories in Model.UserStoriesViewModel) {
-                                                    <div id='@string.Concat("containerItemUserStory", @userStories.Uid)' class="col-xs-12 col-sm-12 col-md-12 col-lg-6">
-                                                        <div class="row row-fixed-zero external-event" style="background-color: #00a65a; color: #fff;">
-                                                            <div class="col-xs-9 col-sm-9 col-md-9 col-lg-9">
-                                                                <div class="container-user-story-content">
-                                                                    <span id='@string.Concat("nameItemUserStory", @userStories.Uid)'>
-                                                                        @userStories.Name
-                                                                    </span>
-                                                                </div>
-                                                            </div>
-                                                            <div class="col-xs-3 col-sm-3 col-md-3 col-lg-3">
-                                                                <button id='@string.Concat("mBtnUpdateUserStory", @userStories.Uid)' data-id='@userStories.Uid' type="button" class="btn btn-box-tool container-user-story-tools mija" data-widget="collapse"><i class="fa fa-plus-circle"></i></button>
-                                                            </div>
-                                                        </div>
-                                                    </div>
-                                                }
-                                            }
-                                        }
-                                    </div>
+                                <div class="box-body" style="display: block !important;">
+                                    <div id="containerUserStoriesDetail" class="row row-fixed-zero"></div>
                                 </div>
-                                <div class="box-footer">
+                                <div class="box-footer" style="display: block !important;">
                                     <button type="button" id="btnCreateTask" class="btn btn-info btn-xs">Crear</button>
                                 </div>
                             </div>
@@ -97,26 +72,7 @@
                                 </div>
                                 <div class="box-body">
                                     <div id="containerSprintDetail" class="row row-fixed-zero">
-                                        @{
-                                            if (Model.SprintViewModel.Count == 0 || Model.SprintViewModel.Equals(null)) {
-                                                <span id="msgEmptySprints">Listado de sprints vac&iacute;o</span>
-                                            } else {
-                                                foreach (var sprint in Model.SprintViewModel) {
-                                                    <div id='@string.Concat("containerItemSprintCreated", @Model.Uid)' class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
-                                                        <div class="row row-fixed-zero external-event" style="background-color: #00c0ef; color: #fff;">
-                                                            <div class="container-user-story-content">
-                                                                <div class="col-xs-9 col-sm-9 col-md-9 col-lg-9">
-                                                                    <div class="container-user-story-content"><span id='@string.Concat("nameItemSprintCreated", @Model.Uid)'>"@sprint.Name"</span></div>
-                                                                </div>
-                                                                <div class="col-xs-3 col-sm-3 col-md-3 col-lg-3">
-                                                                    <button id='@string.Concat("mBtnGoToSprintDetail", @sprint.Uid)' data-id='@sprint.Uid' type="button" class="btn btn-box-tool container-user-story-tools got-to-sprint" data-widget="collapse"><i class="fa fa-plus-circle"></i></button>
-                                                                </div>
-                                                            </div>
-                                                        </div>
-                                                    </div>
-                                                }
-                                            }
-                                        }
+                                        <span id="msgEmptySprints">Listado de sprints vac&iacute;o</span>
                                     </div>
                                 </div>
                                 <div class="box-footer">
@@ -195,6 +151,20 @@
     </div>
 </div>
 
+<!--Container User Story Template-->
+<script id="temp-user-story-container" type="text/x-handlebars-template">
+    <div id="containerItemUserStory{{id}}" class="col-xs-12 col-sm-12 col-md-12 col-lg-6">
+        <div class="row row-fixed-zero external-event" {{{style}}}>
+            <div class="col-xs-9 col-sm-9 col-md-9 col-lg-9">
+                <div class="container-user-story-content"><span id="nameItemUserStory{{id}}">{{name}}</span></div>
+            </div>
+            <div class="col-xs-3 col-sm-3 col-md-3 col-lg-3">
+                <button id="mBtnUpdateUserStory{{id}}" data-id="{{id}}" type="button" class="btn btn-box-tool container-user-story-tools"><i class="fa fa-plus-circle"></i></button>
+            </div>
+        </div>
+    </div>
+</script>
+
 <!--Container Sprint Template-->
 <script id="temp-sprint-container" type="text/x-handlebars-template">
     <div id="containerItemSprintParent" class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
@@ -205,8 +175,8 @@
                         <input type="text" id="nameItemSprint" class="form-control sprint-container input-sprint-action" />
                     </div>
                     <div class="col-xs-3 col-sm-3 col-md-3 col-lg-3">
-                        <button id="btnItemSprintCreate" type="button" class="btn-sprint-action btn btn-box-tool container-user-story-tools sprint-icon-create" data-widget="collapse"><i class="fa fa-check"></i></button>
-                        <button id="btnItemSprintRemove" type="button" class="btn-sprint-action btn btn-box-tool container-user-story-tools sprint-icon-create" data-widget="collapse"><i class="fa fa-times"></i></button>
+                        <button id="btnItemSprintCreate" type="button" class="btn-sprint-action btn btn-box-tool container-user-story-tools sprint-icon-create"><i class="fa fa-check"></i></button>
+                        <button id="btnItemSprintRemove" type="button" class="btn-sprint-action btn btn-box-tool container-user-story-tools sprint-icon-create"><i class="fa fa-times"></i></button>
                     </div>
                 </div>
             </div>
@@ -215,9 +185,21 @@
 </script>
 
 <!--Container Sprint Created Template-->
-<!--script id="temp-sprint-created-container" type="text/x-handlebars-template">
+<script id="temp-sprint-created-container" type="text/x-handlebars-template">
+    <div id="containerItemSprintCreated{{id}}" class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
+        <div class="row row-fixed-zero external-event" {{{style}}}>
+            <div class="container-user-story-content">
+                <div class="col-xs-9 col-sm-9 col-md-9 col-lg-9">
+                    <span id="nameItemSprintCreated{{id}}">{{name}}</span>
+                </div>
+                <div class="col-xs-3 col-sm-3 col-md-3 col-lg-3">
+                    <button id="mBtnGoToSprintDetail{{id}}" data-id="{{id}}" type="button" class="btn btn-box-tool container-user-story-tools"><i class="fa fa-plus-circle"></i></button>
+                </div>
+            </div>
+        </div>
+    </div>
+</script>
 
-</!--script-->
 <!--Msg Sprint Empty Template-->
 <script id="temp-sprints-empty-msg" type="text/x-handlebars-template">
     <span id="msgEmptySprints">Listado de sprints vac&iacute;o</span>
@@ -225,533 +207,5 @@
 
 <script type="text/javascript">
     ejectPageLoad();
-
-    var sResponsibleTaskValid = true,
-        incrementalAuxUserStories = 0,
-        select2Val = {
-            'id': null,
-            'text': null
-        },
-        RESOURCES = {
-            'select2': "Seleccione",
-            'modal': {
-                'create': {
-                    'title': "Crear Historia de Usuario", 'button': "Crear", 'action': "create"
-                },
-                'view': {
-                    'title': "Detalle Historia de Usuario", 'button': null, 'action': "view"
-                }
-            }
-        },
-        COLORS = ['#00a65a', '#f39c12', '#00c0ef', '#3c8dbc', '#dd4b39', '#b32d00', '#ff8c1a', '#99cc00', '#9900cc', '#663300'],
-        colorsIncrementalAux = 0,
-        colorsTotalAux = COLORS.length - 1,
-        dataResponsibles = [],
-        userStories = {},
-        itemUserStoryAux = {},
-        $select, data,
-        idProject,
-        incrementalAuxSprints = 0,
-        colorsIncrementalAuxSprint = 0,
-        sprintCreated = true,
-        styleSprint;
-
-    $(document).ready(function () {
-        $(".got-to-sprint").on('click', function() {
-            var $this = $(this),
-                idSprint = $this.attr('data-id');
-
-            window.location.href = '@Url.Action("Dashboard", "Project")' + "/" + idSprint;
-        });
-
-
-        //Show user storie detail
-        $(".mija").on('click', function () {
-            var $this = $(this),
-                id = $this.attr('data-id');
-
-            console.log(".mija " + id);
-            var userResponsable = "";
-
-            $.ajax({
-                url: '@Url.Action("ShowUserStoryDetail", "Project")',
-                type: 'POST',
-                data: { idUserStory: id }
-            }).done(function (e) {
-                console.log("user storie  " + e);
-
-                $('#iNameTask').val(e.Name);
-                $('#taDescriptionTask').val(e.Description);
-                userResponsable = e.UserResponsable;
-                $('#iEffortTask').val(e.Effort);
-                $('#iPriorityTask').val(e.Priority);
-                $('#taCriteriaOfAcceptanceTask').val(e.AcceptanceCriteria);
-            });
-
-            $.ajax({
-                url: '@Url.Action("GetUserResponsable", "Project")',
-                type: 'GET'
-            }).done(function (e) {
-                var len = e.length;
-
-                for (var i = 0; i < len; i++) {
-                    if (e[i]['Name'] === userResponsable) {
-                        $("#sResponsibleTask").append("<option value='" + e[i]['Uid'] + "'>" + e[i]['Name'] + "</option>");
-                    }
-                }
-            });
-
-            itemUserStoryAux = clone(userStories[id]);
-            $("#taskModal").modal("show");
-            $('#taskModalTitle').text(RESOURCES.modal.view.title);
-            $('#mUserStoryFooter').addClass('hidden');
-            updateFormUserStoryModal(itemUserStoryAux);
-            $('#taskModal').find('[data-freeze="view"]').attr('readonly', 'readonly');
-            $select.prop('disabled', true);
-        });
-    });
-
-    function initialize() {
-        initializeEvents();
-        renderProjectDetail();
-    }
-
-    function initializeEvents() {
-        $("#btnCreateTask").click(function () {
-            $("#taskModal").modal("show");
-            $('#taskModalTitle').text(RESOURCES.modal.create.title);
-            $('#mActionTask').text(RESOURCES.modal.create.button);
-            $('#mUserStoryFooter').removeClass('hidden');
-            $('#mActionTask').attr('data-action', RESOURCES.modal.create.action);
-            $('#taskModal').find('[data-freeze="view"]').removeAttr('readonly');
-            $select.prop('disabled', false);
-            cleanFormUserStoryModal();
-            fillUserResponsable();
-        });
-
-        $("#taskModal").on('show.bs.modal', function () {
-            if (sResponsibleTaskValid) {
-                sResponsibleTaskValid = false;
-                buildResponsibleComponent();
-            }
-        });
-        $("#mActionTask").click(function () {
-            var $this = $(this), action = $this.attr('data-action');
-            if (action === 'create') {
-                if (Object.keys(userStories).length === 0) {
-                    $('#containerUserStoriesDetail').empty();
-                }
-                incrementalAuxUserStories++;
-                userStories[incrementalAuxUserStories.toString()] = {
-                    'Name': $('#iNameTask').val(),
-                    'IdProject': idProject,
-                    'Description': $('#taDescriptionTask').val(),
-                    'IdUserResponsable': select2Val.id,
-                    'UserResponsable': select2Val.text,
-                    'Effort': $('#iEffortTask').val(),
-                    'Priority': $('#iPriorityTask').val(),
-                    'AcceptanceCriteria': $('#taCriteriaOfAcceptanceTask').val(),
-                    'aux': incrementalAuxUserStories.toString()
-                };
-
-                //buildContainerUserStory(userStories[incrementalAuxUserStories.toString()], incrementalAuxUserStories.toString());
-                saveToDatabaseUserStory(userStories[incrementalAuxUserStories.toString()]);
-            }
-        });
-        $("#btnCreateSprint").click(function () {
-            buildContainerSprint();
-        });
-        $("#btnMatchSprintHU").click(function () {
-            //AQUI PONER URL PARA IR A PAGINA DE RELACIONAR SPRINT CON HISTORIAS DE USUARIO
-            location.href = '@Url.Action("AttachToSprint", "Project")';
-        });
-    }
-
-    function buildResponsibleComponent() {
-        $select = $('#sResponsibleTask').select2({
-            'theme': 'bootstrap', 'placeholder': RESOURCES.select2, 'language': 'es',
-            'minimumResultsForSearch': Infinity, 'data': dataResponsibles,
-            'dropdownParent': $('#containerResponsibleTask')
-        });
-        $select.val(null).trigger('change');
-        $select.on('change', function (e) {
-            if (typeof $select.select2('data')[0] !== 'undefined') {
-                select2Val.id = $(this).val();
-                select2Val.text = $select.select2('data')[0].text;
-            }
-        });
-    }
-
-    function renderProjectDetail() {
-        var data = dataProjectDetail.Data,
-            dataUserStories = data.UserStories,
-            dataSprints = data.Sprints,
-            userStory, iUserStory;
-        //General
-        $('#iNameProject').val(data.Name);
-        buildDatesComponent($('#iDatesProject'), '#containerDates', 'auto',
-            { 'startDate': data.StartDate, 'endDate': data.EndDate });
-        $('#taDescriptionProject').val(data.Description);
-        idProject = data.Uid;
-        //Historias de Usuario
-        console.log(dataUserStories);
-
-        for (iUserStory in dataUserStories) {
-            incrementalAuxUserStories++;
-            userStory = dataUserStories[iUserStory];
-            userStories[incrementalAuxUserStories] = {
-                'Uid': userStory.Uid,
-                'Name': userStory.Name,
-                'Description': userStory.Description,
-                'IdUserResponsable': userStory.IdUserResponsable,
-                'UserResponsable': userStory.UserResponsable,
-                'Effort': userStory.Effort,
-                'Priority': userStory.Priority,
-                'AcceptanceCriteria': userStory.AcceptanceCriteria
-            }
-
-            buildContainerUserStory(userStories[incrementalAuxUserStories.toString()], incrementalAuxUserStories.toString());
-        }
-    }
-
-    function buildContainerUserStory(data, id) {
-        console.log(data);
-        var context = {}, nodes = [], project, iProject,
-            source = document.getElementById("temp-user-story-container").innerHTML,
-            template = Handlebars.compile(source);
-        context.name = data.Name;
-        context.id = id;
-        if (colorsIncrementalAux === colorsTotalAux) {
-            colorsIncrementalAux = 0;
-        }
-        context.style = 'style="background-color: '.concat(COLORS[colorsIncrementalAux]).concat(';')
-            .concat(' color: #fff;"');
-        colorsIncrementalAux++;
-        $('#containerUserStoriesDetail').append(template(context));
-
-        $("#mBtnUpdateUserStory".concat(id)).on('click', function () {
-            debugger;
-            var $this = $(this),
-                id = $this.attr('data-id');
-
-            console.log("hola " + id);
-
-            itemUserStoryAux = clone(userStories[id]);
-            $("#taskModal").modal("show");
-            $('#taskModalTitle').text(RESOURCES.modal.view.title);
-            $('#mUserStoryFooter').addClass('hidden');
-            updateFormUserStoryModal(itemUserStoryAux);
-            $('#taskModal').find('[data-freeze="view"]').attr('readonly', 'readonly');
-            $select.prop('disabled', true);
-        });
-    }
-
-    function cleanFormUserStoryModal() {
-        $('#iNameTask').val("");
-        $('#taDescriptionTask').val("");
-        $select.val(null).trigger('change');
-        $('#iEffortTask').val("");
-        $('#iPriorityTask').val("");
-        $('#taCriteriaOfAcceptanceTask').val("");
-    }
-
-    function updateFormUserStoryModal(data) {
-        $('#iNameTask').val(data.Name);
-        $('#taDescriptionTask').val(data.Description);
-        $select.val(data.IdUserResponsable).trigger('change');
-        $('#iEffortTask').val(data.Effort);
-        $('#iPriorityTask').val(data.Priority);
-        $('#taCriteriaOfAcceptanceTask').val(data.AcceptanceCriteria);
-    }
-
-    function buildContainerSprint() {
-        var context = {}, nodes = [], project, iProject,
-            source = document.getElementById("temp-sprint-container").innerHTML,
-            template = Handlebars.compile(source);
-        if (sprintCreated) {
-            sprintCreated = false;
-            $('#containerSprintDetail').empty();
-        }
-        if (colorsIncrementalAuxSprint === colorsTotalAux) {
-            colorsIncrementalAuxSprint = 0;
-        }
-        styleSprint = 'style="background-color: '.concat(COLORS[colorsIncrementalAuxSprint]).concat(';')
-            .concat(' color: #fff;"');
-        context.style = styleSprint;
-        colorsIncrementalAuxSprint++;
-
-        $('#containerSprintDetail').append(template(context));
-
-        $("#btnItemSprintCreate").on('click', function () {
-            var name = $('#nameItemSprint').val();
-
-            saveToDatabaseSprint({ 'Name': name });
-
-            $('#containerItemSprintParent').remove();
-            buildContainerCreatedSprint(name, styleSprint);
-        });
-
-        $("#btnItemSprintRemove").on('click', function () {
-            $('#containerItemSprintParent').remove();
-            if (incrementalAuxSprints === 0) {
-                buildContainerMsgEmptySprint();
-                sprintCreated = true;
-            }
-        });
-    }
-
-    function buildContainerCreatedSprint(name, style) {
-        var context = {}, nodes = [], project, iProject,
-            source = document.getElementById("temp-sprint-created-container").innerHTML,
-            template = Handlebars.compile(source);
-        incrementalAuxSprints++;
-        context.name = name;
-        context.style = style;
-        context.id = incrementalAuxSprints;
-        $('#containerSprintDetail').append(template(context));
-        $('#mBtnGoToSprintDetail'.concat(incrementalAuxSprints)).on('click', function(){
-            location.href = "https://adminlte.io/themes/AdminLTE/pages/calendar.html";
-        });
-    }
-
-    function buildContainerMsgEmptySprint() {
-        var context = {}, nodes = [], project, iProject,
-            source = document.getElementById("temp-sprints-empty-msg").innerHTML,
-            template = Handlebars.compile(source);
-        $('#containerSprintDetail').append(template(context));
-    }
-
-    //AQUI SE DEBE INSERTAR EN LA BASE DE DATOSfa fa-plus-circle
-    function saveToDatabaseUserStory(obj) {
-        var data = clone(obj);
-        delete data.aux;
-
-        $.ajax({
-            url: '@Url.Action("SaveUserStory", "Project")',
-            type: 'POST',
-            data: { model: obj }
-        }).done(function (e) {
-            window.location.reload();
-        });
-    }
-
-    function saveToDatabaseSprint(obj) {
-        console.log("sprint " + obj.Name);
-
-        $.ajax({
-            url: '@Url.Action("CreateSprint", "Project")',
-            type: 'POST',
-            data: { sprint: obj }
-        }).done(function (e) {
-            window.location.reload();
-        });
-    }
-
-    function fillUserResponsable() {
-        $.ajax({
-            url: '@Url.Action("GetUserResponsable", "Project")',
-            type: 'GET'
-        }).done(function (e) {
-            var len = e.length;
-
-            for (var i = 0; i < len; i++) {
-                var id = e[i]['Uid'];
-                var name = e[i]['Name'];
-
-                $("#sResponsibleTask").append("<option value='" + id + "'>" + name + "</option>");
-            }
-        });
-    }
+    initializedetail();
 </script>
-
-@*<div id="blockContainer" class="content-wrapper bg">
-        <div class="container">
-            <section class="content">
-                <div id="containerProyectDetail" class="box box-primary container-opacity">
-                    <div class="box-header">
-                        <h3 class="box-title textOverflow-boxTitles"><i class="fa fa-tags" aria-hidden="true"></i><span class="space-subtitle">Detalle de proyecto</span></h3>
-                    </div>
-                    <div class="box-body">
-                        <div class="row row-fixed-zero">
-                            <div class="col-xs-12 col-sm-12 col-md-6 col-lg-3">
-                                <div class="row row-fixed-zero margin-top-2perc">
-                                    <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
-                                        <label for="iNameProject" class="control-label">Nombre</label>
-                                    </div>
-                                    <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
-                                        <input type="text" class="form-control" id="iNameProject" readonly="readonly" placeholder="Nombre de proyecto" />
-                                    </div>
-                                </div>
-                                <div class="row row-fixed-zero margin-top-2perc">
-                                    <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
-                                        <label for="iDatesProject" class="control-label">Fechas</label>
-                                    </div>
-                                    <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
-                                        <input type="text" class="form-control" id="iDatesProject" disabled="" placeholder="Rango de fechas" />
-                                    </div>
-                                </div>
-                                <div class="row row-fixed-zero margin-top-2perc">
-                                    <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
-                                        <label>Descripci&oacute;n</label>
-                                    </div>
-                                    <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
-                                        <textarea id="taDescriptionProject" class="form-control" rows="5" readonly="readonly" placeholder="Descripci&oacute;n del proyecto..."></textarea>
-                                    </div>
-                                </div>
-                            </div>
-                            <div class="col-xs-12 col-sm-12 col-md-6 col-lg-5">
-                                <div id="containerUserStories" class="box box-cus margin-top-2perc box-task">
-                                    <div class="box-header with-border">
-                                        <h3 class="box-title textOverflow-boxTitles container-task-header">Historias de Usuario</h3>
-                                    </div>
-                                    <div class="box-body">
-                                        <div id="containerUserStoriesDetail" class="row row-fixed-zero"></div>
-                                    </div>
-                                    <div class="box-footer">
-                                        <button type="button" id="btnCreateTask" class="btn btn-info btn-xs">Crear</button>
-                                    </div>
-                                </div>
-                            </div>
-                            <div class="col-xs-12 col-sm-12 col-md-12 col-lg-4">
-                                <div id="containerSprints" class="box box-cus margin-top-2perc box-task">
-                                    <div class="box-header with-border">
-                                        <h3 class="box-title textOverflow-boxTitles container-task-header">Sprints</h3>
-                                    </div>
-                                    <div class="box-body">
-                                        <div id="containerSprintDetail" class="row row-fixed-zero">
-                                            <span id="msgEmptySprints">Listado de sprints vac&iacute;o</span>
-                                        </div>
-                                    </div>
-                                    <div class="box-footer">
-                                        <button type="button" id="btnCreateSprint" class="btn btn-info btn-xs">Crear</button>
-                                        <button type="button" id="btnMatchSprintHU" class="btn btn-warning btn-xs">Vincular con HU</button>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </section>
-        </div>
-    </div>
-
-    <!--Modal Create or Edit Task-->
-    <div id="taskModal" class="modal fade" role="dialog" aria-hidden="true" data-backdrop="static" data-keyboard="false">
-        <div class="modal-dialog modal-cust">
-            <div class="modal-content">
-                <div class="modal-header">
-                    <button type="button" class="close" data-dismiss="modal">&times;</button>
-                    <h4 id="taskModalTitle" class="modal-title modal-header-title">[Create_Task]</h4>
-                </div>
-                <div class="modal-body modal-body-cust">
-                    <div class="row">
-                        <div class="col-xs-12 col-sm-6 col-md-4 col-lg-3 form-line-component-opt1 txt-align-right">
-                            <label for="iNameTask" class="control-label">Nombre</label>
-                        </div>
-                        <div class="col-xs-12 col-sm-6 col-md-8 col-lg-9">
-                            <input data-freeze="view" type="text" class="form-control" id="iNameTask" placeholder="Nombre de tarea" />
-                        </div>
-                    </div>
-                    <div class="row margin-top-2perc">
-                        <div class="col-xs-12 col-sm-6 col-md-4 col-lg-3 form-line-component-opt3 txt-align-right">
-                            <label>Descripci&oacute;n</label>
-                        </div>
-                        <div class="col-xs-12 col-sm-6 col-md-8 col-lg-9">
-                            <textarea data-freeze="view" id="taDescriptionTask" class="form-control" rows="2" placeholder="Descripci&oacute;n de tarea..."></textarea>
-                        </div>
-                    </div>
-                    <div id="containerResponsibleTask" class="row margin-top-2perc">
-                        <div class="col-xs-12 col-sm-6 col-md-4 col-lg-3 form-line-component-opt1 txt-align-right">
-                            <label>Responsable</label>
-                        </div>
-                        <div class="col-xs-12 col-sm-6 col-md-8 col-lg-9">
-                            <select data-freeze="view" id="sResponsibleTask" class="form-control select2"></select>
-                        </div>
-                    </div>
-                    <div class="row margin-top-2perc">
-                        <div class="col-xs-12 col-sm-12 col-md-6 col-lg-3 form-line-component-opt1 txt-align-right">
-                            <label>Esfuerzo</label>
-                        </div>
-                        <div class="col-xs-12 col-sm-12 col-md-6 col-lg-3">
-                            <input data-freeze="view" type="text" class="form-control" id="iEffortTask" placeholder="Esfuerzo" />
-                        </div>
-                        <div class="col-xs-12 col-sm-12 col-md-6 col-lg-3 form-line-component-opt1 txt-align-right">
-                            <label>Prioridad</label>
-                        </div>
-                        <div class="col-xs-12 col-sm-12 col-md-6 col-lg-3">
-                            <input data-freeze="view" type="text" class="form-control" id="iPriorityTask" placeholder="Prioridad" />
-                        </div>
-                    </div>
-                    <div class="row margin-top-2perc">
-                        <div class="col-xs-12 col-sm-6 col-md-4 col-lg-3 form-line-component-opt4 txt-align-right">
-                            <label>Criterio de Aceptaci&oacute;n</label>
-                        </div>
-                        <div class="col-xs-12 col-sm-6 col-md-8 col-lg-9">
-                            <textarea data-freeze="view" id="taCriteriaOfAcceptanceTask" class="form-control" rows="3" placeholder="Criterios de aceptaci&oacute;n..."></textarea>
-                        </div>
-                    </div>
-                </div>
-                <div id="mUserStoryFooter" class="modal-footer">
-                    <button type="button" id="mActionTask" data-action="[action]" class="btn btn-primary btn-sm" data-dismiss="modal">[Action_Task]</button>
-                </div>
-            </div>
-        </div>
-    </div>
-
-    <!--Container User Story Template-->
-    <script id="temp-user-story-container" type="text/x-handlebars-template">
-        <div id="containerItemUserStory{{id}}" class="col-xs-12 col-sm-12 col-md-12 col-lg-6">
-            <div class="row row-fixed-zero external-event" {{{style}}}>
-                <div class="col-xs-9 col-sm-9 col-md-9 col-lg-9">
-                    <div class="container-user-story-content"><span id="nameItemUserStory{{id}}">{{name}}</span></div>
-                </div>
-                <div class="col-xs-3 col-sm-3 col-md-3 col-lg-3">
-                    <button id="mBtnUpdateUserStory{{id}}" data-id="{{id}}" type="button" class="btn btn-box-tool container-user-story-tools" data-widget="collapse"><i class="fa fa-plus-circle"></i></button>
-                </div>
-            </div>
-        </div>
-    </script>
-
-    <!--Container Sprint Template-->
-    <script id="temp-sprint-container" type="text/x-handlebars-template">
-        <div id="containerItemSprintParent" class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
-            <div class="row row-fixed-zero external-event" {{{style}}}>
-                <div class="container-user-story-content">
-                    <div class="row row-fixed-zero">
-                        <div class="col-xs-9 col-sm-9 col-md-9 col-lg-9">
-                            <input type="text" id="nameItemSprint" class="form-control sprint-container input-sprint-action" />
-                        </div>
-                        <div class="col-xs-3 col-sm-3 col-md-3 col-lg-3">
-                            <button id="btnItemSprintCreate" type="button" class="btn-sprint-action btn btn-box-tool container-user-story-tools sprint-icon-create" data-widget="collapse"><i class="fa fa-check"></i></button>
-                            <button id="btnItemSprintRemove" type="button" class="btn-sprint-action btn btn-box-tool container-user-story-tools sprint-icon-create" data-widget="collapse"><i class="fa fa-times"></i></button>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </script>
-
-    <!--Container Sprint Created Template-->
-    <script id="temp-sprint-created-container" type="text/x-handlebars-template">
-        <div id="containerItemSprintCreated{{id}}" class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
-            <div class="row row-fixed-zero external-event" {{{style}}}>
-                <div class="container-user-story-content">
-                    <div class="col-xs-9 col-sm-9 col-md-9 col-lg-9">
-                        <span id="nameItemSprintCreated{{id}}">{{name}}</span>
-                    </div>
-                    <div class="col-xs-3 col-sm-3 col-md-3 col-lg-3">
-                        <button id="mBtnGoToSprintDetail{{id}}" data-id="{{id}}" type="button" class="btn btn-box-tool container-user-story-tools" data-widget="collapse"><i class="fa fa-plus-circle"></i></button>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </script>
-
-    <!--Msg Sprint Empty Template-->
-    <script id="temp-sprints-empty-msg" type="text/x-handlebars-template">
-        <span id="msgEmptySprints">Listado de sprints vac&iacute;o</span>
-    </script>
-
-    <script type="text/javascript">
-        initializeDetail();
-    </script>*@

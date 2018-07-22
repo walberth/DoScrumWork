@@ -70,11 +70,15 @@
 }
 
 .select2-container {
-    width: 20% !important;
+    width: 100% !important;
 }
 
 .select2-selection__rendered {
     line-height: 28px;
+}
+
+#containerSListProjects .select2-container {
+    width: 30% !important;
 }
 
 .box-container-root {

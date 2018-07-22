@@ -162,8 +162,8 @@
                 <div class="container-user-story-content"><span id="nameItemUserStory{{id}}">{{name}}</span></div>
             </div>
             <div class="col-xs-2 col-sm-2 col-md-2 col-lg-2">
-                <button id="mBtnUpdateUserStory{{id}}" data-id="{{id}}" type="button" class="btn btn-box-tool container-user-story-tools" data-widget="collapse"><i class="fa fa-wrench"></i></button>
-                <button id="mBtnRemoveUserStory{{id}}" data-id="{{id}}" type="button" class="btn btn-box-tool container-user-story-tools" data-widget="collapse"><i class="fa fa-times"></i></button>
+                <button id="mBtnUpdateUserStory{{id}}" data-id="{{id}}" type="button" class="btn btn-box-tool container-user-story-tools"><i class="fa fa-wrench"></i></button>
+                <button id="mBtnRemoveUserStory{{id}}" data-id="{{id}}" type="button" class="btn btn-box-tool container-user-story-tools"><i class="fa fa-times"></i></button>
             </div>
         </div>
     </div>
@@ -250,31 +250,29 @@
             data.Description = $('#taDescriptionProject').val();
             data.StartDate = dateParams.startDate;
             data.EndDate = dateParams.endDate;
-            console.log(dateParams.startDate);  
-            console.log(dateParams.endDate);  
+            console.log(dateParams.startDate);
+            console.log(dateParams.endDate);
             data.UserStoriesViewModel = [];
             for (iNode in userStories) {
                 node = userStories[iNode];
                 data.UserStoriesViewModel.push({
-                    'Name': node.Name, 
+                    'Name': node.Name,
                     'Description': node.Description,
-                    'IdUserResponsable': node.IdUserResponsable, 
+                    'IdUserResponsable': node.IdUserResponsable,
                     'UserResponsable': node.UserResponsable,
-                    'Effort': node.Effort, 
+                    'Effort': node.Effort,
                     'Priority': node.Priority,
                     'AcceptanceCriteria': node.AcceptanceCriteria
                 });
             }
-
             $.ajax({
                 url: '@Url.Action("SaveProject", "Project")',
                 type: 'POST',
                 data: { model: data }
-            }).done(function() {
-                console.log(data);  
+            }).done(function () {
+                console.log(data);
+                location.href = '@Url.Action("Index", "Project")';
             });
-
-            location.href = '@Url.Action("Index", "Project")';
         });
     }
 

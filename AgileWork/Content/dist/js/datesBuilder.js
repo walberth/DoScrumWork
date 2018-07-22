@@ -1,6 +1,7 @@
 var daterangepicker, startDate, endDate, formatDate = 'DD/MM/YYYY';
 
-function buildDatesComponent(element, parent){
+function buildDatesComponent(element, parent) {
+    console.log();
     daterangepicker = element.daterangepicker({
         'opens': 'left',
         'locale': {
